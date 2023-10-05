@@ -19,6 +19,8 @@ module.exports = {
     "react"
   ],
   "rules": {
+    "no-console": "warn",
+    "no-trailing-spaces": "warn"
   },
   "settings": {
     "react": {

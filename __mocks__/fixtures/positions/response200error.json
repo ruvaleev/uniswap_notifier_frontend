@@ -1,0 +1,13 @@
+{
+	"errors": [
+		{
+			"locations": [
+				{
+					"column": 0,
+					"line": 0
+				}
+			],
+			"message": "Invalid value provided for argument `where`: Object({\"liquidity_gt\": Int(Number(0)), \"owner\": Enum(\"address\")})"
+		}
+	]
+}

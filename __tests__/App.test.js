@@ -2,7 +2,7 @@ import React from 'react';
 import { screen, render, waitFor } from '@testing-library/react';
 
 import App from '../src/App';
-import { NETWORK_PARAMS } from '../src/constants';
+import { NETWORK_PARAMS } from '__constants';
 
 describe('when Metamask extension is not installed', () => {
   it('suggests to install Metamask', () => {
@@ -25,7 +25,7 @@ describe('when Metamask extension is installed', () => {
       chainId: '0xa4b1',
     };
   });
-  
+
   afterAll(() => {
     delete global.window.ethereum;
   });
@@ -40,7 +40,7 @@ describe('when Metamask extension is installed', () => {
       });
     })
   });
-  
+
   describe('when crypto wallet connected, but with wrong network', () => {
     beforeEach(() => {
       ethereumRequestMock.mock.calls = [];
