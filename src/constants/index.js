@@ -33,3 +33,5 @@ export const POSITIONS_FIELDS = [
   'owner',
   'pool { tick }',
 ].join(' ');
+
+export const PRICE_PRECISION = 18;
