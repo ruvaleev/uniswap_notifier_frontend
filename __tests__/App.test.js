@@ -1,8 +1,16 @@
 import React from 'react';
 import { screen, render, waitFor } from '@testing-library/react';
 
-import App from '../src/App';
+import App from '__src/App';
 import { NETWORK_PARAMS } from '__constants';
+import positionsFixture from '__mocks/fixtures/positions/response200success.json';
+
+function mockFetchPositions() {
+  return jest.fn(() => Promise.resolve(positionsFixture.data.positions));
+}
+
+jest.mock('__services/graph/fetchPositions', () => mockFetchPositions());
+
 
 describe('when Metamask extension is not installed', () => {
   it('suggests to install Metamask', () => {
@@ -10,6 +18,8 @@ describe('when Metamask extension is not installed', () => {
     const metamaskLink = screen.getByText('MetaMask')
     expect(metamaskLink).toBeInTheDocument();
     expect(metamaskLink).toHaveAttribute('href', 'https://metamask.io/download');
+    const positionsList = screen.queryByTestId('positions-list');
+    expect(positionsList).toBeNull();
   })
 });
 
@@ -31,12 +41,14 @@ describe('when Metamask extension is installed', () => {
   });
 
   describe('when no crypto wallet is connected', () => {
-    it('suggests connect to crypto wallet', async () => {
+    it('suggests connect to crypto wallet and renders connected wallet information', async () => {
       render(<App />);
       await waitFor(() => {
         expect(ethereumRequestMock.mock.calls).toEqual([[{method: 'eth_requestAccounts'}]]);
         const textElement = screen.getByText('0x1234567890');
         expect(textElement).toBeInTheDocument();
+        const positionsList = screen.getByTestId('positions-list');
+        expect(positionsList).toBeInTheDocument();
       });
     })
   });

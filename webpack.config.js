@@ -28,7 +28,12 @@ module.exports = {
   ],
   resolve: {
     alias: {
+      '__components': path.resolve(__dirname, 'src/components'),
       '__constants': path.resolve(__dirname, 'src/constants'),
+      '__contexts': path.resolve(__dirname, 'src/contexts'),
+      '__mocks': path.resolve(__dirname, '__mocks__'),
+      '__services': path.resolve(__dirname, 'src/services'),
+      '__src': path.resolve(__dirname, 'src'),
     },
   },
 };

@@ -1,0 +1,74 @@
+import React from 'react';
+import { act, render, screen, waitFor } from '@testing-library/react';
+
+import PositionsInfo from '__components/PositionsInfo';
+import { WalletProvider } from '__contexts/WalletContext';
+import { ethereumMock } from '__mocks/ethereumMock';
+import positionsFixture from '__mocks/fixtures/positions/response200success.json';
+
+function mockFetchPositions() {
+  return jest.fn(() => Promise.resolve(positionsFixture.data.positions));
+}
+
+jest.mock('__services/graph/fetchPositions', () => mockFetchPositions());
+
+import fetchPositions from '__services/graph/fetchPositions';
+
+const renderWithProvider = async () => {
+  await act(async () => {
+    render(
+      <WalletProvider>
+        <PositionsInfo />
+      </WalletProvider>
+    );
+  });
+};
+
+describe('PositionsInfo', () => {
+  describe('when WalletContext has no address', () => {
+    beforeEach(async () => {
+      ethereumMock()
+      await renderWithProvider()
+    });
+
+    it("doesn't call fetchPositions service", () => {
+      expect(fetchPositions).not.toHaveBeenCalled()
+    });
+
+    it('renders proper message', () => {
+      expect(screen.getByText(/Connect wallet/i)).toBeInTheDocument();
+    })
+  });
+
+  describe('when WalletContext has address', () => {
+    const mockAddress = 'address'
+
+    beforeEach(async () => {
+      ethereumMock({addresses: [mockAddress]})
+      await renderWithProvider()
+    });
+
+    it('calls fetchPositions service', async () => {
+      await waitFor(() => expect(fetchPositions).toHaveBeenCalledWith(mockAddress));
+    });
+
+    describe('when fetchPositions service returns successfull response', () => {
+      it('shows received info on the page', () => {
+        positionsFixture.data.positions.forEach((position) => {
+          expect(screen.getByText(position.id)).toBeInTheDocument();
+        })
+      })
+    })
+
+    describe('when fetchPositions service returns error', () => {
+      beforeEach(async () => {
+        fetchPositions.mockImplementation(() => Promise.resolve({errors: ['some error']}));
+        await renderWithProvider()
+      });
+
+      it('shows received error', () => {
+        expect(screen.getByText(/some error/i)).toBeInTheDocument();
+      });
+    })
+  });
+})
