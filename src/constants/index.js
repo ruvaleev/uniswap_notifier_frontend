@@ -26,12 +26,16 @@ export const POSITIONS_FIELDS = [
   'feeGrowthInside1LastX128',
   'id',
   'liquidity',
+  'owner',
   'tickLower',
   'tickUpper',
   'withdrawnToken0',
   'withdrawnToken1',
-  'owner',
-  'pool { tick }',
+  'token0 { decimals id symbol }',
+  'token1 { decimals id symbol }',
+  'pool { sqrtPrice }',
 ].join(' ');
 
 export const PRICE_PRECISION = 18;
+
+export const Q96 = Math.pow(2, 96);
