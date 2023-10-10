@@ -37,5 +37,7 @@ export const POSITIONS_FIELDS = [
 ].join(' ');
 
 export const PRICE_PRECISION = 18;
-
 export const Q96 = Math.pow(2, 96);
+export const Q128 = Math.pow(2, 128);
+export const Q256 = Math.pow(2, 256);
+export const ZERO = 0;
