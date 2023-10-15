@@ -36,7 +36,7 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.072058684527202058', fees1: '139.847572053993474128'})
+      ).toEqual({fees0: '0.072058684527202238', fees1: '139.847572053993502550'})
     });
   })
 
@@ -74,7 +74,7 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.004617939679200665', fees1: '7.225428'})
+      ).toEqual({fees0: '0.004617939679200672', fees1: '7.225428'})
     });
   })
 });

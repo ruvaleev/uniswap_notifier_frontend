@@ -5,6 +5,7 @@ import { WalletContext } from '__contexts/WalletContext';
 import ErrorsList from '__components/ErrorsList'
 import fetchPositions from '__services/graph/fetchPositions';
 import Position from './Position'
+import './styles.css';
 
 const PositionsList = ({ positions }) => {
   return positions.errors

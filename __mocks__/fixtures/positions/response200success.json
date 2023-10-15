@@ -20,8 +20,20 @@
         "withdrawnToken0": "0",
         "withdrawnToken1": "0",
         "owner": "0x08786a247d4b9ff489fa4f599f74ac1228786a24",
+				"token0": {
+					"decimals": "18",
+					"id": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+					"symbol": "WETH"
+				},
+				"token1": {
+					"decimals": "6",
+					"id": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+					"symbol": "USDC"
+				},
         "pool": {
-					"tick": "-202088"
+					"id": "0xc6962004f452be9203591991d15f6b388e09e8d0",
+					"tick": "-202817",
+					"sqrtPrice": "3113456966182712215655822"
 				}
 			},
 			{
@@ -43,8 +55,20 @@
 			  "withdrawnToken0": "0",
 			  "withdrawnToken1": "0",
 			  "owner": "0x08786a247d4b9ff489fa4f599f74ac1228786a24",
-			  "pool": {
-					"tick": "74814"
+				"token0": {
+					"decimals": "18",
+					"id": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+					"symbol": "WETH"
+				},
+				"token1": {
+					"decimals": "18",
+					"id": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+					"symbol": "ARB"
+				},
+				"pool": {
+          "id": "0xc6f780497a95e246eb9449f5e4770916dcd6396a",
+          "tick": "75674",
+					"sqrtPrice": "3466610960857266939405161214604"
 				}
 			}
 		]

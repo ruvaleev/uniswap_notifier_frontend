@@ -33,7 +33,7 @@ export const POSITIONS_FIELDS = [
   'withdrawnToken1',
   'token0 { decimals id symbol }',
   'token1 { decimals id symbol }',
-  'pool { sqrtPrice }',
+  'pool { id tick sqrtPrice }',
 ].join(' ');
 
 export const PRICE_PRECISION = 18;

@@ -14,6 +14,21 @@ jest.mock('__services/graph/fetchPositions', () => mockFetchPositions());
 
 import fetchPositions from '__services/graph/fetchPositions';
 
+
+import { poolMock } from '__mocks/poolMock';
+
+const mockPoolContract = () => poolMock();
+
+jest.mock('ethers', () => {
+  const originalEthers = jest.requireActual('ethers');
+  return {
+    ethers: {
+      ...originalEthers.ethers,
+      Contract: jest.fn().mockImplementation(() => mockPoolContract())
+    }
+  };
+});
+
 const renderWithProvider = async () => {
   await act(async () => {
     render(

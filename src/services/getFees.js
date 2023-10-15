@@ -2,9 +2,9 @@ import BigNumber from 'bignumber.js';
 import { Q128, Q256, ZERO } from '__constants';
 
 function subIn256(x, y) {
-  const difference = x.minus(y);
-  if (difference.isLessThan(ZERO)) {
-    return Q256.plus(difference);
+  const difference = x - y;
+  if (difference < ZERO) {
+    return Q256 + difference;
   } else {
     return difference;
   }

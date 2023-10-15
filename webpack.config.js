@@ -1,5 +1,9 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const loadEnv = require('./loadEnv');
+
+const envVars = loadEnv();
 
 module.exports = {
   entry: './src/index.js',
@@ -25,6 +29,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
+    new webpack.DefinePlugin(envVars),
   ],
   resolve: {
     alias: {
