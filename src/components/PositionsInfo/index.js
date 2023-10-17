@@ -3,11 +3,20 @@ import PropTypes from 'prop-types';
 
 import { WalletContext } from '__contexts/WalletContext';
 import ErrorsList from '__components/ErrorsList'
+import getPrice from '__services/getPrice';
 import fetchPositions from '__services/graph/fetchPositions';
 import Position from './Position'
 import './styles.css';
 
 const PositionsList = ({ positions }) => {
+  useEffect(() => {
+    const getData = async () => {
+      !positions.errors && await getPrice(positions)
+    }
+
+    getData()
+  }, [positions])
+
   return positions.errors
     ? <ErrorsList errors={positions.errors} />
     : <div data-testid='positions-list'>
@@ -25,6 +34,7 @@ const PositionsInfo = () => {
     if (address) {
       const fetchData = async () => {
         const positions = await fetchPositions(address);
+
         setPositions(positions)
       };
       fetchData();

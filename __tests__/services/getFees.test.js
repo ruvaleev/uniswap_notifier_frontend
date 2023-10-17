@@ -36,7 +36,7 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.072058684527202238', fees1: '139.847572053993502550'})
+      ).toEqual({fees0: '0.072058684527202062', fees1: '139.847572053993460216'})
     });
   })
 
@@ -74,7 +74,46 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.004617939679200672', fees1: '7.225428'})
+      ).toEqual({fees0: '0.004617939679200664', fees1: '7.225428'})
+    });
+  })
+
+  describe('when current tick is out of range', () => {
+    const liquidity = BigNumber('16649031368038418')
+    const feeGrowthGlobal0X128 = BigNumber('41587826366351661761787568234919597257287')
+    const feeGrowthGlobal1X128 = BigNumber('71207135789803872127732583284281')
+    const tickUpper = -202740
+    const tickLower = -202950
+    const feeGrowthOutside0X128Upper = BigNumber('23623927678635026405525201674516592214499') // of the upper tick of position
+    const feeGrowthOutside1X128Upper = BigNumber('41889215130226370061098949950347') // of the upper tick of position
+    const feeGrowthOutside0X128Lower = BigNumber('28138940083802386376225608139418141010216') // of the lower tick of position
+    const feeGrowthOutside1X128Lower = BigNumber('49574638000242573396812064032056') // of the lower tick of position
+    const feeGrowthInside0LastX128 = BigNumber('115792089237316195423570985008687907848111843853796435050067843230047949334441')
+    const feeGrowthInside1LastX128 = BigNumber('115792089237316195423570985008687907853269984656885367027568119608456871195988')
+    const tick = -202710
+    const decimals0 = 18
+    const decimals1 = 6
+
+    // TODO: Find the reason why it doesn't work and fix.
+    xit('returns properly calculated fees', () => {
+      expect(
+        getFees(
+          feeGrowthGlobal0X128,
+          feeGrowthGlobal1X128,
+          feeGrowthOutside0X128Lower,
+          feeGrowthOutside0X128Upper,
+          feeGrowthInside0LastX128,
+          feeGrowthOutside1X128Lower,
+          feeGrowthOutside1X128Upper,
+          feeGrowthInside1LastX128,
+          liquidity,
+          decimals0,
+          decimals1,
+          tickLower,
+          tickUpper,
+          tick
+        )
+      ).toEqual({fees0: '0.02962279', fees1: '49.0998560'})
     });
   })
 });

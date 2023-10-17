@@ -5,6 +5,13 @@ import PositionsInfo from '__components/PositionsInfo';
 import { WalletProvider } from '__contexts/WalletContext';
 import { ethereumMock } from '__mocks/ethereumMock';
 import positionsFixture from '__mocks/fixtures/positions/response200success.json';
+import pricesFixture from '__mocks/fixtures/prices/success.json';
+
+global.fetch = jest.fn(() => Promise.resolve({
+  json: () => pricesFixture,
+  status: 200,
+  ok: true
+}));
 
 function mockFetchPositions() {
   return jest.fn(() => Promise.resolve(positionsFixture.data.positions));
@@ -13,7 +20,6 @@ function mockFetchPositions() {
 jest.mock('__services/graph/fetchPositions', () => mockFetchPositions());
 
 import fetchPositions from '__services/graph/fetchPositions';
-
 
 import { poolMock } from '__mocks/poolMock';
 

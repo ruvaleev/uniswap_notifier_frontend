@@ -2,9 +2,9 @@ import BigNumber from 'bignumber.js';
 import { Q128, Q256, ZERO } from '__constants';
 
 function subIn256(x, y) {
-  const difference = x - y;
-  if (difference < ZERO) {
-    return Q256 + difference;
+  const difference = x.minus(y);
+  if (difference.lt(ZERO)) {
+    return Q256.plus(difference);
   } else {
     return difference;
   }
@@ -30,6 +30,8 @@ function getFees(
   let tickLowerFeeGrowthBelow_1 = ZERO;
   let tickUpperFeeGrowthAbove_0 = ZERO;
   let tickUpperFeeGrowthAbove_1 = ZERO;
+  let decimals_0 = Number(decimals0);
+  let decimals_1 = Number(decimals1);
 
   if (tickCurrent >= tickUpper){
     tickUpperFeeGrowthAbove_0 = subIn256(feeGrowthGlobal_0, tickUpperFeeGrowthOutside_0);
@@ -47,16 +49,17 @@ function getFees(
     tickLowerFeeGrowthBelow_1 = subIn256(feeGrowthGlobal_1, tickLowerFeeGrowthOutside_1);
   }
 
-  let fr_t1_0 = subIn256(subIn256(feeGrowthGlobal_0, tickLowerFeeGrowthBelow_0), tickUpperFeeGrowthAbove_0);
-  let fr_t1_1 = subIn256(subIn256(feeGrowthGlobal_1, tickLowerFeeGrowthBelow_1), tickUpperFeeGrowthAbove_1);
+  const fr_t1_0 = subIn256(subIn256(feeGrowthGlobal_0, tickLowerFeeGrowthBelow_0), tickUpperFeeGrowthAbove_0);
+  const fr_t1_1 = subIn256(subIn256(feeGrowthGlobal_1, tickLowerFeeGrowthBelow_1), tickUpperFeeGrowthAbove_1);
+  const resGrowthFees0 = subIn256(fr_t1_0, feeGrowthInsideLast_0)
+  const resGrowthFees1 = subIn256(fr_t1_1, feeGrowthInsideLast_1)
+  const uncollectedFees_0 = liquidity.multipliedBy(resGrowthFees0).dividedBy(Q128);
+  const uncollectedFees_1 = liquidity.multipliedBy(resGrowthFees1).dividedBy(Q128);
+  const precision0 = toBigNumber(10**decimals_0);
+  const precision1 = toBigNumber(10**decimals_1);
 
-  // The final calculations uncollected fees formula
-  let uncollectedFees_0 = (liquidity * subIn256(fr_t1_0, feeGrowthInsideLast_0)) / Q128;
-  let uncollectedFees_1 = (liquidity * subIn256(fr_t1_1, feeGrowthInsideLast_1)) / Q128;
-
-  // Decimal adjustment to get final results
-  let uncollectedFeesAdjusted_0 = (uncollectedFees_0 / toBigNumber(10**decimals0)).toFixed(decimals0);
-  let uncollectedFeesAdjusted_1 = (uncollectedFees_1 / toBigNumber(10**decimals1)).toFixed(decimals1);
+  let uncollectedFeesAdjusted_0 = (uncollectedFees_0.dividedBy(precision0)).toFixed(decimals_0);
+  let uncollectedFeesAdjusted_1 = (uncollectedFees_1.dividedBy(precision1)).toFixed(decimals_1);
 
   return {fees0: uncollectedFeesAdjusted_0, fees1: uncollectedFeesAdjusted_1}
 }

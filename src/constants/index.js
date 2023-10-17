@@ -1,3 +1,12 @@
+import BigNumber from "bignumber.js";
+
+export const COINGECKO_CURRENCIES = {
+  'ARB': 'arbitrum',
+  'USDC': 'usd-coin',
+  'USDT': 'tether',
+  'WETH': 'ethereum',
+}
+
 export const NETWORK_PARAMS = {
   arbitrum: {
     chainId: '0xa4b1',
@@ -37,7 +46,7 @@ export const POSITIONS_FIELDS = [
 ].join(' ');
 
 export const PRICE_PRECISION = 18;
-export const Q96 = Math.pow(2, 96);
-export const Q128 = Math.pow(2, 128);
-export const Q256 = Math.pow(2, 256);
-export const ZERO = 0;
+export const Q96 = BigNumber(Math.pow(2, 96));
+export const Q128 = BigNumber(Math.pow(2, 128));
+export const Q256 = BigNumber(Math.pow(2, 256));
+export const ZERO = BigNumber(0);
