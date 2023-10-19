@@ -1,4 +1,5 @@
 const path = require('path');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const loadEnv = require('./loadEnv');
@@ -26,6 +27,7 @@ module.exports = {
     path: __dirname + '/dist',
   },
   plugins: [
+    new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
@@ -36,6 +38,7 @@ module.exports = {
       '__components': path.resolve(__dirname, 'src/components'),
       '__constants': path.resolve(__dirname, 'src/constants'),
       '__contexts': path.resolve(__dirname, 'src/contexts'),
+      '__helpers': path.resolve(__dirname, 'src/helpers'),
       '__mocks': path.resolve(__dirname, '__mocks__'),
       '__services': path.resolve(__dirname, 'src/services'),
       '__src': path.resolve(__dirname, 'src'),

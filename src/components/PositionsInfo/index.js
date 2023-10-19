@@ -2,33 +2,16 @@ import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { WalletContext } from '__contexts/WalletContext';
-import ErrorsList from '__components/ErrorsList'
 import getPrice from '__services/getPrice';
 import fetchPositions from '__services/graph/fetchPositions';
-import Position from './Position'
+import PositionsList from './PositionsList';
+import PricesList from './PricesList';
 import './styles.css';
-
-const PositionsList = ({ positions }) => {
-  useEffect(() => {
-    const getData = async () => {
-      !positions.errors && await getPrice(positions)
-    }
-
-    getData()
-  }, [positions])
-
-  return positions.errors
-    ? <ErrorsList errors={positions.errors} />
-    : <div data-testid='positions-list'>
-        {positions && positions.map((position) => (
-          <Position key={position.id} position={position} />
-        ))}
-      </div>
-}
 
 const PositionsInfo = () => {
   const { address } = useContext(WalletContext);
   const [positions, setPositions] = useState([]);
+  const [prices, setPrices] = useState({});
 
   useEffect(() => {
     if (address) {
@@ -42,8 +25,24 @@ const PositionsInfo = () => {
     }
   }, [address]);
 
+  useEffect(() => {
+    async function getData() {
+      if (!positions.errors) {
+        const tokens = positions.map((pos) => [pos.token0.symbol, pos.token1.symbol]).flat()
+
+        const prices = await getPrice(tokens);
+        setPrices(prices);
+      }
+    }
+    getData()
+  }, [positions])
+
   return address
-    ? <PositionsList positions={positions} />
+    ?
+      <>
+        <PricesList prices={prices} />
+        <PositionsList positions={positions} prices={prices} />
+      </>
     : <div>Connect wallet</div>;
 };
 

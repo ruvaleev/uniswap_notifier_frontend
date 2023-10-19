@@ -1,5 +1,5 @@
 import React from 'react';
-import { screen, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 
 import App from '__src/App';
 import { NETWORK_PARAMS } from '__constants';
@@ -13,8 +13,10 @@ jest.mock('__services/graph/fetchPositions', () => mockFetchPositions());
 
 
 describe('when Metamask extension is not installed', () => {
-  it('suggests to install Metamask', () => {
-    render(<App />);
+  it('suggests to install Metamask', async () => {
+    await act(async () => {
+      render(<App />);
+    })
     const metamaskLink = screen.getByText('MetaMask')
     expect(metamaskLink).toBeInTheDocument();
     expect(metamaskLink).toHaveAttribute('href', 'https://metamask.io/download');

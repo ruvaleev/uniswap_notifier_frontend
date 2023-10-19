@@ -9,6 +9,9 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended"
   ],
+  "ignorePatterns": [
+    "dist/", "node_modules/"
+  ],
   "overrides": [
   ],
   "parserOptions": {

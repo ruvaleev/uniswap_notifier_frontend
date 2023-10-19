@@ -1,51 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import BigNumber from 'bignumber.js';
 
-import getFees from '__services/getFees';
-import getPool from '__services/getPool';
+import moneyFormat from '__helpers/moneyFormat';
 
-const FeesInfo = ({position}) => {
-  const [fees, setFees] = useState({});
-
-  useEffect(() => {
-    async function fetchData() {
-      const res = await getPool(position.pool.id, position.tickLower, position.tickUpper)
-      const fees = getFees(
-        BigNumber(res.feeGrowthGlobal0X128.toString()),
-        BigNumber(res.feeGrowthGlobal1X128.toString()),
-        BigNumber(res.lowTickFeeGrowthOutside0X128.toString()),
-        BigNumber(res.highTickFeeGrowthOutside0X128.toString()),
-        BigNumber(position.feeGrowthInside0LastX128),
-        BigNumber(res.lowTickFeeGrowthOutside1X128.toString()),
-        BigNumber(res.highTickFeeGrowthOutside1X128.toString()),
-        BigNumber(position.feeGrowthInside1LastX128),
-        BigNumber(position.liquidity),
-        position.token0.decimals,
-        position.token1.decimals,
-        Number(position.tickLower),
-        Number(position.tickUpper),
-        Number(position.pool.tick)
-      )
-
-      setFees(fees)
-    }
-    fetchData()
-  }, []);
-
-
-
+const FeesInfo = ({token0, token1, fees0, fees1, usdFees0, usdFees1}) => {
   return (
     <>
-      <div className="grid-item">Earned Fees:</div>
-      {
-        Object.keys(fees).length === 0
-        ? <div className="grid-item">No info</div>
-        : <>
-            <div className="grid-item">{fees.fees0} of {position.token0.symbol}</div>
-            <div className="grid-item">{fees.fees1} of {position.token1.symbol}</div>
-          </>
-      }
+      <div className="grid-item">{fees0} of {token0} ({moneyFormat(usdFees0)})</div>
+      <div className="grid-item">{fees1} of {token1} ({moneyFormat(usdFees1)})</div>
+      <div className="grid-item">Total fees: {moneyFormat(usdFees0 + usdFees1)}</div>
     </>
   )
 };
@@ -53,5 +16,16 @@ const FeesInfo = ({position}) => {
 export default FeesInfo;
 
 FeesInfo.propTypes = {
-  position: PropTypes.object.isRequired
+  token0: PropTypes.string.isRequired,
+  token1: PropTypes.string.isRequired,
+  fees0: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired,
+  fees1: PropTypes.oneOfType([
+    PropTypes.number,
+    PropTypes.string
+  ]).isRequired,
+  usdFees0: PropTypes.number.isRequired,
+  usdFees1: PropTypes.number.isRequired,
 }
