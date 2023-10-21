@@ -78,6 +78,12 @@ describe('PositionsInfo', () => {
         positionsFixture.data.positions.forEach((position) => {
           expect(screen.getByText(position.id)).toBeInTheDocument();
         })
+
+        expect(screen.getByText('Total Portfolio Value: $38363.53')).toBeInTheDocument();
+        expect(screen.getByText('Total Fees: $2226027789375424200000000000000000000000000.00')).toBeInTheDocument();
+        expect(screen.getByText('ARB: $0.920302')).toBeInTheDocument();
+        expect(screen.getByText('USDC: $0.998581')).toBeInTheDocument();
+        expect(screen.getByText('WETH: $1699.14')).toBeInTheDocument();
       })
     })
 

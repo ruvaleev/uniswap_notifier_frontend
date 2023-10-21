@@ -9,6 +9,7 @@ import getPrice from '__services/getPrice';
 import getTokenAmounts from '__services/getTokenAmounts';
 import sqrtPriceToReadablePrices from '__services/sqrtPriceToReadablePrices';
 import fetchPositions from '__services/graph/fetchPositions';
+import Dashboard from './Dashboard';
 import PositionsList from './PositionsList';
 import PricesList from './PricesList';
 import './styles.css';
@@ -115,6 +116,7 @@ const PositionsInfo = () => {
   return address
     ?
       <>
+        <Dashboard positions={positions} />
         <PricesList prices={prices} />
         <PositionsList positions={positions} />
       </>

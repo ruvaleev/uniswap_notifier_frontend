@@ -7,9 +7,9 @@ const PricesList = ({ prices }) => {
   return (
     <div data-testid='prices-list'>
       {
-        Object.keys(prices).map((cur) => {
+        Object.keys(prices).map((cur) => (
           <PricesInfo key={cur} currency={cur} price={prices[cur]}/>
-        })
+        ))
       }
     </div>
   )
