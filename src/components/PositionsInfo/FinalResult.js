@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 
 import moneyFormat from '__helpers/moneyFormat';
 
-const FinalResult = ({ totalValueWithFeesUsd, totalHoldUsd }) => {
+const FinalResult = ({ position }) => {
+  const totalValueWithFeesUsd = position.totalUsdValue + position.token0.usdFees + position.token1.usdFees
+  const totalHoldUsd = position.token0.holdUsdValue + position.token1.holdUsdValue
   const totalEarnedConsideringIlUsd = totalValueWithFeesUsd - totalHoldUsd
   const totalEarnedConsideringIlPercentage = (totalEarnedConsideringIlUsd / totalHoldUsd) * 100
   return (
@@ -18,6 +20,5 @@ const FinalResult = ({ totalValueWithFeesUsd, totalHoldUsd }) => {
 export default FinalResult;
 
 FinalResult.propTypes = {
-  totalValueWithFeesUsd: PropTypes.number.isRequired,
-  totalHoldUsd: PropTypes.number.isRequired,
+  position: PropTypes.object.isRequired,
 }

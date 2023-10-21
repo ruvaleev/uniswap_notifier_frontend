@@ -3,12 +3,12 @@ import PropTypes from 'prop-types';
 
 import moneyFormat from '__helpers/moneyFormat';
 
-const FeesInfo = ({token0, token1, fees0, fees1, usdFees0, usdFees1}) => {
+const FeesInfo = ({token0, token1}) => {
   return (
-    <>
-      <div className="grid-item">{fees0} of {token0} ({moneyFormat(usdFees0)})</div>
-      <div className="grid-item">{fees1} of {token1} ({moneyFormat(usdFees1)})</div>
-      <div className="grid-item">Total fees: {moneyFormat(usdFees0 + usdFees1)}</div>
+    token0.fees && <>
+      <div className="grid-item">{token0.fees} of {token0.symbol} ({moneyFormat(token0.usdFees)})</div>
+      <div className="grid-item">{token1.fees} of {token1.symbol} ({moneyFormat(token1.usdFees)})</div>
+      <div className="grid-item">Total fees: {moneyFormat(token0.usdFees + token1.usdFees)}</div>
     </>
   )
 };
@@ -16,16 +16,6 @@ const FeesInfo = ({token0, token1, fees0, fees1, usdFees0, usdFees1}) => {
 export default FeesInfo;
 
 FeesInfo.propTypes = {
-  token0: PropTypes.string.isRequired,
-  token1: PropTypes.string.isRequired,
-  fees0: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]).isRequired,
-  fees1: PropTypes.oneOfType([
-    PropTypes.number,
-    PropTypes.string
-  ]).isRequired,
-  usdFees0: PropTypes.number.isRequired,
-  usdFees1: PropTypes.number.isRequired,
+  token0: PropTypes.object.isRequired,
+  token1: PropTypes.object.isRequired,
 }

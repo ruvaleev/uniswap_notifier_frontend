@@ -3,17 +3,18 @@ import PropTypes from 'prop-types';
 
 import moneyFormat from '__helpers/moneyFormat';
 
-const CommonInfo = ({ id, token0, token1, amount0, amount1, price0, price1, usdAmount0, usdAmount1 }) => {
-  const totalValue = usdAmount0 + usdAmount1
+const CommonInfo = ({ position }) => {
+  const t0 = position.token0
+  const t1 = position.token1
   return (
     <>
-      <div className="grid-item">{id}</div>
-      <div className="grid-item">1 {token0} costs {price1} of {token1}</div>
-      <div className="grid-item">1 {token1} costs {price0} of {token0}</div>
+      <div className="grid-item">{position.id}</div>
+      <div className="grid-item">1 {t0.symbol} costs {t1.price} of {t1.symbol}</div>
+      <div className="grid-item">1 {t1.symbol} costs {t0.price} of {t0.symbol}</div>
       <div className="grid-item">Position has:</div>
-      <div className="grid-item">{amount0} of {token0} ({moneyFormat(usdAmount0)})</div>
-      <div className="grid-item">{amount1} of {token1} ({moneyFormat(usdAmount1)})</div>
-      <div className="grid-item">Total value: {moneyFormat(totalValue)}</div>
+      <div className="grid-item">{t0.amount} of {t0.symbol} ({moneyFormat(t0.usdValue)})</div>
+      <div className="grid-item">{t1.amount} of {t1.symbol} ({moneyFormat(t1.usdValue)})</div>
+      <div className="grid-item">Total value: {moneyFormat(position.totalUsdValue)}</div>
     </>
   )
 };
@@ -21,13 +22,5 @@ const CommonInfo = ({ id, token0, token1, amount0, amount1, price0, price1, usdA
 export default CommonInfo;
 
 CommonInfo.propTypes = {
-  id: PropTypes.string.isRequired,
-  token0: PropTypes.string.isRequired,
-  token1: PropTypes.string.isRequired,
-  amount0: PropTypes.number.isRequired,
-  amount1: PropTypes.number.isRequired,
-  price0: PropTypes.string.isRequired,
-  price1: PropTypes.string.isRequired,
-  usdAmount0: PropTypes.number.isRequired,
-  usdAmount1: PropTypes.number.isRequired,
+  position: PropTypes.object.isRequired,
 }
