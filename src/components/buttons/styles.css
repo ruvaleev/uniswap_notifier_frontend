@@ -1,0 +1,9 @@
+.connect-button {
+  background-color: #6e63e8;
+  color: inherit;
+  padding: 0.5em 1em;
+  cursor: pointer;
+  border-color: #5e57bc;
+  position: absolute;
+  right: 1em;
+}

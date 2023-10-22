@@ -12,7 +12,6 @@ import fetchPositions from '__services/graph/fetchPositions';
 import Dashboard from './Dashboard';
 import PositionsList from './PositionsList';
 import PricesList from './PricesList';
-import './styles.css';
 
 const enrichPosition = async (position, prices) => {
   const poolData = await getPool(position.pool.id, position.tickLower, position.tickUpper)

@@ -9,11 +9,17 @@ const FinalResult = ({ position }) => {
   const totalEarnedConsideringIlUsd = totalValueWithFeesUsd - totalHoldUsd
   const totalEarnedConsideringIlPercentage = (totalEarnedConsideringIlUsd / totalHoldUsd) * 100
   return (
-    <>
-      <div className="grid-item">Final result:</div>
-      <div className="grid-item">Total Profit considering IL: {moneyFormat(totalEarnedConsideringIlUsd)}</div>
-      <div className="grid-item">Total Profit %: {totalEarnedConsideringIlPercentage.toFixed(4)}</div>
-    </>
+    <div className="grid-item leading-4 my-2">
+      <div className="grid-item secondary text-sm">Final result:</div>
+      <div className="grid-item">
+        <span className="leading-4 secondary text-sm">Total Profit considering IL: </span>
+        <span className="leading-4 primary text-base">{moneyFormat(totalEarnedConsideringIlUsd)}</span>
+      </div>
+      <div className="grid-item">
+        <span className="leading-4 secondary text-sm">Total Profit %: </span>
+        <span className="leading-4 primary text-base">{totalEarnedConsideringIlPercentage.toFixed(4)}%</span>
+      </div>
+    </div>
   )
 };
 

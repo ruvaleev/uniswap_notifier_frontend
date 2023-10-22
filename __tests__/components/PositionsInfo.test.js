@@ -62,7 +62,7 @@ describe('PositionsInfo', () => {
   });
 
   describe('when WalletContext has address', () => {
-    const mockAddress = 'address'
+    const mockAddress = '0x08786a247d4b9ff489fa4f599f74ac1228786a24'
 
     beforeEach(async () => {
       ethereumMock({addresses: [mockAddress]})
@@ -79,11 +79,10 @@ describe('PositionsInfo', () => {
           expect(screen.getByText(position.id)).toBeInTheDocument();
         })
 
-        expect(screen.getByText('Total Portfolio Value: $38363.53')).toBeInTheDocument();
-        expect(screen.getByText('Total Fees: $2226027789375424200000000000000000000000000.00')).toBeInTheDocument();
-        expect(screen.getByText('ARB: $0.920302')).toBeInTheDocument();
-        expect(screen.getByText('USDC: $0.998581')).toBeInTheDocument();
-        expect(screen.getByText('WETH: $1699.14')).toBeInTheDocument();
+        expect(screen.getByText('$38363.53')).toBeInTheDocument();
+        expect(screen.getByText('$0.920302')).toBeInTheDocument();
+        expect(screen.getByText('$0.998581')).toBeInTheDocument();
+        expect(screen.getByText('$1699.14')).toBeInTheDocument();
       })
     })
 

@@ -25,4 +25,12 @@ describe('moneyFormat', () => {
       expect(moneyFormat(input)).toEqual('$140.12')
     })
   })
+
+  describe('when input is undefined', () => {
+    const input = undefined;
+
+    it('returns proper string representation of provided value with proper precision', () => {
+      expect(moneyFormat(input)).toEqual(' ... ')
+    })
+  })
 });

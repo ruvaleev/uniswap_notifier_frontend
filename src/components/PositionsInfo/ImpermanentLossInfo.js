@@ -12,18 +12,44 @@ const ImpermanentLossInfo = ({ position }) => {
   const depositedUsd = BigNumber(position.amountDepositedUSD)
   const impermanentLossPercentage = (impermanentLossUsd / depositedUsd) * 100
   return (
-    position.token0.initialAmount && <>
-      <div className="grid-item">Impremanent Loss info:</div>
-      <div className="grid-item">Initial position consisted from:</div>
-      <div className="grid-item">{t0.initialAmount.toFixed(8)} of {t0.initialAmount.symbol}</div>
-      <div className="grid-item">{t1.initialAmount.toFixed(8)} of {t1.initialAmount.symbol}</div>
-      <div className="grid-item">Initial position cost: {moneyFormat(depositedUsd)}</div>
-      <div className="grid-item">{t0.symbol} current amount if hold: {moneyFormat(t0.holdUsdValue)}</div>
-      <div className="grid-item">{t1.symbol} current amount if hold: {moneyFormat(t1.holdUsdValue)}</div>
-      <div className="grid-item">Total value with hold would be: {moneyFormat(totalHoldAmountUsd)}</div>
-      <div className="grid-item">Impermanent Loss USD: {moneyFormat(impermanentLossUsd)}</div>
-      <div className="grid-item">Impermanent Loss: {impermanentLossPercentage.toFixed(4)}%</div>
-    </>
+    position.token0.initialAmount &&
+      <div className="grid-item leading-4 my-2">
+        <div className="grid-item mb-2 secondary text-sm">Impremanent Loss info:</div>
+        <div className="grid-item secondary text-sm">Initial position proportion:</div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
+          <span className="leading-4 primary text-base">{t0.initialAmount.toFixed(8)}</span>
+        </div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">{t1.symbol}: </span>
+          <span className="leading-4 primary text-base">{t1.initialAmount.toFixed(8)}</span>
+        </div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">Initial position cost: </span>
+          <span className="leading-4 primary text-base">{moneyFormat(depositedUsd)}</span>
+        </div>
+        <div className="grid-item mt-2 secondary text-sm">With hold strategy current USD amounts would be:</div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
+          <span className="leading-4 primary text-base">{moneyFormat(t0.holdUsdValue)}</span>
+        </div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">{t1.symbol}: </span>
+          <span className="leading-4 primary text-base">{moneyFormat(t1.holdUsdValue)}</span>
+        </div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">Total value: </span>
+          <span className="leading-4 primary text-base">{moneyFormat(totalHoldAmountUsd)}</span>
+        </div>
+        <div className="grid-item mt-2">
+          <span className="leading-4 secondary text-sm">Impermanent Loss USD: </span>
+          <span className="leading-4 primary text-base">{moneyFormat(impermanentLossUsd)}</span>
+        </div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">Impermanent Loss: </span>
+          <span className="leading-4 primary text-base">{impermanentLossPercentage.toFixed(4)}%</span>
+        </div>
+      </div>
   )
 };
 

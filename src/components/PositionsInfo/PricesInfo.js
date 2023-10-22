@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const PricesInfo = ({ currency, price }) => {
-  return <div>{currency}: ${price}</div>
+  return (
+    <div className="grid-item mr-2 text-xs">
+      <span className="secondary">{currency}: </span>
+      <span className="primary">${price}</span>
+    </div>
+  )
 };
 
 export default PricesInfo;

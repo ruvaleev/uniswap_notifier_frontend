@@ -7,7 +7,6 @@ function Main() {
   return (
     <>
       <ConnectButton/>
-      <div>Hello, world! Hey hey!</div>
       <PositionsInfo/>
     </>
   );

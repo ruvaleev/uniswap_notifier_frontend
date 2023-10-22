@@ -8,13 +8,24 @@ const CommonInfo = ({ position }) => {
   const t1 = position.token1
   return (
     <>
-      <div className="grid-item">{position.id}</div>
-      <div className="grid-item">1 {t0.symbol} costs {t1.price} of {t1.symbol}</div>
-      <div className="grid-item">1 {t1.symbol} costs {t0.price} of {t0.symbol}</div>
-      <div className="grid-item">Position has:</div>
-      <div className="grid-item">{t0.amount} of {t0.symbol} ({moneyFormat(t0.usdValue)})</div>
-      <div className="grid-item">{t1.amount} of {t1.symbol} ({moneyFormat(t1.usdValue)})</div>
-      <div className="grid-item">Total value: {moneyFormat(position.totalUsdValue)}</div>
+      <div className="grid-item">
+        <div className="grid-item secondary">{position.id}</div>
+        <div className="grid-item secondary text-xs">1 {t0.symbol} costs {t1.price} of {t1.symbol}</div>
+        <div className="grid-item secondary text-xs">1 {t1.symbol} costs {t0.price} of {t0.symbol}</div>
+      </div>
+      <div className="grid-item leading-4 my-2">
+        <div className="grid-item secondary text-sm">Position has:</div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
+          <span className="leading-4 primary text-base">{t0.amount}</span>
+          <span className="leading-4 secondary text-sm"> ({moneyFormat(t0.usdValue)})</span>
+        </div>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">{t1.symbol}: </span>
+          <span className="leading-4 primary text-base">{t1.amount}</span>
+          <span className="leading-4 secondary text-sm"> ({moneyFormat(t1.usdValue)})</span>
+        </div>
+      </div>
     </>
   )
 };

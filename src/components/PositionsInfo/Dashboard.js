@@ -10,10 +10,15 @@ const Dashboard = ({positions}) => {
   const totalFees = positions.reduce((acc, pos) => acc + pos.token0.usdFees + pos.token1.usdFees, 0);
 
   return (
-    <div className="grid-container">
-      <div className="grid-item">Dashboard:</div>
-      <div className="grid-item">Total Portfolio Value: {moneyFormat(totalValue)}</div>
-      <div className="grid-item">Total Fees: {moneyFormat(totalFees)}</div>
+    <div className="grid-container" data-testid='dashboard'>
+      <div className="grid-item">
+        <span className="secondary text-sm">Total Portfolio Value (fees not included): </span>
+        <span className="primary text-base">{moneyFormat(totalValue)}</span>
+      </div>
+      <div className="grid-item">
+        <span className="secondary text-sm">Total Fees: </span>
+        <span className="primary text-base">{moneyFormat(totalFees)}</span>
+      </div>
     </div>
   )
 }

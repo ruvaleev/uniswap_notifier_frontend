@@ -47,7 +47,7 @@ describe('when Metamask extension is installed', () => {
       render(<App />);
       await waitFor(() => {
         expect(ethereumRequestMock.mock.calls).toEqual([[{method: 'eth_requestAccounts'}]]);
-        const textElement = screen.getByText('0x1234567890');
+        const textElement = screen.getByText('0x1234...7890');
         expect(textElement).toBeInTheDocument();
         const positionsList = screen.getByTestId('positions-list');
         expect(positionsList).toBeInTheDocument();

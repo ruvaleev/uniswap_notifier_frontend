@@ -7,7 +7,7 @@ import Position from './Position'
 const PositionsList = ({ positions, prices }) => {
   return positions.errors
     ? <ErrorsList errors={positions.errors} />
-    : <div data-testid='positions-list'>
+    : <div className='text-base' data-testid='positions-list'>
         {positions && positions.map((position) => (
           <Position key={position.id} position={position} prices={prices} />
         ))}
