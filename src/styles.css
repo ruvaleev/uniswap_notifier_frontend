@@ -4,6 +4,11 @@ body {
   font-family: sans-serif;
 }
 
+.current-tick {
+  background-color: #7367f0;
+  border-radius: 0.5rem 0 0 0.5rem;
+}
+
 .flex {
   display: flex;
 }
@@ -35,6 +40,10 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.ml-2 {
+  margin-left: 0.5rem;
+}
+
 .mr-2 {
   margin-right: 0.5rem;
 }
@@ -48,6 +57,10 @@ body {
   margin-bottom: 0.5rem;
 }
 
+.primary {
+  color: #ffffff;
+}
+
 .relative {
   position: relative;
 }
@@ -56,12 +69,22 @@ body {
   border-radius: 0.75rem;
 }
 
-.secondary {
-  color: #959ebf;
+.scale {
+  flex-grow: 1;
+  height: 0.5rem;
+  display: flex;
+  background-color: #3e4460;
+  border-radius: 0.5rem;
 }
 
-.primary {
-  color: #ffffff;
+.scale-wrapper {
+  display: flex;
+  align-items: center;
+  width: 90%;
+}
+
+.secondary {
+  color: #959ebf;
 }
 
 .text-base {
@@ -81,4 +104,14 @@ body {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
+}
+
+.token {
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {  /* Adjust the breakpoint as needed */
+  .scale-wrapper {
+    width: 50%;
+  }
 }

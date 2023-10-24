@@ -3,9 +3,28 @@ import PropTypes from 'prop-types';
 
 import moneyFormat from '__helpers/moneyFormat';
 
+const ProportionsScale = ({token0, token1, share0}) => {
+  const scaleStyle = {
+    width: `${share0}%`
+  };
+
+  return (
+    <div className="grid-item scale-wrapper">
+      <div className="token token-left secondary mr-2">{token0}</div>
+      <div className="scale">
+        <div className="current-tick" style={scaleStyle}></div>
+      </div>
+      <div className="token token-right secondary ml-2">{token1}</div>
+    </div>
+  )
+}
+
 const CommonInfo = ({ position }) => {
   const t0 = position.token0
   const t1 = position.token1
+  const totalUsdValue = t0.usdValue + t1.usdValue
+  const share0 = 100 * t0.usdValue / totalUsdValue
+  const share1 = 100 * t1.usdValue / totalUsdValue
   return (
     <>
       <div className="grid-item">
@@ -18,12 +37,17 @@ const CommonInfo = ({ position }) => {
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
           <span className="leading-4 primary text-base">{t0.amount}</span>
-          <span className="leading-4 secondary text-sm"> ({moneyFormat(t0.usdValue)})</span>
+          <span className="leading-4 secondary text-sm"> ({moneyFormat(t0.usdValue)}) - {share0.toFixed(2)}%</span>
         </div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{t1.symbol}: </span>
           <span className="leading-4 primary text-base">{t1.amount}</span>
-          <span className="leading-4 secondary text-sm"> ({moneyFormat(t1.usdValue)})</span>
+          <span className="leading-4 secondary text-sm"> ({moneyFormat(t1.usdValue)}) - {share1.toFixed(2)}%</span>
+        </div>
+        <ProportionsScale token0={t0.symbol} token1={t1.symbol} share0={share0}/>
+        <div className="grid-item">
+          <span className="leading-4 secondary text-sm">Total USD value (No Fees): </span>
+          <span className="leading-4 primary text-base">{moneyFormat(totalUsdValue)}</span>
         </div>
       </div>
     </>
@@ -34,4 +58,10 @@ export default CommonInfo;
 
 CommonInfo.propTypes = {
   position: PropTypes.object.isRequired,
+}
+
+ProportionsScale.propTypes = {
+  token0: PropTypes.string.isRequired,
+  token1: PropTypes.string.isRequired,
+  share0: PropTypes.number.isRequired,
 }
