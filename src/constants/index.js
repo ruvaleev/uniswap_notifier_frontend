@@ -4,6 +4,7 @@ export const COINGECKO_CURRENCIES = {
   'ARB': 'arbitrum',
   'USDC': 'usd-coin',
   'USDT': 'tether',
+  'WBTC': 'wrapped-bitcoin',
   'WETH': 'ethereum',
 }
 
@@ -20,6 +21,8 @@ export const NETWORK_PARAMS = {
     blockExplorerUrls: ['https://arbiscan.io'],
   }
 };
+
+export const POSITION_MANAGER_CONTRACT = '0xc36442b4a4522e871399cd717abdd847ab11fe88';
 
 export const POSITIONS_FIELDS = [
   'amountCollectedUSD',
