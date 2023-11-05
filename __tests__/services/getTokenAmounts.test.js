@@ -20,7 +20,7 @@ describe('getTokenAmounts', () => {
           decimal0,
           decimal1,
         )
-      ).toEqual({amount0: 0, amount1: 0.009999999999987420})
+      ).toEqual({amount0: BigNumber(0), amount1: BigNumber(0.009999999999987420)})
     });
   })
 
@@ -42,7 +42,7 @@ describe('getTokenAmounts', () => {
           decimal0,
           decimal1,
         )
-      ).toEqual({amount0: 0, amount1: 0.009999999999987420})
+      ).toEqual({amount0: BigNumber(0), amount1: BigNumber(0.009999999999987420)})
     });
   })
 
@@ -64,7 +64,7 @@ describe('getTokenAmounts', () => {
           decimal0,
           decimal1,
         )
-      ).toEqual({amount0: 0.000000000042470714, amount1: 0})
+      ).toEqual({amount0: BigNumber(0.000000000042470714), amount1: BigNumber(0)})
     });
   })
 });

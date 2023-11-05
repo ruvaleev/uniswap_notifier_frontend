@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import BigNumber from 'bignumber.js';
 
 import { WalletContext } from '__contexts/WalletContext';
+import getEvents from '__services/getEvents';
 import getFees from '__services/getFees';
 import getPool from '__services/getPool';
 import getPrice from '__services/getPrice';
@@ -46,35 +47,53 @@ const enrichPosition = async (position, prices) => {
     position.token1.decimals
   )
 
-  const enrichTokenInfo = ({ tokenInfo, amount, initialAmount, fees, price, usdPrice }) => {
+  const totalLiquidity = (collection) => (
+    collection.reduce((acc, pos) => acc.plus(BigNumber(pos.liquidity)), BigNumber(0))
+  );
+
+  const enrichTokenInfo = ({ tokenInfo, amount, initialAmount, fees, price, usdPrice, increasesEvents, decreasesEvents }) => {
+    const sortedIncreasesEvents = increasesEvents.sort((a, b) => a.blockNumber - b.blockNumber)
+    const initialLiquidity = BigNumber(sortedIncreasesEvents[0].liquidity)
+    const sumLiquidityIncreased = totalLiquidity(sortedIncreasesEvents.slice(1, sortedIncreasesEvents.length))
+    const sumLiquidityDecreased = totalLiquidity(decreasesEvents)
+    const totalLiquidityChangedBy = sumLiquidityIncreased.minus(sumLiquidityDecreased)
+    const liquidityChangedByPercent = totalLiquidityChangedBy.multipliedBy(100).dividedBy(initialLiquidity)
+    const currentAmountHold = initialAmount.plus(initialAmount.multipliedBy(liquidityChangedByPercent).dividedBy(100))
+
     tokenInfo.amount = amount,
     tokenInfo.initialAmount = initialAmount
     tokenInfo.fees = fees
     tokenInfo.price = price
     tokenInfo.usdPrice = usdPrice
-    tokenInfo.usdValue = amount * usdPrice
-    tokenInfo.usdFees = fees * usdPrice
-    tokenInfo.holdUsdValue = initialAmount * usdPrice
+    tokenInfo.usdValue = amount.multipliedBy(usdPrice)
+    tokenInfo.usdFees = fees.multipliedBy(usdPrice)
+    tokenInfo.holdUsdValue = currentAmountHold.multipliedBy(usdPrice)
   }
 
-  enrichTokenInfo({
-    tokenInfo: position.token0,
-    amount: amount0,
-    initialAmount: BigNumber(position.depositedToken0),
-    fees: fees.fees0,
-    price: price0,
-    usdPrice: prices[position.token0.symbol],
+  await getEvents(position.id, position.token0.decimals, position.token1.decimals).then((events) =>{
+    position.events = events
+    enrichTokenInfo({
+      tokenInfo: position.token0,
+      amount: amount0,
+      initialAmount: BigNumber(position.depositedToken0),
+      fees: fees.fees0,
+      price: price0,
+      usdPrice: prices[position.token0.symbol],
+      increasesEvents: position.events.liquidityIncreases,
+      decreasesEvents: position.events.liquidityDecreases,
+    });
+    enrichTokenInfo({
+      tokenInfo: position.token1,
+      amount: amount1,
+      initialAmount: BigNumber(position.depositedToken1),
+      fees: fees.fees1,
+      price: price1,
+      usdPrice: prices[position.token1.symbol],
+      increasesEvents: position.events.liquidityIncreases,
+      decreasesEvents: position.events.liquidityDecreases,
+    })
+    position.totalUsdValue = position.token0.usdValue.plus(position.token1.usdValue)
   })
-
-  enrichTokenInfo({
-    tokenInfo: position.token1,
-    amount: amount1,
-    initialAmount: BigNumber(position.depositedToken1),
-    fees: fees.fees1,
-    price: price1,
-    usdPrice: prices[position.token1.symbol],
-  })
-  position.totalUsdValue = position.token0.usdValue + position.token1.usdValue
 }
 
 const PositionsInfo = () => {

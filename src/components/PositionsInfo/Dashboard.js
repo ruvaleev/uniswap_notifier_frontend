@@ -1,13 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import BigNumber from 'bignumber.js';
 
 import moneyFormat from '__helpers/moneyFormat';
 
 const Dashboard = ({positions}) => {
   if (positions.errors) { return }
 
-  const totalValue = positions.reduce((acc, pos) => acc + pos.totalUsdValue, 0);
-  const totalFees = positions.reduce((acc, pos) => acc + pos.token0.usdFees + pos.token1.usdFees, 0);
+  const totalValue = positions.reduce((acc, pos) => acc.plus(pos.totalUsdValue), BigNumber(0));
+  const totalFees = positions.reduce((acc, pos) => acc.plus(pos.token0.usdFees?.plus(pos.token1.usdFees)), BigNumber(0));
 
   return (
     <div className="grid-container" data-testid='dashboard'>

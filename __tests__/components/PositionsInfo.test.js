@@ -76,15 +76,27 @@ describe('PositionsInfo', () => {
     });
 
     describe('when fetchPositions service returns successfull response', () => {
-      it('shows received info on the page', () => {
+      it('shows received info on the page', async () => {
         positionsFixture.data.positions.forEach((position) => {
           expect(screen.getByText(position.id)).toBeInTheDocument();
         })
 
-        expect(screen.getByText('$38363.53')).toBeInTheDocument();
-        expect(screen.getByText('$0.920302')).toBeInTheDocument();
-        expect(screen.getByText('$0.998581')).toBeInTheDocument();
-        expect(screen.getByText('$1699.14')).toBeInTheDocument();
+        await waitFor(() => {
+          // Common Info
+          expect(screen.getByText('$38363.53')).toBeInTheDocument();
+          expect(screen.getByText('$0.920302')).toBeInTheDocument();
+          expect(screen.getByText('$0.998581')).toBeInTheDocument();
+          expect(screen.getByText('$1699.14')).toBeInTheDocument();
+
+          // With hold strategy current USD amounts would be ->
+          expect(screen.getByText('$24.13')).toBeInTheDocument(); // WETH
+          expect(screen.getByText('$17966.56')).toBeInTheDocument(); // ARB
+          expect(screen.getByText('$17990.69')).toBeInTheDocument(); // Total
+
+          // Final result
+          expect(screen.getByText('$1431.40')).toBeInTheDocument(); // Total Profit considering IL
+          expect(screen.getByText('104.6547%')).toBeInTheDocument(); // Total Profit %
+        });
       })
     })
 

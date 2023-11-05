@@ -4,10 +4,13 @@ import PropTypes from 'prop-types';
 import moneyFormat from '__helpers/moneyFormat';
 
 const FinalResult = ({ position }) => {
-  const totalValueWithFeesUsd = position.totalUsdValue + position.token0.usdFees + position.token1.usdFees
-  const totalHoldUsd = position.token0.holdUsdValue + position.token1.holdUsdValue
-  const totalEarnedConsideringIlUsd = totalValueWithFeesUsd - totalHoldUsd
-  const totalEarnedConsideringIlPercentage = (totalEarnedConsideringIlUsd / totalHoldUsd) * 100
+  if (!position.totalUsdValue) { return }
+
+  const totalValueWithFeesUsd = position.totalUsdValue.plus(position.token0.usdFees).plus(position.token1.usdFees)
+  const totalHoldUsd = position.token0.holdUsdValue.plus(position.token1.holdUsdValue)
+  const totalEarnedConsideringIlUsd = totalValueWithFeesUsd.minus(totalHoldUsd)
+  const totalEarnedConsideringIlPercentage = totalEarnedConsideringIlUsd.multipliedBy(100).dividedBy(totalHoldUsd)
+
   return (
     <div className="grid-item leading-4 my-2">
       <div className="grid-item secondary text-sm">Final result:</div>

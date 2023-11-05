@@ -21,10 +21,14 @@ const ProportionsScale = ({token0, token1, share0}) => {
 
 const CommonInfo = ({ position }) => {
   const t0 = position.token0
+  if (!t0.usdValue) { return }
+
   const t1 = position.token1
-  const totalUsdValue = t0.usdValue + t1.usdValue
-  const share0 = 100 * t0.usdValue / totalUsdValue
-  const share1 = 100 * t1.usdValue / totalUsdValue
+
+  const totalUsdValue = t0.usdValue.plus(t1.usdValue)
+  const share0 = t0.usdValue.multipliedBy(100).dividedBy(totalUsdValue)
+  const share1 = t1.usdValue.multipliedBy(100).dividedBy(totalUsdValue)
+
   return (
     <>
       <div className="grid-item">
@@ -36,12 +40,12 @@ const CommonInfo = ({ position }) => {
         <div className="grid-item secondary text-sm">Position has:</div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
-          <span className="leading-4 primary text-base">{t0.amount}</span>
+          <span className="leading-4 primary text-base">{t0.amount.toFixed()}</span>
           <span className="leading-4 secondary text-sm"> ({moneyFormat(t0.usdValue)}) - {share0.toFixed(2)}%</span>
         </div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{t1.symbol}: </span>
-          <span className="leading-4 primary text-base">{t1.amount}</span>
+          <span className="leading-4 primary text-base">{t1.amount.toFixed()}</span>
           <span className="leading-4 secondary text-sm"> ({moneyFormat(t1.usdValue)}) - {share1.toFixed(2)}%</span>
         </div>
         <ProportionsScale token0={t0.symbol} token1={t1.symbol} share0={share0}/>
@@ -63,5 +67,5 @@ CommonInfo.propTypes = {
 ProportionsScale.propTypes = {
   token0: PropTypes.string.isRequired,
   token1: PropTypes.string.isRequired,
-  share0: PropTypes.number.isRequired,
+  share0: PropTypes.object.isRequired,
 }

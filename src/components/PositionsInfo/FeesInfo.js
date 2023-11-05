@@ -10,17 +10,17 @@ const FeesInfo = ({token0, token1}) => {
         <div className="grid-item secondary text-sm">Fees Earned:</div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{token0.symbol}: </span>
-          <span className="leading-4 primary text-base">{token0.fees}</span>
+          <span className="leading-4 primary text-base">{token0.fees.toFixed()}</span>
           <span className="leading-4 secondary text-sm"> ({moneyFormat(token0.usdFees)})</span>
         </div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{token1.symbol}: </span>
-          <span className="leading-4 primary text-base">{token1.fees}</span>
+          <span className="leading-4 primary text-base">{token1.fees.toFixed()}</span>
           <span className="leading-4 secondary text-sm"> ({moneyFormat(token1.usdFees)})</span>
         </div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">Total Fees: </span>
-          <span className="leading-4 secondary text-sm"> ({moneyFormat(token0.usdFees + token1.usdFees)})</span>
+          <span className="leading-4 secondary text-sm"> ({moneyFormat(token0.usdFees.plus(token1.usdFees))})</span>
         </div>
       </div>
   )

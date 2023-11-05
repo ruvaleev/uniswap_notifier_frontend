@@ -58,8 +58,8 @@ function getFees(
   const precision0 = toBigNumber(10**decimals_0);
   const precision1 = toBigNumber(10**decimals_1);
 
-  let uncollectedFeesAdjusted_0 = (uncollectedFees_0.dividedBy(precision0)).toFixed(decimals_0);
-  let uncollectedFeesAdjusted_1 = (uncollectedFees_1.dividedBy(precision1)).toFixed(decimals_1);
+  let uncollectedFeesAdjusted_0 = uncollectedFees_0.dividedBy(precision0).decimalPlaces(decimals_0);
+  let uncollectedFeesAdjusted_1 = uncollectedFees_1.dividedBy(precision1).decimalPlaces(decimals_1);
 
   return {fees0: uncollectedFeesAdjusted_0, fees1: uncollectedFeesAdjusted_1}
 }

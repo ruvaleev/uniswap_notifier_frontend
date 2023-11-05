@@ -36,7 +36,7 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.072058684527202062', fees1: '139.847572053993460216'})
+      ).toEqual({fees0: BigNumber('0.072058684527202062'), fees1: BigNumber('139.847572053993460216')})
     });
   })
 
@@ -74,7 +74,7 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.004617939679200664', fees1: '7.225428'})
+      ).toEqual({fees0: BigNumber('0.004617939679200664'), fees1: BigNumber('7.225428')})
     });
   })
 
@@ -113,7 +113,7 @@ describe('getFees', () => {
           tickUpper,
           tick
         )
-      ).toEqual({fees0: '0.02962279', fees1: '49.0998560'})
+      ).toEqual({fees0: BigNumber('0.02962279'), fees1: BigNumber('49.0998560')})
     });
   })
 });

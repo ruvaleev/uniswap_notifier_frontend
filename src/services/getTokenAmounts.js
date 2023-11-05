@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import { Q96 } from '__constants';
 
 const getTickAtSqrtPrice = (sqrtPriceX96) => (
@@ -25,8 +26,8 @@ function getTokenAmounts(liquidity, sqrtPriceX96, tickLow, tickHigh, decimal0, d
     amount1InDecimal = Math.floor(liquidity * (sqrtPrice - sqrtRatioA));
   }
 
-  let amount0 = Number((amount0InDecimal / Math.pow(10, decimal0)).toFixed(decimal0));
-  let amount1 = Number((amount1InDecimal / Math.pow(10, decimal1)).toFixed(decimal1));
+  let amount0 = BigNumber(amount0InDecimal).dividedBy(new BigNumber(10).pow(decimal0));
+  let amount1 = BigNumber(amount1InDecimal).dividedBy(new BigNumber(10).pow(decimal1));
 
   return { amount0, amount1 };
 }

@@ -7,10 +7,12 @@ import moneyFormat from '__helpers/moneyFormat';
 const ImpermanentLossInfo = ({ position }) => {
   const t0 = position.token0
   const t1 = position.token1
-  const totalHoldAmountUsd = t0.holdUsdValue + t1.holdUsdValue
-  const impermanentLossUsd = t0.holdUsdValue + t1.holdUsdValue - position.totalUsdValue
+  if (!(t0.holdUsdValue && t0.holdUsdValue)) { return }
+
+  const totalHoldAmountUsd = t0.holdUsdValue.plus(t1.holdUsdValue)
+  const impermanentLossUsd = t0.holdUsdValue.plus(t1.holdUsdValue).minus(position.totalUsdValue)
   const depositedUsd = BigNumber(position.amountDepositedUSD)
-  const impermanentLossPercentage = (impermanentLossUsd / depositedUsd) * 100
+  const impermanentLossPercentage = impermanentLossUsd.multipliedBy(100).dividedBy(depositedUsd)
   return (
     position.token0.initialAmount &&
       <div className="grid-item leading-4 my-2">
