@@ -4,17 +4,24 @@ import BigNumber from 'bignumber.js';
 
 import moneyFormat from '__helpers/moneyFormat';
 
+const WaitPleaseMessage = () => (
+  <div className="grid-item leading-4 my-2">
+    <div className="grid-item mt-2 secondary text-sm">Impremanent Loss info:</div>
+    <div className="grid-item secondary text-sm">Loading...</div>
+  </div>
+)
+
 const ImpermanentLossInfo = ({ position }) => {
   const t0 = position.token0
   const t1 = position.token1
-  if (!(t0.holdUsdValue && t0.holdUsdValue)) { return }
+  if (!(t0.holdUsdValue && t0.holdUsdValue)) { return <WaitPleaseMessage/> }
 
   const totalHoldAmountUsd = t0.holdUsdValue.plus(t1.holdUsdValue)
   const impermanentLossUsd = t0.holdUsdValue.plus(t1.holdUsdValue).minus(position.totalUsdValue)
   const depositedUsd = BigNumber(position.amountDepositedUSD)
-  const impermanentLossPercentage = impermanentLossUsd.multipliedBy(100).dividedBy(depositedUsd)
+  const impermanentLossPercentage = impermanentLossUsd.multipliedBy(100).dividedBy(totalHoldAmountUsd)
+
   return (
-    position.token0.initialAmount &&
       <div className="grid-item leading-4 my-2">
         <div className="grid-item mb-2 secondary text-sm">Impremanent Loss info:</div>
         <div className="grid-item secondary text-sm">Initial position proportion:</div>
@@ -40,7 +47,7 @@ const ImpermanentLossInfo = ({ position }) => {
           <span className="leading-4 primary text-base">{moneyFormat(t1.holdUsdValue)}</span>
         </div>
         <div className="grid-item">
-          <span className="leading-4 secondary text-sm">Total value: </span>
+          <span className="leading-4 secondary text-sm">Total value (HODL): </span>
           <span className="leading-4 primary text-base">{moneyFormat(totalHoldAmountUsd)}</span>
         </div>
         <div className="grid-item mt-2">
