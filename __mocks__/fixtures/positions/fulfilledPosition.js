@@ -68,7 +68,8 @@ const fulfilledPosition = {
               liquidity: "7108218528222899361894",
               amount0: "0.028400052060967359",
               amount1: "39044.924814345658556843",
-              blockNumber: 132099846
+              blockNumber: 132099846,
+              timestamp: 1695009234,
           }
       ],
       liquidityDecreases: [
@@ -76,7 +77,8 @@ const fulfilledPosition = {
               liquidity: "3554109264111449680947",
               amount0: "0.023347648059209943",
               amount1: "19504.10771635450461526",
-              blockNumber: 143631172
+              blockNumber: 143631172,
+              timestamp: 1698175159,
           }
       ]
   },

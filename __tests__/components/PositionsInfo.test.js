@@ -25,6 +25,7 @@ jest.mock('ethers', () => {
   const originalEthers = jest.requireActual('ethers');
   const { poolMock } = require('__mocks/poolMock')
   const { positionsManagerMock } = require('__mocks/positionsManagerMock')
+  const { rpcProviderMock } = require('__mocks/rpcProviderMock')
   const { POSITION_MANAGER_CONTRACT } = require('__constants');
 
   return {
@@ -32,7 +33,8 @@ jest.mock('ethers', () => {
       ...originalEthers.ethers,
       Contract: jest.fn().mockImplementation((address) => (
         address === POSITION_MANAGER_CONTRACT ? positionsManagerMock() : poolMock()
-      ))
+      )),
+      JsonRpcProvider: jest.fn().mockImplementation(() => rpcProviderMock()),
     }
   };
 });

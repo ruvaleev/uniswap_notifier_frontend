@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import BigNumber from 'bignumber.js';
 
 import moneyFormat from '__helpers/moneyFormat';
+import LiquidityChanges from './LiquidityChanges';
 
 const WaitPleaseMessage = () => (
   <div className="grid-item leading-4 my-2">
@@ -37,6 +38,7 @@ const ImpermanentLossInfo = ({ position }) => {
           <span className="leading-4 secondary text-sm">Initial position cost: </span>
           <span className="leading-4 primary text-base">{moneyFormat(depositedUsd)}</span>
         </div>
+        <LiquidityChanges increases={position.events.liquidityIncreases} decreases={position.events.liquidityDecreases} />
         <div className="grid-item mt-2 secondary text-sm">With hold strategy current USD amounts would be:</div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
