@@ -7,11 +7,16 @@ import positionManagerAbi from './positionManagerAbi.json'
 const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_URL);
 const contract = new ethers.Contract(POSITION_MANAGER_CONTRACT, positionManagerAbi, provider);
 
-const parseCollectLog = (log, decimals0, decimals1) => ({
-  amount0: BigNumber(log.args[2]).dividedBy(BigNumber(10).pow(decimals0)).toString(),
-  amount1: BigNumber(log.args[3]).dividedBy(BigNumber(10).pow(decimals1)).toString(),
-  blockNumber: log.blockNumber,
-});
+const parseCollectLog = async (log, decimals0, decimals1) => {
+  const timestamp = await getBlockTimestamp(log.blockNumber)
+
+  return {
+    amount0: BigNumber(log.args[2]).dividedBy(BigNumber(10).pow(decimals0)).toString(),
+    amount1: BigNumber(log.args[3]).dividedBy(BigNumber(10).pow(decimals1)).toString(),
+    blockNumber: log.blockNumber,
+    timestamp
+  }
+};
 
 const getBlockTimestamp = async (blockNumber) => {
   const cacheKey = `timestamp_${blockNumber}`
@@ -39,8 +44,9 @@ const parseLiquidityLog = async (log, decimals0, decimals1) => {
 const queryCollectLogs = async (id, decimals0, decimals1) => {
   const collectFilter = contract.filters.Collect(id)
   const collectLogs = await contract.queryFilter(collectFilter)
+  const logsPromises = collectLogs.map(async (log) => await parseCollectLog(log, decimals0, decimals1))
 
-  return collectLogs.map((log) => parseCollectLog(log, decimals0, decimals1))
+  return Promise.all(logsPromises)
 }
 
 const queryIncreaseLiquidityLogs = async (id, decimals0, decimals1) => {

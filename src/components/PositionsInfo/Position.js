@@ -7,11 +7,14 @@ import FinalResult from './FinalResult';
 import ImpermanentLossInfo from './ImpermanentLossInfo';
 
 const Position = ({position}) => {
+  const { collects, liquidityDecreases } = position.events || {}
+  const { token0, token1 } = position
+
   return (
     <div className="grid-container">
       <CommonInfo position={position} />
       <FinalResult position={position} />
-      <FeesInfo token0={position.token0} token1={position.token1}/>
+      <FeesInfo token0={token0} token1={token1} collects={collects} liquidityDecreases={liquidityDecreases}/>
       <ImpermanentLossInfo position={position}/>
     </div>
   )

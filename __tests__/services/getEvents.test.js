@@ -21,12 +21,14 @@ const expectedResult = {
     {
       amount0: '0.113170575274402416',
       amount1: '205.450158813346474497',
-      blockNumber: 136491756
+      blockNumber: 136491756,
+      timestamp: 1696176230
     },
     {
       amount0: '0.17468539802218363',
       amount1: '19802.098020191023044861',
-      blockNumber: 143631172
+      blockNumber: 143631172,
+      timestamp: 1698175159
     }
   ],
   liquidityIncreases: [
@@ -52,6 +54,7 @@ const expectedResult = {
 describe('getEvents', () => {
   afterEach(() => {
     localStorage.removeItem('timestamp_132099846');
+    localStorage.removeItem('timestamp_136491756');
     localStorage.removeItem('timestamp_143631172');
   })
 
@@ -64,12 +67,14 @@ describe('getEvents', () => {
 
     expect(ethers.JsonRpcProvider).toHaveBeenCalledTimes(1)
     expect(localStorage.getItem('timestamp_132099846')).toEqual('1695009234')
+    expect(localStorage.getItem('timestamp_136491756')).toEqual('1696176230')
     expect(localStorage.getItem('timestamp_143631172')).toEqual('1698175159')
   });
 
   describe('when timestamps of provided blocks are already in cache', () => {
     beforeAll(() => {
       localStorage.setItem('timestamp_132099846', 1695009234);
+      localStorage.setItem('timestamp_136491756', 1696176230);
       localStorage.setItem('timestamp_143631172', 1698175159);
       ethers.JsonRpcProvider.mockClear();
     })

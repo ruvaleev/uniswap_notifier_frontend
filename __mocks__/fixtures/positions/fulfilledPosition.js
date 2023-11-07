@@ -55,12 +55,14 @@ const fulfilledPosition = {
           {
               amount0: "0.113170575274402416",
               amount1: "205.450158813346474497",
-              blockNumber: 136491756
+              blockNumber: 136491756,
+              timestamp: 1696176230,
           },
           {
               amount0: "0.17468539802218363",
               amount1: "19802.098020191023044861",
-              blockNumber: 143631172
+              blockNumber: 143631172,
+              timestamp: 1698175159,
           }
       ],
       liquidityIncreases: [
