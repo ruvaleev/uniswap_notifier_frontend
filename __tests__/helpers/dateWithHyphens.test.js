@@ -5,7 +5,7 @@ describe('dateWithHyphens', () => {
     const input = 1699323491593;
 
     it('returns properly formatted date', () => {
-      expect(dateWithHyphens(input)).toEqual('06-11-2023')
+      expect(dateWithHyphens(input)).toEqual('07-11-2023')
     })
   })
 
@@ -13,7 +13,7 @@ describe('dateWithHyphens', () => {
     const input = '1699323491593';
 
     it('returns properly formatted date', () => {
-      expect(dateWithHyphens(input)).toEqual('06-11-2023')
+      expect(dateWithHyphens(input)).toEqual('07-11-2023')
     })
   })
 });
