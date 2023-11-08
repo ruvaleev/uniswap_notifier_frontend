@@ -2,73 +2,49 @@ import { ethers } from 'ethers';
 import BigNumber from 'bignumber.js';
 
 import { POSITION_MANAGER_CONTRACT } from '__constants';
-import positionManagerAbi from './positionManagerAbi.json'
+import positionManagerAbi from './positionManagerAbi.json';
+import getTimestamp from './getEvents/getTimestamp';
+import getPriceByDate from './getEvents/getPriceByDate';
 
 const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_URL);
 const contract = new ethers.Contract(POSITION_MANAGER_CONTRACT, positionManagerAbi, provider);
 
-const parseCollectLog = async (log, decimals0, decimals1) => {
-  const timestamp = await getBlockTimestamp(log.blockNumber)
+const parseLogsFunctions = {
+  parseLog: async function (log, t0, t1) {
+    const timestamp = await getTimestamp(provider, log.blockNumber)
+    const usdPrice0 = await getPriceByDate(t0.symbol, timestamp)
+    const usdPrice1 = await getPriceByDate(t1.symbol, timestamp)
 
-  return {
-    amount0: BigNumber(log.args[2]).dividedBy(BigNumber(10).pow(decimals0)).toString(),
-    amount1: BigNumber(log.args[3]).dividedBy(BigNumber(10).pow(decimals1)).toString(),
-    blockNumber: log.blockNumber,
-    timestamp
+    return {
+      amount0: BigNumber(log.args[2]).dividedBy(BigNumber(10).pow(t0.decimals)).toString(),
+      amount1: BigNumber(log.args[3]).dividedBy(BigNumber(10).pow(t1.decimals)).toString(),
+      blockNumber: log.blockNumber,
+      timestamp,
+      usdPrice0,
+      usdPrice1
+    }
+  },
+  parseLiquidityLog: async function (log, t0, t1) {
+    const parsedLog = await parseLogsFunctions['parseLog'](log, t0, t1)
+
+    return { ...parsedLog, liquidity: BigNumber(log.args[1]).toFixed() }
   }
-};
-
-const getBlockTimestamp = async (blockNumber) => {
-  const cacheKey = `timestamp_${blockNumber}`
-  const timestamp = localStorage.getItem(cacheKey)
-  if (timestamp) { return +timestamp }
-
-  const block = await provider.getBlock(blockNumber)
-  localStorage.setItem(cacheKey, block.timestamp)
-
-  return block.timestamp
 }
 
-const parseLiquidityLog = async (log, decimals0, decimals1) => {
-  const timestamp = await getBlockTimestamp(log.blockNumber)
-
-  return {
-    liquidity: BigNumber(log.args[1]).toFixed(),
-    amount0: BigNumber(log.args[2]).dividedBy(BigNumber(10).pow(decimals0)).toString(),
-    amount1: BigNumber(log.args[3]).dividedBy(BigNumber(10).pow(decimals1)).toString(),
-    blockNumber: log.blockNumber,
-    timestamp
-  }
-};
-
-const queryCollectLogs = async (id, decimals0, decimals1) => {
-  const collectFilter = contract.filters.Collect(id)
-  const collectLogs = await contract.queryFilter(collectFilter)
-  const logsPromises = collectLogs.map(async (log) => await parseCollectLog(log, decimals0, decimals1))
+const queryLogs = async (id, t0, t1, filterName, parseLogFnName = 'parseLog') => {
+  const filter = contract.filters[filterName](id)
+  const collectLogs = await contract.queryFilter(filter)
+  const logsPromises = collectLogs.map(async (log) => (
+    await parseLogsFunctions[parseLogFnName](log, t0, t1)
+  ))
 
   return Promise.all(logsPromises)
 }
 
-const queryIncreaseLiquidityLogs = async (id, decimals0, decimals1) => {
-  const increaseLiquidityFilter = contract.filters.IncreaseLiquidity(id)
-  const increaseLiquidityLogs = await contract.queryFilter(increaseLiquidityFilter)
-  const logsPromises = increaseLiquidityLogs.map(async (log) => await parseLiquidityLog(log, decimals0, decimals1))
-
-  return Promise.all(logsPromises)
-}
-
-const queryDecreaseLiquidityLogs = async (id, decimals0, decimals1) => {
-  const decreaseLiquidityFilter = contract.filters.DecreaseLiquidity(id)
-  const decreaseLiquidityLogs = await contract.queryFilter(decreaseLiquidityFilter)
-  const logsPromises = decreaseLiquidityLogs.map(async (log) => await parseLiquidityLog(log, decimals0, decimals1))
-
-  return Promise.all(logsPromises)
-}
-
-const getEvents = async (id, decimals0, decimals1) => {
-  const parsedCollectLogs = await queryCollectLogs(id, decimals0, decimals1)
-  const parsedIncreaseLiquidityLogs = await queryIncreaseLiquidityLogs(id, decimals0, decimals1)
-  const parsedDecreaseLiquidityLogs = await queryDecreaseLiquidityLogs(id, decimals0, decimals1)
+const getEvents = async (id, t0, t1) => {
+  const parsedCollectLogs = await queryLogs(id, t0, t1, 'Collect')
+  const parsedIncreaseLiquidityLogs = await queryLogs(id, t0, t1, 'IncreaseLiquidity', 'parseLiquidityLog')
+  const parsedDecreaseLiquidityLogs = await queryLogs(id, t0, t1, 'DecreaseLiquidity', 'parseLiquidityLog')
 
   return {
     collects: parsedCollectLogs,

@@ -13,6 +13,12 @@ global.fetch = jest.fn(() => Promise.resolve({
   ok: true
 }));
 
+jest.mock('__services/getHistoricalPrice', () => {
+  const { getHistoricalPriceMock } = require('__mocks/services/getHistoricalPriceMock')
+
+  return getHistoricalPriceMock();
+});
+
 function mockFetchPositions() {
   return jest.fn(() => Promise.resolve(positionsFixture.data.positions));
 }

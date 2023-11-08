@@ -70,7 +70,7 @@ const enrichPosition = async (position, prices) => {
     tokenInfo.holdUsdValue = currentAmountHold.multipliedBy(usdPrice)
   }
 
-  await getEvents(position.id, position.token0.decimals, position.token1.decimals).then((events) =>{
+  await getEvents(position.id, position.token0, position.token1).then((events) =>{
     position.events = events
     enrichTokenInfo({
       tokenInfo: position.token0,

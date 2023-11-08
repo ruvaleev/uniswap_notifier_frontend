@@ -19,6 +19,8 @@ describe('FeesInfo', () => {
       amount1: "9752.053858177253",
       blockNumber: 143631172,
       timestamp: 1698175159,
+      usdPrice0: '1650',
+      usdPrice1: '0.95',
     },
     {
       liquidity: "1777054632055724840474",
@@ -26,6 +28,8 @@ describe('FeesInfo', () => {
       amount1: "9752.053858177253",
       blockNumber: 143631172,
       timestamp: 1698175159,
+      usdPrice0: '1650',
+      usdPrice1: '0.95',
     }
   ]
 
@@ -43,10 +47,14 @@ describe('FeesInfo', () => {
 
     // WETH Claimed Fees
     expect(screen.getByText('0.113170575274402416')).toBeInTheDocument();
+    expect(screen.getByText('($181.07)')).toBeInTheDocument();
     expect(screen.getByText('0.151337749962973687')).toBeInTheDocument();
+    expect(screen.getByText('($249.71)')).toBeInTheDocument();
 
     // ARB Claimed Fees
     expect(screen.getByText('205.450158813346474497')).toBeInTheDocument();
+    expect(screen.getByText('($205.45)')).toBeInTheDocument();
     expect(screen.getByText('297.990303836517044861')).toBeInTheDocument();
+    expect(screen.getByText('($283.09)')).toBeInTheDocument();
   })
 });
