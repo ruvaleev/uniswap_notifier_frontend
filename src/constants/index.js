@@ -22,8 +22,8 @@ export const NETWORK_PARAMS = {
   }
 };
 
+export const POOLS_FIELDS = ['tick', 'id'].join(' ');
 export const POSITION_MANAGER_CONTRACT = '0xc36442b4a4522e871399cd717abdd847ab11fe88';
-
 export const POSITIONS_FIELDS = [
   'amountCollectedUSD',
   'amountDepositedUSD',

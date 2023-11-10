@@ -1,4 +1,5 @@
 import { POSITIONS_FIELDS } from '__constants';
+import { postRequest } from './functions';
 
 const buildPositionsQuery = (ownerAddress) => JSON.stringify({query: `
   {
@@ -8,30 +9,11 @@ const buildPositionsQuery = (ownerAddress) => JSON.stringify({query: `
   }
 `});
 
-const serializedErrors = (json) => {
-  return {
-    errors:
-      json.error
-        ? [json.error]
-        : json.errors.map((err) => err.message)
-  }
-}
-
-const fetchPositions = async (ownerAddress) => {
-  const response = await fetch('https://api.thegraph.com/subgraphs/name/revert-finance/uniswap-v3-arbitrum', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',
-    },
-    body: buildPositionsQuery(ownerAddress),
-  });
-
-  const json = await response.json();
-
-  return !response.ok || json.errors
-    ? serializedErrors(json)
-    : json.data.positions;
-};
+const fetchPositions = async (ownerAddress) => (
+  postRequest(
+    buildPositionsQuery(ownerAddress),
+    (json) => json.data.positions
+  )
+)
 
 export default fetchPositions;

@@ -1,22 +1,25 @@
-import fetchPositions from '__services/graph/fetchPositions';
-import positionsFixture from '__mocks/fixtures/positions/response200success.json';
-import errorsPositionsFixture from '__mocks/fixtures/positions/response200error.json';
-import errorFixture from '__mocks/fixtures/positions/response400error.json';
+import fetchPool from '__services/graph/fetchPool';
+import poolFixture from '__mocks/fixtures/pools/response200success.json';
+import errorsPositionsFixture from '__mocks/fixtures/pools/response200error.json';
+import errorFixture from '__mocks/fixtures/pools/response400error.json';
 
-describe('fetchPositions service', () => {
+describe('fetchPool service', () => {
+  const poolAddress = '0xc6f780497a95e246eb9449f5e4770916dcd6396a';
+  const blockNumber = 132099846;
+
   describe('when successful', () => {
     beforeEach(() => {
       global.fetch = jest.fn(() => Promise.resolve({
-        json: () => positionsFixture,
+        json: () => poolFixture,
         status: 200,
         ok: true
       }));
     });
 
     it('returns properly parsed response', async () => {
-      const result = await fetchPositions("0x1542dadda32ba086434d589a8f005176d6e650b4");
+      const result = await fetchPool(poolAddress, blockNumber);
 
-      expect(result).toEqual(positionsFixture.data.positions);
+      expect(result).toEqual(poolFixture.data.pools[0]);
     });
   })
 
@@ -30,7 +33,7 @@ describe('fetchPositions service', () => {
     });
 
     it('returns properly parsed error', async () => {
-      const result = await fetchPositions("0x1542dadda32ba086434d589a8f005176d6e650b4");
+      const result = await fetchPool(poolAddress, blockNumber);
 
       expect(result).toEqual({errors: [errorsPositionsFixture.errors[0].message]});
     });
@@ -46,7 +49,7 @@ describe('fetchPositions service', () => {
     });
 
     it('returns properly parsed error', async () => {
-      const result = await fetchPositions("0x1542dadda32ba086434d589a8f005176d6e650b4");
+      const result = await fetchPool(poolAddress, blockNumber);
 
       expect(result).toEqual({errors: [errorFixture.error]});
     });
