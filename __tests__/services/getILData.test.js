@@ -192,15 +192,42 @@ describe('getILData service', () => {
           decimals1,
         )
         expect(result).toEqual({
-          impermanentLoss: 0,
+          impermanentLoss: 2.9650045992514102,
           tickPrices: {
-            price0: BigNumber('0.0004814921070446516'),
-            price1: BigNumber('2076.8772434046652151629')
+            price0: BigNumber('2076.8772434046652151629'),
+            price1: BigNumber('0.0004814921070446516')
           },
           tickProportions: {
             amount0: BigNumber('0'),
             amount1: BigNumber('7506.821918')
           }
+        });
+      });
+
+      describe("when tick is in range", () => {
+        const tick = '-200200'
+
+        it('returns correct result', () => {
+          const result = getILData(
+            tick,
+            initialTick,
+            lowerTick,
+            upperTick,
+            liquidity,
+            decimals0,
+            decimals1,
+          )
+          expect(result).toEqual({
+            impermanentLoss: 0.40260809564697997,
+            tickPrices: {
+              price0: BigNumber('2022.36328416665341765145'),
+              price1: BigNumber('0.00049447100223245287')
+            },
+            tickProportions: {
+              amount0: BigNumber('0.9905820015244744'),
+              amount1: BigNumber('5499.494807')
+            }
+          });
         });
       });
     });
