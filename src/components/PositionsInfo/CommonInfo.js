@@ -34,11 +34,12 @@ const CommonInfo = ({ position }) => {
     <>
       <div className="grid-item">
         <div className="grid-item secondary">{position.id}</div>
+        <div className="grid-item secondary">{Math.floor(position.daysAge)} days</div>
         <div className="grid-item secondary text-xs">
-          1 {t0.symbol} costs {t1.price.toFixed(PRICE_PRECISION)} of {t1.symbol}
+          1 {t0.symbol} costs {t0.price.toFixed(PRICE_PRECISION)} of {t1.symbol}
         </div>
         <div className="grid-item secondary text-xs">
-          1 {t1.symbol} costs {t0.price.toFixed(PRICE_PRECISION)} of {t0.symbol}
+          1 {t1.symbol} costs {t1.price.toFixed(PRICE_PRECISION)} of {t0.symbol}
         </div>
       </div>
       <div className="grid-item leading-4 my-2">

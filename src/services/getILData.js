@@ -6,7 +6,7 @@ import priceFromTick from './priceFromTick';
 
 function tickToSqrtPrice(tick) {
   const base = 1.0001;
-  const sqrtPrice = BigNumber(Math.pow(base, tick / 2));
+  const sqrtPrice = BigNumber(Math.pow(base, Math.abs(tick) / 2));
   const sqrtPriceX96 = sqrtPrice.multipliedBy(Q96);
 
   return sqrtPriceX96;

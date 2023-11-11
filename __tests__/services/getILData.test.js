@@ -171,5 +171,38 @@ describe('getILData service', () => {
         });
       });
     });
+
+    describe("with negative ticks", () => {
+      const tick = '-199934'
+      const initialTick = "-200312"
+      const lowerTick = "-200310"
+      const upperTick = "-200160"
+      const liquidity = "22296974509719896"
+      const decimals0 = 18
+      const decimals1 = 6
+
+      it('returns correct result', () => {
+        const result = getILData(
+          tick,
+          initialTick,
+          lowerTick,
+          upperTick,
+          liquidity,
+          decimals0,
+          decimals1,
+        )
+        expect(result).toEqual({
+          impermanentLoss: 0,
+          tickPrices: {
+            price0: BigNumber('0.0004814921070446516'),
+            price1: BigNumber('2076.8772434046652151629')
+          },
+          tickProportions: {
+            amount0: BigNumber('0'),
+            amount1: BigNumber('7506.821918')
+          }
+        });
+      });
+    });
   });
 });
