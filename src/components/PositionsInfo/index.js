@@ -9,6 +9,7 @@ import getPool from '__services/getPool';
 import getPrice from '__services/getPrice';
 import getTokenAmounts from '__services/getTokenAmounts';
 import sqrtPriceToReadablePrices from '__services/sqrtPriceToReadablePrices';
+import fetchPool from '__services/graph/fetchPool';
 import fetchPositions from '__services/graph/fetchPositions';
 import Dashboard from './Dashboard';
 import PositionsList from './PositionsList';
@@ -76,8 +77,11 @@ const enrichPosition = async (position, prices) => {
   const { price0: minPrice0, price1: minPrice1 } = priceFromTick(position.tickLower, position.token0.decimals, position.token1.decimals)
   const { price0: maxPrice0, price1: maxPrice1 } = priceFromTick(position.tickUpper, position.token0.decimals, position.token1.decimals)
 
-  await getEvents(position.id, position.token0, position.token1).then((events) =>{
+  await getEvents(position.id, position.token0, position.token1).then(async (events) =>{
     position.events = events
+    const initialBlockNumber = events.liquidityIncreases.map((rec) => rec.blockNumber).sort()[0]
+    const pool = await fetchPool(position.pool.id, initialBlockNumber)
+    position.initialTick = pool.tick
 
     enrichTokenInfo({
       tokenInfo: position.token0,

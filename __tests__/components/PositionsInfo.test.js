@@ -4,6 +4,7 @@ import { act, render, screen, waitFor } from '@testing-library/react';
 import PositionsInfo from '__components/PositionsInfo';
 import { WalletProvider } from '__contexts/WalletContext';
 import { ethereumMock } from '__mocks/ethereumMock';
+import poolFixture from '__mocks/fixtures/pools/response200success.json';
 import positionsFixture from '__mocks/fixtures/positions/response200success.json';
 import pricesFixture from '__mocks/fixtures/prices/success.json';
 
@@ -18,6 +19,12 @@ jest.mock('__services/getHistoricalPrice', () => {
 
   return getHistoricalPriceMock();
 });
+
+function mockFetchPool() {
+  return jest.fn(() => Promise.resolve(poolFixture.data.pools[0]));
+}
+
+jest.mock('__services/graph/fetchPool', () => mockFetchPool());
 
 function mockFetchPositions() {
   return jest.fn(() => Promise.resolve(positionsFixture.data.positions));

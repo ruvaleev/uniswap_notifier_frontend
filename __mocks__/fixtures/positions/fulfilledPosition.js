@@ -13,6 +13,7 @@ const fulfilledPosition = {
   feeGrowthInside0LastX128: "76397129572731229585273990554861353",
   feeGrowthInside1LastX128: "131266988962904009232919193323370292802",
   id: "100000",
+  initialTick: "76046",
   liquidity: "3554109264111449680947",
   owner: "0x5eeefdac5a68d3117994bd8cec068cc3fb3bc402",
   tickLower: "73430",

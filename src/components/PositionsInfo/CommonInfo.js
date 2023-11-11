@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import moneyFormat from '__helpers/moneyFormat';
+import { PRICE_PRECISION } from '__constants';
 
 const ProportionsScale = ({token0, token1, share0}) => {
   const scaleStyle = {
@@ -33,8 +34,12 @@ const CommonInfo = ({ position }) => {
     <>
       <div className="grid-item">
         <div className="grid-item secondary">{position.id}</div>
-        <div className="grid-item secondary text-xs">1 {t0.symbol} costs {t1.price} of {t1.symbol}</div>
-        <div className="grid-item secondary text-xs">1 {t1.symbol} costs {t0.price} of {t0.symbol}</div>
+        <div className="grid-item secondary text-xs">
+          1 {t0.symbol} costs {t1.price.toFixed(PRICE_PRECISION)} of {t1.symbol}
+        </div>
+        <div className="grid-item secondary text-xs">
+          1 {t1.symbol} costs {t0.price.toFixed(PRICE_PRECISION)} of {t0.symbol}
+        </div>
       </div>
       <div className="grid-item leading-4 my-2">
         <div className="grid-item secondary text-sm">Position has:</div>

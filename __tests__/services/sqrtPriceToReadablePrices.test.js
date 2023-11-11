@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import sqrtPriceToReadablePrices from '__services/sqrtPriceToReadablePrices';
 
 describe('sqrtPriceToReadablePrices', () => {
@@ -9,7 +10,10 @@ describe('sqrtPriceToReadablePrices', () => {
     it('returns properly calculated prices', () => {
       expect(
         sqrtPriceToReadablePrices(sqrtPrice, decimals0, decimals1)
-      ).toEqual({price0: '0.000536455716525690', price1: '1864.086762792676942462'})
+      ).toEqual({
+        price0: BigNumber('1864.0867627926768292234659853896845472844356'),
+        price1: BigNumber('0.00053645571652569033')
+      })
     });
   })
 
@@ -21,7 +25,10 @@ describe('sqrtPriceToReadablePrices', () => {
     it('returns properly calculated prices', () => {
       expect(
         sqrtPriceToReadablePrices(sqrtPrice, decimals0, decimals1)
-      ).toEqual({price0: '0.000611739458566176', price1: '1634.682847406717736146'})
+      ).toEqual({
+        price0: BigNumber('1634.6828474067177361455112993225'),
+        price1: BigNumber('0.00061173945856617575')
+      })
     });
   })
 });
