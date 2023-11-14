@@ -3,7 +3,6 @@ import React from 'react';
 import './styles.css';
 
 function InstallExtension() {
-  // console.log(styles)
   return (
     <div className="modal">
       <div className="modal-content">

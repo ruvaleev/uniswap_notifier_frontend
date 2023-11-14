@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import LiquidityChanges from '__components/PositionsInfo/LiquidityChanges';
+import LiquidityChanges from '__components/Position/LiquidityChanges';
 
 const renderComponent = (increases, decreases) => {
   render(

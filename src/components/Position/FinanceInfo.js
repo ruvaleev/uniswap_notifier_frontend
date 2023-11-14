@@ -20,7 +20,7 @@ const ProportionsScale = ({token0, token1, share0}) => {
   )
 }
 
-const CommonInfo = ({ position }) => {
+const FinanceInfo = ({ position }) => {
   const t0 = position.token0
   if (!t0.usdValue) { return }
 
@@ -33,7 +33,6 @@ const CommonInfo = ({ position }) => {
   return (
     <>
       <div className="grid-item">
-        <div className="grid-item secondary">{position.id}</div>
         <div className="grid-item secondary">{Math.floor(position.daysAge)} days</div>
         <div className="grid-item secondary text-xs">
           1 {t0.symbol} costs {t0.price.toFixed(PRICE_PRECISION)} of {t1.symbol}
@@ -64,9 +63,9 @@ const CommonInfo = ({ position }) => {
   )
 };
 
-export default CommonInfo;
+export default FinanceInfo;
 
-CommonInfo.propTypes = {
+FinanceInfo.propTypes = {
   position: PropTypes.object.isRequired,
 }
 

@@ -11,7 +11,8 @@ export const WalletProvider = ({ children }) => {
   const { ethereum } = window;
 
   const switchNetwork = async () => {
-    if (ethereum.chainId != NETWORK_PARAMS.arbitrum.chainId) {
+    const chainId = await ethereum.request({ method: 'eth_chainId'})
+    if (chainId != NETWORK_PARAMS.arbitrum.chainId) {
       await ethereum.request({ method: 'wallet_addEthereumChain', params: [NETWORK_PARAMS.arbitrum] });
     }
   };

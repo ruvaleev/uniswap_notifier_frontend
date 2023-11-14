@@ -2,39 +2,19 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 
 import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition';
-import FeesInfo from '__components/PositionsInfo/FeesInfo';
+import FeesInfo from '__components/Position/FeesInfo';
 
-const renderComponent = (token0, token1, collects, liquidityDecreases) => {
+const renderComponent = (token0, token1, feesClaims) => {
   render(
-    <FeesInfo token0={token0} token1={token1} collects={collects} liquidityDecreases={liquidityDecreases} />
+    <FeesInfo token0={token0} token1={token1} feesClaims={feesClaims} />
   );
 };
 
 describe('FeesInfo', () => {
-  const { token0, token1, events } = fulfilledPosition
-  const liquidityDecreases = [
-    {
-      liquidity: "1777054632055724840473",
-      amount0: "0.011673824029604971",
-      amount1: "9752.053858177253",
-      blockNumber: 143631172,
-      timestamp: 1698175159,
-      usdPrice0: '1650',
-      usdPrice1: '0.95',
-    },
-    {
-      liquidity: "1777054632055724840474",
-      amount0: "0.011673824029604972",
-      amount1: "9752.053858177253",
-      blockNumber: 143631172,
-      timestamp: 1698175159,
-      usdPrice0: '1650',
-      usdPrice1: '0.95',
-    }
-  ]
+  const { token0, token1, feesClaims } = fulfilledPosition
 
   it('renders proper info about claimed and unclaimed fees', () => {
-    renderComponent(token0, token1, events.collects, liquidityDecreases)
+    renderComponent(token0, token1, feesClaims)
 
     // WETH Unclaimed Fees
     expect(screen.getByText('0.105978455624063704')).toBeInTheDocument();
@@ -54,7 +34,7 @@ describe('FeesInfo', () => {
     // ARB Claimed Fees
     expect(screen.getByText('205.450158813346474497')).toBeInTheDocument();
     expect(screen.getByText('($205.45)')).toBeInTheDocument();
-    expect(screen.getByText('297.990303836517044861')).toBeInTheDocument();
+    expect(screen.getByText('297.990303836518429601')).toBeInTheDocument();
     expect(screen.getByText('($283.09)')).toBeInTheDocument();
   })
 });

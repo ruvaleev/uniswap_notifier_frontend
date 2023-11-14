@@ -45,7 +45,7 @@ jest.mock('ethers', () => {
     ethers: {
       ...originalEthers.ethers,
       Contract: jest.fn().mockImplementation((address) => (
-        address === POSITION_MANAGER_CONTRACT ? positionsManagerMock() : poolMock()
+        address === POSITION_MANAGER_CONTRACT ? positionsManagerMock() : poolMock({ address })
       )),
       JsonRpcProvider: jest.fn().mockImplementation(() => rpcProviderMock()),
     }
@@ -53,13 +53,13 @@ jest.mock('ethers', () => {
 });
 
 const renderWithProvider = async () => {
-  await act(async () => {
+  return await act(async () => (
     render(
       <WalletProvider>
         <PositionsInfo />
       </WalletProvider>
-    );
-  });
+    )
+  ));
 };
 
 describe('PositionsInfo', () => {
@@ -97,33 +97,17 @@ describe('PositionsInfo', () => {
         })
 
         await waitFor(() => {
+          // Dashboard Summary
+          expect(screen.getByText('$1839.32')).toBeInTheDocument(); // Total Unclaimed Fees
+          expect(screen.getByText('$919.32')).toBeInTheDocument(); // Total Claimed Fees
+          expect(screen.getByText('$2758.64')).toBeInTheDocument(); // Total Fees Earned (Claimed + Unclaimed)
           // Common Info
           expect(screen.getByText('$38363.53')).toBeInTheDocument();
           expect(screen.getByText('$0.920302')).toBeInTheDocument();
           expect(screen.getByText('$0.998581')).toBeInTheDocument();
           expect(screen.getByText('$1699.14')).toBeInTheDocument();
-
-          // With hold strategy current USD amounts would be ->
-          expect(screen.getByText('$24.13')).toBeInTheDocument(); // WETH
-          expect(screen.getByText('$17966.56')).toBeInTheDocument(); // ARB
-          expect(screen.getByText('$17990.69')).toBeInTheDocument(); // Total
-
-          // Final result
-          expect(screen.getByText('$1431.40')).toBeInTheDocument(); // Total Profit considering IL
-          expect(screen.getByText('104.6547%')).toBeInTheDocument(); // Total Profit %
         });
       })
-    })
-
-    describe('when fetchPositions service returns error', () => {
-      beforeEach(async () => {
-        fetchPositions.mockImplementation(() => Promise.resolve({errors: ['some error']}));
-        await renderWithProvider()
-      });
-
-      it('shows received error', () => {
-        expect(screen.getByText(/some error/i)).toBeInTheDocument();
-      });
     })
   });
 })

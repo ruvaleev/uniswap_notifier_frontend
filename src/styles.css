@@ -4,9 +4,18 @@ body {
   font-family: sans-serif;
 }
 
+.absolute {
+  position: absolute;
+}
+
 .current-tick {
   background-color: #7367f0;
   border-radius: 0.5rem 0 0 0.5rem;
+}
+
+.disappearing {
+  opacity: 0;
+  transition: opacity 1s ease-out;
 }
 
 .flex {
@@ -63,6 +72,10 @@ body {
 
 .relative {
   position: relative;
+}
+
+.right-50 {
+  right: 50%;
 }
 
 .rounded-xl {

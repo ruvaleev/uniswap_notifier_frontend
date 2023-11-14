@@ -8,12 +8,14 @@ const fulfilledPosition = {
   collectedFeesToken1: "503.440462649864904098",
   collectedToken0: "0.287855973296586046",
   collectedToken1: "20007.548179004369519358",
+  daysAge: 53,
   depositedToken0: "0.028400052060967359",
   depositedToken1: "39044.924814345658556843",
   feeGrowthInside0LastX128: "76397129572731229585273990554861353",
   feeGrowthInside1LastX128: "131266988962904009232919193323370292802",
   id: "100000",
   initialTick: "76046",
+  initialTimestamp: 1698260190,
   liquidity: "3554109264111449680947",
   owner: "0x5eeefdac5a68d3117994bd8cec068cc3fb3bc402",
   tickLower: "73430",
@@ -27,9 +29,9 @@ const fulfilledPosition = {
     amount: BigNumber("6.252150962732637"),
     initialAmount: BigNumber("0.028400052060967359"),
     fees: BigNumber("0.105978455624063704"),
-    price: "0.000579764075352052",
-    maxPrice: "2007.448467185575736949",
-    minPrice: "1544.773960081565292057",
+    price: BigNumber("0.000579764075352052"),
+    maxPrice: BigNumber("2007.448467185575736949"),
+    minPrice: BigNumber("1544.773960081565292057"),
     usdPrice: 1891.06,
     usdValue: BigNumber("11823.19259958518052522"),
     usdFees: BigNumber("200.41161829244190808624"),
@@ -42,9 +44,9 @@ const fulfilledPosition = {
     amount: BigNumber("7917.044869547772"),
     initialAmount: BigNumber("39044.924814345658556843"),
     fees: BigNumber("189.402873985428375334"),
-    price: "1724.839538208308673783",
-    maxPrice: "0.000498144792429960",
-    minPrice: "0.000647343900040365",
+    price: BigNumber("1724.839538208308673783"),
+    maxPrice: BigNumber("0.000498144792429960"),
+    minPrice: BigNumber("0.000647343900040365"),
     usdPrice: 1.096,
     usdValue: BigNumber("8677.081177024358112"),
     usdFees: BigNumber("207.585549888029499366064"),
@@ -87,9 +89,18 @@ const fulfilledPosition = {
     ],
     liquidityDecreases: [
       {
-        liquidity: '3554109264111449680947',
-        amount0: '0.023347648059209943',
-        amount1: '19504.10771635450461526',
+        liquidity: "1777054632055724840473",
+        amount0: "0.011673824029604971",
+        amount1: "9752.053858177253",
+        blockNumber: 143631172,
+        timestamp: 1698175159,
+        usdPrice0: '1650',
+        usdPrice1: '0.95',
+      },
+      {
+        liquidity: "1777054632055724840474",
+        amount0: "0.011673824029604972",
+        amount1: "9752.053858177253",
         blockNumber: 143631172,
         timestamp: 1698175159,
         usdPrice0: '1650',
@@ -97,6 +108,22 @@ const fulfilledPosition = {
       }
     ]
   },
+  feesClaims: [
+    {
+      "amount0": BigNumber("0.113170575274402416"),
+      "amount1": BigNumber("205.450158813346474497"),
+      "timestamp": "1696176230",
+      "usdAmount0": BigNumber("181.0729204390438656"),
+      "usdAmount1": BigNumber("205.450158813346474497"),
+    },
+    {
+      "amount0": BigNumber("0.151337749962973687"),
+      "amount1": BigNumber("297.990303836518429601"),
+      "timestamp": "1698175159",
+      "usdAmount0": BigNumber("249.70728743890658355"),
+      "usdAmount1": BigNumber("283.09078864469250812095"),
+    }
+  ],
   totalUsdValue: BigNumber("20500.27377660953863722")
 }
 

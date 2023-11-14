@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 
-import ImpermanentLossInfo from '__components/PositionsInfo/ImpermanentLossInfo';
+import ImpermanentLossInfo from '__components/Position/ImpermanentLossInfo';
 import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition';
 import unfilledPosition from '__mocks/fixtures/positions/unfilledPosition.json';
 
@@ -34,7 +34,7 @@ describe('ImpermanentLossInfo', () => {
       expect(screen.getByText('$31768.83')).toBeInTheDocument(); // Initial position cost
 
       // Liquidity changes:
-      expect(screen.getByText('-50%')).toBeInTheDocument();
+      expect(screen.getByText('-25%')).toBeInTheDocument();
 
       // With hold strategy current USD amounts would be:
       expect(screen.getByText('$26.85')).toBeInTheDocument(); // WETH

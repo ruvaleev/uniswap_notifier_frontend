@@ -43,20 +43,29 @@ const expectedResult = {
   ],
   liquidityIncreases: [
     {
-      liquidity: '7108218528222899361894',
-      amount0: '0.028400052060967359',
-      amount1: '39044.924814345658556843',
-      blockNumber: 132099846,
-      timestamp: 1695009234,
-      usdPrice0: '1700',
-      usdPrice1: '0.90',
+      liquidity: '386283065283473',
+      amount0: '0',
+      amount1: '11.950680406515371969',
+      blockNumber: 143631172,
+      timestamp: 1698175159,
+      usdPrice0: '1650',
+      usdPrice1: '0.95',
     }
   ],
   liquidityDecreases: [
     {
-      liquidity: '3554109264111449680947',
-      amount0: '0.023347648059209943',
-      amount1: '19504.10771635450461526',
+      liquidity: '1777054632055724840473',
+      amount0: '0.011673824029604971',
+      amount1: '9752.053858177253',
+      blockNumber: 143631172,
+      timestamp: 1698175159,
+      usdPrice0: '1650',
+      usdPrice1: '0.95',
+    },
+    {
+      liquidity: '1777054632055724840474',
+      amount0: '0.011673824029604972',
+      amount1: '9752.053858177253',
       blockNumber: 143631172,
       timestamp: 1698175159,
       usdPrice0: '1650',
@@ -67,12 +76,11 @@ const expectedResult = {
 
 describe('getEvents', () => {
   afterEach(() => {
-    localStorage.removeItem('timestamp_132099846');
     localStorage.removeItem('timestamp_136491756');
     localStorage.removeItem('timestamp_143631172');
   })
 
-  const id = 1000;
+  const id = 100001;
   const token0 = { symbol: 'WETH', decimals: 18 }
   const token1 = { symbol: 'ARB', decimals: 18 }
 
@@ -80,14 +88,12 @@ describe('getEvents', () => {
     expect(await getEvents(id, token0, token1)).toEqual(expectedResult)
 
     expect(ethers.JsonRpcProvider).toHaveBeenCalledTimes(1)
-    expect(localStorage.getItem('timestamp_132099846')).toEqual('1695009234')
     expect(localStorage.getItem('timestamp_136491756')).toEqual('1696176230')
     expect(localStorage.getItem('timestamp_143631172')).toEqual('1698175159')
   });
 
   describe('when timestamps of provided blocks are already in cache', () => {
     beforeAll(() => {
-      localStorage.setItem('timestamp_132099846', 1695009234);
       localStorage.setItem('timestamp_136491756', 1696176230);
       localStorage.setItem('timestamp_143631172', 1698175159);
       ethers.JsonRpcProvider.mockClear();
