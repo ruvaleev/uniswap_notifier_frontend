@@ -135,6 +135,7 @@ describe('buildPosition', () => {
       expect(response.position.events).toEqual(fulfilledPosition.events)
       expect(response.position.token0.holdUsdValue).toEqual(holdUsdValue0)
       expect(response.position.token1.holdUsdValue).toEqual(holdUsdValue1)
+      expect(response.position.liquidityChanges).toEqual({'1698175159': '-50'})
       expect(response.position.feesClaims).toEqual([
         {
           "amount0": BigNumber("0.113170575274402416"),
@@ -142,6 +143,7 @@ describe('buildPosition', () => {
           "timestamp": "1696176230",
           "usdAmount0": BigNumber("181.0729204390438656"),
           "usdAmount1": BigNumber("205.450158813346474497"),
+          "percentOfDeposit": BigNumber("1.21667396963995391451"),
         },
         {
           "amount0": BigNumber("0.151337749962973687"),
@@ -149,6 +151,7 @@ describe('buildPosition', () => {
           "timestamp": "1698175159",
           "usdAmount0": BigNumber("249.70728743890658355"),
           "usdAmount1": BigNumber("283.09078864469119261795"),
+          "percentOfDeposit": BigNumber("1.6771095570773791882"),
         }
       ])
     });

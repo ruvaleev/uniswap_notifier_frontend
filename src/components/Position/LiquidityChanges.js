@@ -1,39 +1,30 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import BigNumber from 'bignumber.js';
+
+import dateWithHyphens from '__helpers/dateWithHyphens';
 
 const NoChanges = () => <span className="grid-item secondary text-sm">No changes</span>
 
-const Change = ({ change }) => (
+const Change = ({ timestamp, change }) => (
   <div className="grid-item">
-    <span className="leading-4 secondary text-sm">{change[1].toDateString()}: </span>
-    <span className="leading-4 primary text-sm">{change[2]}%</span>
+    <span className="leading-4 secondary text-sm">{dateWithHyphens(timestamp)}: </span>
+    <span className="leading-4 primary text-sm">{change > 0 && '+'}{change}%</span>
   </div>
 )
 
-const Changes = ({ changes }) => (
-  changes.length === 0
+const Changes = ({ changes }) => {
+  const timestamps = Object.keys(changes)
+
+  return timestamps.length === 0
   ? <NoChanges/>
-  : changes.map((change, index) => <Change key={index} change={change} />)
-)
+  : timestamps.map((timestamp, index) => <Change key={index} timestamp={timestamp} change={changes[timestamp]} />)
+}
 
-const LiquidityChanges = ({ increases, decreases }) => {
-  const serializedIncreases = increases.map((l) => [BigNumber(l.liquidity), new Date(l.timestamp * 1000)])
-  const serializedDecreases = decreases.map((l) => [BigNumber(-l.liquidity), new Date(l.timestamp * 1000)])
-  const changes = serializedIncreases.concat(serializedDecreases).sort((a, b) => a[1] - b[1])
-
-  let current_liquidity = changes[0][0]
-  const serializedChanges = changes.slice(1).map((change) => {
-    change[2] = change[0].multipliedBy(100).dividedBy(current_liquidity).toFixed(0)
-    if (change[0] > 0) { change[2] = `+${change[2]}` }
-    current_liquidity = current_liquidity.plus(change[0])
-    return change
-  })
-
+const LiquidityChanges = ({ changes }) => {
   return (
     <div className="grid-item">
       <span className="leading-4 secondary text-sm">Liquidity changes: </span>
-      <Changes changes={serializedChanges} />
+      <Changes changes={changes} />
     </div>
   )
 }
@@ -41,14 +32,14 @@ const LiquidityChanges = ({ increases, decreases }) => {
 export default LiquidityChanges;
 
 LiquidityChanges.propTypes = {
-  increases: PropTypes.arrayOf(PropTypes.object).isRequired,
-  decreases: PropTypes.arrayOf(PropTypes.object).isRequired
+  changes: PropTypes.object.isRequired
 }
 
 Change.propTypes = {
-  change: PropTypes.array.isRequired
+  change: PropTypes.string.isRequired,
+  timestamp: PropTypes.string.isRequired
 }
 
 Changes.propTypes = {
-  changes: PropTypes.arrayOf(PropTypes.array).isRequired
+  changes: PropTypes.object.isRequired
 }

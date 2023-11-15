@@ -1,6 +1,9 @@
 import { ethers } from 'ethers';
 
 import getEvents from '__services/getEvents';
+import {
+  defaultCollectLogs, defaultDecreaseLiquidityLogs, positionsManagerMock
+} from '__mocks/positionsManagerMock'
 
 jest.mock('ethers', () => {
   const originalEthers = jest.requireActual('ethers');
@@ -102,6 +105,20 @@ describe('getEvents', () => {
     it("returns proper data retrieved from Contract but doesn't query timestamps", async () => {
       expect(await getEvents(id, token0, token1)).toEqual(expectedResult)
       expect(ethers.JsonRpcProvider).not.toHaveBeenCalled()
+    });
+  })
+
+  describe('when events received in non sorted order', () => {
+    const resortedLogs = (logs) => logs.sort((a, b) => b.blockNumber - a.blockNumber)
+    const collectLogs = { 100001: resortedLogs(defaultCollectLogs[100001]) }
+    const decreaseLiquidityLogs = { 100001: resortedLogs(defaultDecreaseLiquidityLogs[100001]) }
+
+    beforeEach(() => {
+      ethers.Contract = jest.fn().mockImplementation(() => positionsManagerMock({ collectLogs, decreaseLiquidityLogs }))
+    })
+
+    it("sorts data in returns result", async () => {
+      expect(await getEvents(id, token0, token1)).toEqual(expectedResult)
     });
   })
 });

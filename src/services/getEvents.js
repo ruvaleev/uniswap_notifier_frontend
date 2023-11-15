@@ -41,15 +41,17 @@ const queryLogs = async (id, t0, t1, filterName, parseLogFnName = 'parseLog') =>
   return Promise.all(logsPromises)
 }
 
+const sortedByBlock = (logs) => logs.sort((a, b) => a.blockNumber - b.blockNumber)
+
 const getEvents = async (id, t0, t1) => {
   const parsedCollectLogs = await queryLogs(id, t0, t1, 'Collect')
   const parsedIncreaseLiquidityLogs = await queryLogs(id, t0, t1, 'IncreaseLiquidity', 'parseLiquidityLog')
   const parsedDecreaseLiquidityLogs = await queryLogs(id, t0, t1, 'DecreaseLiquidity', 'parseLiquidityLog')
 
   return {
-    collects: parsedCollectLogs,
-    liquidityIncreases: parsedIncreaseLiquidityLogs,
-    liquidityDecreases: parsedDecreaseLiquidityLogs,
+    collects: sortedByBlock(parsedCollectLogs),
+    liquidityIncreases: sortedByBlock(parsedIncreaseLiquidityLogs),
+    liquidityDecreases: sortedByBlock(parsedDecreaseLiquidityLogs),
   }
 };
 

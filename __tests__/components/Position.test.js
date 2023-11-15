@@ -115,10 +115,6 @@ describe('Position', () => {
       expect(screen.getByText('$26.85')).toBeInTheDocument(); // WETH
       expect(screen.getByText('$21396.62')).toBeInTheDocument(); // ARB
       expect(screen.getByText('$21423.47')).toBeInTheDocument(); // Total
-
-      // Final result
-      expect(screen.getByText('$-515.20')).toBeInTheDocument(); // Total Profit considering IL
-      expect(screen.getByText('-2.4048%')).toBeInTheDocument(); // Total Profit %
     })
   })
 

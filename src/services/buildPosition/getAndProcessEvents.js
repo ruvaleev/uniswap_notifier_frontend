@@ -1,6 +1,7 @@
 import BigNumber from 'bignumber.js';
 
 import getEvents from '__services/getEvents';
+import getLiquidityChanges from '__services/getLiquidityChanges';
 
 const totalLiquidity = (collection) => (
   collection.reduce((acc, pos) => (
@@ -44,7 +45,7 @@ const pricesByTimestamp = (events) => (
   }, {})
 )
 
-const serializeCollects = (collects, liquidityDecreases) => {
+const serializeCollects = (collects, liquidityDecreases, amountDepositedUSD) => {
   const decreasesHash = sumByTimestamp(liquidityDecreases)
   const collectsHash = sumByTimestamp(collects)
   const prices = pricesByTimestamp(collects.concat(liquidityDecreases))
@@ -58,13 +59,15 @@ const serializeCollects = (collects, liquidityDecreases) => {
     )
     const usdAmount0 = amount0.multipliedBy(prices[timestamp].usdPrice0)
     const usdAmount1 = amount1.multipliedBy(prices[timestamp].usdPrice1)
+    const percentOfDeposit = BigNumber('100').multipliedBy(usdAmount0.plus(usdAmount1)).dividedBy(amountDepositedUSD)
 
     return {
       amount0,
       amount1,
       usdAmount0,
       usdAmount1,
-      timestamp: timestamp
+      timestamp,
+      percentOfDeposit
     }
   })
 }
@@ -75,8 +78,9 @@ const getAndProcessEvents = async (position, prices) => {
       calculateHoldUsdValue(BigNumber(position.depositedToken0), prices[position.token0.symbol], events)
     position.token1.holdUsdValue =
       calculateHoldUsdValue(BigNumber(position.depositedToken1), prices[position.token1.symbol], events)
+    position.liquidityChanges = getLiquidityChanges(events.liquidityIncreases, events.liquidityDecreases)
     position.events = events
-    position.feesClaims = serializeCollects(events.collects, events.liquidityDecreases)
+    position.feesClaims = serializeCollects(events.collects, events.liquidityDecreases, BigNumber(position.amountDepositedUSD))
   })
 }
 

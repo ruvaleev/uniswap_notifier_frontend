@@ -34,7 +34,7 @@ describe('ImpermanentLossInfo', () => {
       expect(screen.getByText('$31768.83')).toBeInTheDocument(); // Initial position cost
 
       // Liquidity changes:
-      expect(screen.getByText('-25%')).toBeInTheDocument();
+      expect(screen.getByText('-50%')).toBeInTheDocument();
 
       // With hold strategy current USD amounts would be:
       expect(screen.getByText('$26.85')).toBeInTheDocument(); // WETH

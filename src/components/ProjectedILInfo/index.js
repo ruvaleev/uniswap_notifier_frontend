@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import { PERCENT_PRECISION } from '__constants';
 import getILData from '__services/getILData';
 
 const Slider = ({ min, max, value, onChange }) => {
@@ -47,7 +48,7 @@ function ProjectedIlInfo({ position }) {
       </div>
       <div className="grid-item">
         <span className="leading-4 secondary text-sm">IL: </span>
-        <span className="leading-4 primary text-base">{ilData.impermanentLoss.toFixed(4)}%</span>
+        <span className="leading-4 primary text-base">{ilData.impermanentLoss.toFixed(PERCENT_PRECISION)}%</span>
       </div>
       <div className="grid-item secondary text-sm">Proportions:</div>
       <div className="grid-item">

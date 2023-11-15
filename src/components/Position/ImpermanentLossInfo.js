@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import BigNumber from 'bignumber.js';
 
+import { PERCENT_PRECISION } from '__constants';
 import moneyFormat from '__helpers/moneyFormat';
 import LiquidityChanges from './LiquidityChanges';
 
@@ -38,7 +39,7 @@ const ImpermanentLossInfo = ({ position }) => {
           <span className="leading-4 secondary text-sm">Initial position cost: </span>
           <span className="leading-4 primary text-base">{moneyFormat(depositedUsd)}</span>
         </div>
-        <LiquidityChanges increases={position.events.liquidityIncreases} decreases={position.events.liquidityDecreases} />
+        <LiquidityChanges changes={position.liquidityChanges} />
         <div className="grid-item mt-2 secondary text-sm">With hold strategy current USD amounts would be:</div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
@@ -58,7 +59,7 @@ const ImpermanentLossInfo = ({ position }) => {
         </div>
         <div className="grid-item">
           <span className="leading-4 secondary text-sm">Impermanent Loss: </span>
-          <span className="leading-4 primary text-base">{impermanentLossPercentage.toFixed(4)}%</span>
+          <span className="leading-4 primary text-base">{impermanentLossPercentage.toFixed(PERCENT_PRECISION)}%</span>
         </div>
       </div>
   )

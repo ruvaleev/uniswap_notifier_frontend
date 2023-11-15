@@ -17,6 +17,9 @@ const fulfilledPosition = {
   initialTick: "76046",
   initialTimestamp: 1698260190,
   liquidity: "3554109264111449680947",
+  liquidityChanges: {
+    '1698175159': '-50'
+  },
   owner: "0x5eeefdac5a68d3117994bd8cec068cc3fb3bc402",
   tickLower: "73430",
   tickUpper: "76050",
@@ -115,6 +118,7 @@ const fulfilledPosition = {
       "timestamp": "1696176230",
       "usdAmount0": BigNumber("181.0729204390438656"),
       "usdAmount1": BigNumber("205.450158813346474497"),
+      "percentOfDeposit": BigNumber("1.21667396963995391451"),
     },
     {
       "amount0": BigNumber("0.151337749962973687"),
@@ -122,6 +126,7 @@ const fulfilledPosition = {
       "timestamp": "1698175159",
       "usdAmount0": BigNumber("249.70728743890658355"),
       "usdAmount1": BigNumber("283.09078864469250812095"),
+      "percentOfDeposit": BigNumber("1.6771095570773791882"),
     }
   ],
   totalUsdValue: BigNumber("20500.27377660953863722")
