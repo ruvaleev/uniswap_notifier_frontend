@@ -35,6 +35,7 @@ module.exports = {
   ],
   resolve: {
     alias: {
+      '__assets': path.resolve(__dirname, 'src/assets'),
       '__components': path.resolve(__dirname, 'src/components'),
       '__constants': path.resolve(__dirname, 'src/constants'),
       '__contexts': path.resolve(__dirname, 'src/contexts'),

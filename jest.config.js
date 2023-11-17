@@ -3,6 +3,7 @@ module.exports = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
   moduleNameMapper: {
     '\\.css$': '<rootDir>/__mocks__/styleMock.js',
+    "^__assets(.*)$": "<rootDir>/src/assets$1",
     "^__components(.*)$": "<rootDir>/src/components$1",
     "^__constants(.*)$": "<rootDir>/src/constants$1",
     "^__contexts(.*)$": "<rootDir>/src/contexts$1",

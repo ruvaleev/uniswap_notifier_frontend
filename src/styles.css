@@ -18,6 +18,19 @@ body {
   transition: opacity 1s ease-out;
 }
 
+.expandable-container {
+  transition: opacity 0.5s, visibility 0.5s;
+  opacity: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+.expandable-container.expanded {
+  opacity: 1;
+  visibility: visible;
+  height: auto;
+}
+
 .flex {
   display: flex;
 }
@@ -37,8 +50,17 @@ body {
   color: #ffffff;
 }
 
+.icon-size {
+  height: 24px;
+  width: 24px;
+}
+
 .inline-block {
   display: inline-block;
+}
+
+.items-center {
+  align-items: center;
 }
 
 .leading-4 {
