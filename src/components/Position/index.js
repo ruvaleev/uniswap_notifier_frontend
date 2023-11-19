@@ -6,9 +6,9 @@ import FeesInfo from './FeesInfo';
 import FinalResult from './FinalResult';
 import FinanceInfo from './FinanceInfo';
 import ImpermanentLossInfo from './ImpermanentLossInfo';
-import ProjectedILInfo from '__components/ProjectedILInfo';
 import { STATUSES } from '__services/buildPosition/constants';
 import buildPosition from '__services/buildPosition';
+import ProportionsInfo from './ProportionsInfo';
 
 const statusMessage = {
   [STATUSES.gettingFeesInfo]: 'Getting Info About Fees...',
@@ -69,7 +69,7 @@ const Position = ({position, prices, completionCallback = () => {}, initialStatu
   const isCompleted = status === STATUSES.completed
 
   return (
-    <div className="grid-container">
+    <div className="grid-container position">
       <Status status={status} disappearing={isCompleted}/>
       <CommonInfo position={position} />
       {
@@ -77,10 +77,10 @@ const Position = ({position, prices, completionCallback = () => {}, initialStatu
         ? <Error message={position.errorMessage} />
         : isCompleted &&
           <>
+            <ProportionsInfo t0={token0} t1={token1}/>
             <FinanceInfo position={position} />
             <FinalResult position={position} />
             <FeesInfo token0={token0} token1={token1} feesClaims={feesClaims} />
-            <ProjectedILInfo position={position}/>
             <ImpermanentLossInfo position={position}/>
           </>
       }

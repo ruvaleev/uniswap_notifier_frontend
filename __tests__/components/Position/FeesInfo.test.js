@@ -23,7 +23,7 @@ describe('FeesInfo', () => {
     expect(screen.getByText('189.402873985428375334')).toBeInTheDocument();
     expect(screen.getByText('($207.59)')).toBeInTheDocument();
     // Total Unclaimed Fees
-    expect(screen.getByText('($408.00)')).toBeInTheDocument();
+    expect(screen.getByText('$408.00')).toBeInTheDocument();
 
     // WETH Claimed Fees
     expect(screen.getByText('0.113170575274402416')).toBeInTheDocument();

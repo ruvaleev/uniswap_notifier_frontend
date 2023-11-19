@@ -1,4 +1,5 @@
 import React, { createRef } from 'react';
+import PropTypes from 'prop-types';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 import ExpandButton from '__components/buttons/ExpandButton';
@@ -6,6 +7,10 @@ import ExpandButton from '__components/buttons/ExpandButton';
 const RelatedComponent = ({ refProp }) => (
   <div ref={refProp} data-testid='relatedComponent'>Child is here</div>
 )
+
+RelatedComponent.propTypes = {
+  refProp: PropTypes.object.isRequired,
+}
 
 describe('ExpandButton', () => {
   const buttonTitle = 'Click me'

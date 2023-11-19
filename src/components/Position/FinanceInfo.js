@@ -1,26 +1,14 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 
+import ExpandButton from '__components/buttons/ExpandButton';
+import Row from '__components/Row';
 import moneyFormat from '__helpers/moneyFormat';
 import { PRICE_PRECISION } from '__constants';
 
-const ProportionsScale = ({token0, token1, share0}) => {
-  const scaleStyle = {
-    width: `${share0}%`
-  };
-
-  return (
-    <div className="grid-item scale-wrapper">
-      <div className="token token-left secondary mr-2">{token0}</div>
-      <div className="scale">
-        <div className="current-tick" style={scaleStyle}></div>
-      </div>
-      <div className="token token-right secondary ml-2">{token1}</div>
-    </div>
-  )
-}
-
 const FinanceInfo = ({ position }) => {
+  const detailsRef = createRef();
+
   const t0 = position.token0
   if (!t0.usdValue) { return }
 
@@ -32,32 +20,24 @@ const FinanceInfo = ({ position }) => {
 
   return (
     <>
-      <div className="grid-item">
-        <div className="grid-item secondary">{Math.floor(position.daysAge)} days</div>
-        <div className="grid-item secondary text-xs">
-          1 {t0.symbol} costs {t0.price.toFixed(PRICE_PRECISION)} of {t1.symbol}
-        </div>
-        <div className="grid-item secondary text-xs">
-          1 {t1.symbol} costs {t1.price.toFixed(PRICE_PRECISION)} of {t0.symbol}
-        </div>
+      <div className="flex grid-item items-center">
+        <Row title='Total USD value (No Fees):' value={moneyFormat(totalUsdValue)}/>
+        <ExpandButton relRef={detailsRef}/>
       </div>
-      <div className="grid-item leading-4 my-2">
-        <div className="grid-item secondary text-sm">Position has:</div>
-        <div className="grid-item">
-          <span className="leading-4 secondary text-sm">{t0.symbol}: </span>
-          <span className="leading-4 primary text-base">{t0.amount.toFixed()}</span>
-          <span className="leading-4 secondary text-sm"> ({moneyFormat(t0.usdValue)}) - {share0.toFixed(2)}%</span>
-        </div>
-        <div className="grid-item">
-          <span className="leading-4 secondary text-sm">{t1.symbol}: </span>
-          <span className="leading-4 primary text-base">{t1.amount.toFixed()}</span>
-          <span className="leading-4 secondary text-sm"> ({moneyFormat(t1.usdValue)}) - {share1.toFixed(2)}%</span>
-        </div>
-        <ProportionsScale token0={t0.symbol} token1={t1.symbol} share0={share0}/>
-        <div className="grid-item">
-          <span className="leading-4 secondary text-sm">Total USD value (No Fees): </span>
-          <span className="leading-4 primary text-base">{moneyFormat(totalUsdValue)}</span>
-        </div>
+      <div ref={detailsRef} className="grid-item leading-4">
+        <div className="grid-item secondary text-base mr-1">Position has:</div>
+        <Row
+          title={`${t0.symbol}:`}
+          value={t0.amount.toFixed()}
+          addition={`(${moneyFormat(t0.usdValue)}) - ${share0.toFixed(2)}%`}
+        />
+        <Row
+          title={`${t1.symbol}:`}
+          value={t1.amount.toFixed()}
+          addition={`(${moneyFormat(t1.usdValue)}) - ${share1.toFixed(2)}%`}
+        />
+        <Row title={`1 ${t0.symbol} costs ${t0.price.toFixed(PRICE_PRECISION)} of ${t1.symbol}`}/>
+        <Row title={`1 ${t1.symbol} costs ${t1.price.toFixed(PRICE_PRECISION)} of ${t0.symbol}`}/>
       </div>
     </>
   )
@@ -67,10 +47,4 @@ export default FinanceInfo;
 
 FinanceInfo.propTypes = {
   position: PropTypes.object.isRequired,
-}
-
-ProportionsScale.propTypes = {
-  token0: PropTypes.string.isRequired,
-  token1: PropTypes.string.isRequired,
-  share0: PropTypes.object.isRequired,
 }

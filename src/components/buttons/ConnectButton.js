@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
 import './styles.css';
-import { WalletContext } from '../../contexts/WalletContext';
+import { WalletContext } from '__contexts/WalletContext';
 
 const maskedAddress = (address) => {
   if (!address) { return '' }

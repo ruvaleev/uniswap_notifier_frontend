@@ -1,5 +1,5 @@
 import React from 'react';
-import { act, render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor, within } from '@testing-library/react';
 
 import PositionsInfo from '__components/PositionsInfo';
 import { WalletProvider } from '__contexts/WalletContext';
@@ -97,10 +97,12 @@ describe('PositionsInfo', () => {
         })
 
         await waitFor(() => {
+          const dashboard = screen.getByTestId('dashboard')
+          const withinDasboard = within(dashboard)
           // Dashboard Summary
-          expect(screen.getByText('$1839.32')).toBeInTheDocument(); // Total Unclaimed Fees
-          expect(screen.getByText('$919.32')).toBeInTheDocument(); // Total Claimed Fees
-          expect(screen.getByText('$2758.64')).toBeInTheDocument(); // Total Fees Earned (Claimed + Unclaimed)
+          expect(withinDasboard.getByText('$1839.32')).toBeInTheDocument(); // Total Unclaimed Fees
+          expect(withinDasboard.getByText('$919.32')).toBeInTheDocument(); // Total Claimed Fees
+          expect(withinDasboard.getByText('$2758.64')).toBeInTheDocument(); // Total Fees Earned (Claimed + Unclaimed)
           // Common Info
           expect(screen.getByText('$38363.53')).toBeInTheDocument();
           expect(screen.getByText('$0.920302')).toBeInTheDocument();

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
+import Row from '__components/Row';
 import { PERCENT_PRECISION } from '__constants';
 import getILData from '__services/getILData';
 
@@ -8,6 +9,7 @@ const Slider = ({ min, max, value, onChange }) => {
   return (
     <input
       type="range"
+      className='w-full styled-slider'
       min={min}
       max={max}
       value={value}
@@ -41,33 +43,18 @@ function ProjectedIlInfo({ position }) {
 
   return (
     <div className="grid-item leading-4 my-2">
+      <div className="grid-item secondary">Projected IL:</div>
       <Slider min={min} max={max} value={value} onChange={handleChange}/>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Tick: </span>
-        <span className="leading-4 primary text-base">{value}</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">IL: </span>
-        <span className="leading-4 primary text-base">{ilData.impermanentLoss.toFixed(PERCENT_PRECISION)}%</span>
-      </div>
-      <div className="grid-item secondary text-sm">Proportions:</div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{t0Symbol}: </span>
-        <span className="leading-4 primary text-base">{ilData.tickProportions.amount0.toFixed()}</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{t1Symbol}: </span>
-        <span className="leading-4 primary text-base">{ilData.tickProportions.amount1.toFixed()}</span>
-      </div>
-      <div className="grid-item secondary text-sm">Prices:</div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{t0Symbol}: </span>
-        <span className="leading-4 primary text-base">{ilData.tickPrices.price0.toFixed()}</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{t1Symbol}: </span>
-        <span className="leading-4 primary text-base">{ilData.tickPrices.price1.toFixed()}</span>
-      </div>
+      <Row title={'Tick:'} value={value}/>
+      <Row title={'IL:'} value={`${ilData.impermanentLoss.toFixed(PERCENT_PRECISION)}%`}/>
+
+      <div className="grid-item secondary">Proportions:</div>
+      <Row title={`${t0Symbol}:`} value={ilData.tickProportions.amount0.toFixed()}/>
+      <Row title={`${t1Symbol}:`} value={ilData.tickProportions.amount1.toFixed()}/>
+
+      <div className="grid-item secondary">Prices:</div>
+      <Row title={`${t0Symbol}:`} value={ilData.tickPrices.price0.toFixed()}/>
+      <Row title={`${t1Symbol}:`} value={ilData.tickPrices.price1.toFixed()}/>
     </div>
   );
 }

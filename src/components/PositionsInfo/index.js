@@ -97,13 +97,6 @@ const PositionsInfo = () => {
 
 export default PositionsInfo;
 
-PositionsList.propTypes = {
-  positions: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.object).isRequired,
-    PropTypes.object
-  ])
-}
-
 Status.propTypes = {
   status: PropTypes.string.isRequired
 }

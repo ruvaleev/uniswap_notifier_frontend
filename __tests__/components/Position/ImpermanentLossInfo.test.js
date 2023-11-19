@@ -42,7 +42,7 @@ describe('ImpermanentLossInfo', () => {
       expect(screen.getByText('$21423.47')).toBeInTheDocument(); // Total value HODL
 
       // Result:
-      expect(screen.getByText('$923.20')).toBeInTheDocument(); // Impermanent Loss USD
+      expect(screen.getByText('($923.20)')).toBeInTheDocument(); // Impermanent Loss USD
       expect(screen.getByText('4.3093%')).toBeInTheDocument(); // Impermanent Loss Percent (100 * (IL USD / Total HODL))
     })
   });

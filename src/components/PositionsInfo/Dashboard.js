@@ -1,27 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Row from '__components/Row';
 import moneyFormat from '__helpers/moneyFormat';
 
 const Dashboard = ({totalUsdValue, totalUnclaimedUsdFees, totalClaimedUsdFees}) => {
   return (
-    <div className="grid-container" data-testid='dashboard'>
-      <div className="grid-item">
-        <span className="secondary text-sm">Total Portfolio Value (fees not included): </span>
-        <span className="primary text-base">{moneyFormat(totalUsdValue)}</span>
-      </div>
-      <div className="grid-item">
-        <span className="secondary text-sm">Total Unclaimed Fees: </span>
-        <span className="primary text-base">{moneyFormat(totalUnclaimedUsdFees)}</span>
-      </div>
-      <div className="grid-item">
-        <span className="secondary text-sm">Total Claimed Fees: </span>
-        <span className="primary text-base">{moneyFormat(totalClaimedUsdFees)}</span>
-      </div>
-      <div className="grid-item">
-        <span className="secondary text-sm">Total Fees Earned (Claimed + Unclaimed): </span>
-        <span className="primary text-base">{moneyFormat(totalClaimedUsdFees?.plus(totalUnclaimedUsdFees))}</span>
-      </div>
+    <div className="dashboard grid-container" data-testid='dashboard'>
+      <Row title='Total Portfolio Value (fees not included):' value={moneyFormat(totalUsdValue)}/>
+      <Row title='Total Unclaimed Fees:' value={moneyFormat(totalUnclaimedUsdFees)}/>
+      <Row title='Total Claimed Fees:' value={moneyFormat(totalClaimedUsdFees)}/>
+      <Row
+        title='Total Fees Earned (Claimed + Unclaimed):'
+        value={moneyFormat(totalClaimedUsdFees?.plus(totalUnclaimedUsdFees))}
+      />
     </div>
   )
 }

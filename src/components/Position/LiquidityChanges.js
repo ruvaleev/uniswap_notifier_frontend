@@ -1,14 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Row from '__components/Row';
 import dateWithHyphens from '__helpers/dateWithHyphens';
 
 const NoChanges = () => <span className="grid-item secondary text-sm">No changes</span>
 
 const Change = ({ timestamp, change }) => (
   <div className="grid-item">
-    <span className="leading-4 secondary text-sm">{dateWithHyphens(timestamp)}: </span>
-    <span className="leading-4 primary text-sm">{change > 0 && '+'}{change}%</span>
+    <Row title={`${dateWithHyphens(timestamp)}:`} value={`${change > 0 ? '+' : ''}${change}%`}/>
   </div>
 )
 
@@ -23,7 +23,7 @@ const Changes = ({ changes }) => {
 const LiquidityChanges = ({ changes }) => {
   return (
     <div className="grid-item">
-      <span className="leading-4 secondary text-sm">Liquidity changes: </span>
+      <Row title='Liquidity changes:'/>
       <Changes changes={changes} />
     </div>
   )

@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
 import BigNumber from 'bignumber.js';
 
+import ExpandButton from '__components/buttons/ExpandButton';
+import Row from '__components/Row';
 import moneyFormat from '__helpers/moneyFormat';
 import { HUNDRED, PERCENT_PRECISION, PRICE_PRECISION, YEAR_DAYS, ZERO } from '__constants';
 
@@ -39,36 +41,25 @@ const FinalResult = ({ position }) => {
   const totalEarnedConsideringIlUsd = totalValueWithFeesUsd.minus(totalHoldUsd)
   const totalEarnedConsideringIl = totalEarnedConsideringIlUsd.multipliedBy(HUNDRED).dividedBy(totalHoldUsd)
 
+  const detailsRef = createRef();
+
   return (
-    <div className="grid-item leading-4 my-2">
-      <div className="grid-item secondary text-sm">Final result:</div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Total Profit In USD: </span>
-        <span className="leading-4 primary text-base">{moneyFormat(totalFeesUsd)}</span>
+    <div className='leading-4'>
+      <div className="flex grid-item items-center">
+        <div className="grid-item secondary text-base">Final result:</div>
+        <ExpandButton relRef={detailsRef}/>
       </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{position.token0.symbol} Earned: </span>
-        <span className="leading-4 primary text-base">{token0Earned.toFixed(PRICE_PRECISION)}</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{position.token1.symbol} Earned: </span>
-        <span className="leading-4 primary text-base">{token1Earned.toFixed(PRICE_PRECISION)}</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Total Profit in Fees % (by USD for {position.daysAge.toFixed(0)} days): </span>
-        <span className="leading-4 primary text-base">{totalFeesProfitPercent.toFixed(PERCENT_PRECISION)}%</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Expected APR in Fees %: </span>
-        <span className="leading-4 primary text-base">{expectedApr.toFixed(PERCENT_PRECISION)}%</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Total Profit considering IL: </span>
-        <span className="leading-4 primary text-base">{moneyFormat(totalEarnedConsideringIlUsd)}</span>
-      </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Total Profit % considering IL: </span>
-        <span className="leading-4 primary text-base">{totalEarnedConsideringIl.toFixed(PERCENT_PRECISION)}%</span>
+        <Row title='Total Profit In USD %:' value={moneyFormat(totalFeesUsd)}/>
+        <Row title='Expected APR in Fees %:' value={`${expectedApr.toFixed(PERCENT_PRECISION)}%`}/>
+      <div ref={detailsRef}>
+        <Row title={`${position.token0.symbol} Earned:`} value={token0Earned.toFixed(PRICE_PRECISION)}/>
+        <Row title={`${position.token1.symbol} Earned:`} value={token1Earned.toFixed(PRICE_PRECISION)}/>
+        <Row
+          title={`Total Profit in Fees % (by USD for ${position.daysAge.toFixed(0)} days):`}
+          value={`${totalFeesProfitPercent.toFixed(PERCENT_PRECISION)}%`}
+        />
+        <Row title='Total Profit considering IL:' value={moneyFormat(totalEarnedConsideringIlUsd)}/>
+        <Row title='Total Profit % considering IL:' value={`${totalEarnedConsideringIl.toFixed(PERCENT_PRECISION)}%`}/>
       </div>
     </div>
   )

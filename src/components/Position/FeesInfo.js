@@ -1,55 +1,53 @@
-import React from 'react';
+import React, { createRef } from 'react';
 import PropTypes from 'prop-types';
+import BigNumber from 'bignumber.js';
 
+import ExpandButton from '__components/buttons/ExpandButton';
+import Row from '__components/Row';
 import dateWithHyphens from '__helpers/dateWithHyphens';
 import moneyFormat from '__helpers/moneyFormat';
 
-const Collect = ({ collect, token0Symbol, token1Symbol }) => (
+const Collect = ({ collect, t0Symbol, t1Symbol }) => (
   <>
-    <div className="grid-item">
-      <span className="leading-4 secondary text-sm"> ({dateWithHyphens(collect.timestamp * 1000)}):</span>
-    </div>
-    <div className="grid-item">
-      <span className="leading-4 secondary text-sm">{token0Symbol}: </span>
-      <span className="leading-4 primary text-base">{collect.amount0.toFixed()}</span>
-      <span className="leading-4 secondary text-sm"> ({moneyFormat(collect.usdAmount0)})</span>
-    </div>
-    <div className="grid-item">
-      <span className="leading-4 secondary text-sm">{token1Symbol}: </span>
-      <span className="leading-4 primary text-base">{collect.amount1.toFixed()}</span>
-      <span className="leading-4 secondary text-sm"> ({moneyFormat(collect.usdAmount1)})</span>
-    </div>
+    <Row title={`${dateWithHyphens(collect.timestamp * 1000)}:`}/>
+    <Row title={`${t0Symbol}:`} value={collect.amount0.toFixed()} addition={`(${moneyFormat(collect.usdAmount0)})`}/>
+    <Row title={`${t1Symbol}:`} value={collect.amount1.toFixed()} addition={`(${moneyFormat(collect.usdAmount1)})`}/>
   </>
 )
 
-const ClaimedFees = ({ feesClaims, token0Symbol, token1Symbol }) => (
-  <>
-    <div className="grid-item secondary text-sm">Claimed Fees:</div>
-    {
-      feesClaims.map((collect, index) => (
-        <Collect key={index} collect={collect} token0Symbol={token0Symbol} token1Symbol={token1Symbol} />
-      ))
-    }
-  </>
-)
+const ClaimedFees = ({ feesClaims, t0Symbol, t1Symbol }) => {
+  const claimedFeesRef = createRef();
+  const usdAmount = feesClaims.reduce((acc, claim) => acc.plus(claim.usdAmount0).plus(claim.usdAmount1), BigNumber(0))
 
-const UnclaimedFees = ({ token0, token1 }) => {
   return (
     <>
-      <div className="grid-item secondary text-sm">Unclaimed Fees Earned:</div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{token0.symbol}: </span>
-        <span className="leading-4 primary text-base">{token0.fees.toFixed()}</span>
-        <span className="leading-4 secondary text-sm"> ({moneyFormat(token0.usdFees)})</span>
+      <div className="flex grid-item items-center">
+        <Row title='Claimed Fees:' value={moneyFormat(usdAmount)}/>
+        <ExpandButton relRef={claimedFeesRef}/>
       </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">{token1.symbol}: </span>
-        <span className="leading-4 primary text-base">{token1.fees.toFixed()}</span>
-        <span className="leading-4 secondary text-sm"> ({moneyFormat(token1.usdFees)})</span>
+      <div ref={claimedFeesRef}>
+        {
+          feesClaims.map((collect, index) => (
+            <Collect key={index} collect={collect} t0Symbol={t0Symbol} t1Symbol={t1Symbol} />
+          ))
+        }
       </div>
-      <div className="grid-item">
-        <span className="leading-4 secondary text-sm">Total Unclaimed Fees: </span>
-        <span className="leading-4 secondary text-sm"> ({moneyFormat(token0.usdFees.plus(token1.usdFees))})</span>
+    </>
+  )
+}
+
+const UnclaimedFees = ({ token0, token1 }) => {
+  const unclaimedFeesRef = createRef();
+
+  return (
+    <>
+      <div className="flex grid-item items-center">
+        <Row title='Unclaimed Fees Earned:' value={moneyFormat(token0.usdFees.plus(token1.usdFees))}/>
+        <ExpandButton relRef={unclaimedFeesRef}/>
+      </div>
+      <div ref={unclaimedFeesRef}>
+        <Row title={`${token0.symbol}:`} value={token0.fees.toFixed()} addition={`(${moneyFormat(token0.usdFees)})`}/>
+        <Row title={`${token1.symbol}:`} value={token1.fees.toFixed()} addition={`(${moneyFormat(token1.usdFees)})`}/>
       </div>
     </>
   )
@@ -58,9 +56,9 @@ const UnclaimedFees = ({ token0, token1 }) => {
 const FeesInfo = ({token0, token1, feesClaims}) => {
   return (
     token0.fees &&
-      <div className="grid-item leading-4 my-2">
+      <div className="grid-item leading-4">
         <UnclaimedFees token0={token0} token1={token1} />
-        <ClaimedFees feesClaims={feesClaims} token0Symbol={token0.symbol} token1Symbol={token1.symbol} />
+        <ClaimedFees feesClaims={feesClaims} t0Symbol={token0.symbol} t1Symbol={token1.symbol} />
       </div>
   )
 };
@@ -75,14 +73,14 @@ FeesInfo.propTypes = {
 
 Collect.propTypes = {
   collect: PropTypes.object.isRequired,
-  token0Symbol: PropTypes.string.isRequired,
-  token1Symbol: PropTypes.string.isRequired,
+  t0Symbol: PropTypes.string.isRequired,
+  t1Symbol: PropTypes.string.isRequired,
 }
 
 ClaimedFees.propTypes = {
   feesClaims: PropTypes.arrayOf(PropTypes.object).isRequired,
-  token0Symbol: PropTypes.string.isRequired,
-  token1Symbol: PropTypes.string.isRequired,
+  t0Symbol: PropTypes.string.isRequired,
+  t1Symbol: PropTypes.string.isRequired,
 }
 
 UnclaimedFees.propTypes = {

@@ -4,8 +4,12 @@ import PropTypes from 'prop-types';
 const CommonInfo = ({ position }) => {
   return (
     <>
-      <div className="grid-item">
+      <div className="flex grid-item justify-between">
         <div className="grid-item secondary">{position.id}</div>
+        {
+          position.daysAge &&
+            <div className="grid-item secondary">{Math.floor(position.daysAge)} days</div>
+        }
       </div>
     </>
   )

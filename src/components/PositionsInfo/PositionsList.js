@@ -7,7 +7,7 @@ import Position from '__components/Position';
 const PositionsList = ({ positions, prices, completionCallback }) => {
   return positions.errors
     ? <ErrorsList errors={positions.errors} />
-    : <div className='text-base' data-testid='positions-list'>
+    : <div className='flex justify-between positions-list text-base' data-testid='positions-list'>
         {positions && positions.map((position) => (
           <Position key={position.id} position={position} prices={prices} completionCallback={completionCallback} />
         ))}

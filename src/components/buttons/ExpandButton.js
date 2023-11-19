@@ -11,8 +11,17 @@ const ExpandButton = ({ buttonTitle, relRef }) => {
   useEffect(() => {
     const content = relRef.current
     if(content) {
-      content.className = `expandable-container ${isShown && 'expanded'}`
+      content.classList.add('expandable-container')
     }
+  }, [])
+
+  useEffect(() => {
+    const content = relRef.current
+    if (!content) { return }
+
+    isShown
+      ? content.classList.add('expanded')
+      : content.classList.remove('expanded')
   }, [isShown])
 
 
