@@ -4,6 +4,10 @@ body {
   font-family: sans-serif;
 }
 
+footer {
+  height: 80vh
+}
+
 input[type="range" i] {
   color: #3e4460 !important;
 }
