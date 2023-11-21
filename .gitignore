@@ -1,2 +1,6 @@
+dist/
 node_modules/
 notes/
+
+.DS_Store
+.env.development

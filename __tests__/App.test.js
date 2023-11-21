@@ -1,56 +1,93 @@
 import React from 'react';
-import { screen, render, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 
-import App from '../src/App';
-import { NETWORK_PARAMS } from '../src/constants';
+import App from '__src/App';
+import { NETWORK_PARAMS } from '__constants';
+import positionsFixture from '__mocks/fixtures/positions/response200success.json';
+import pricesFixture from '__mocks/fixtures/prices/success.json';
+// import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition';
+
+global.fetch = jest.fn(() => Promise.resolve({
+  json: () => pricesFixture,
+  status: 200,
+  ok: true
+}));
+
+function mockFetchPositions() {
+  return jest.fn(() => Promise.resolve(positionsFixture.data.positions));
+}
+
+jest.mock('__services/graph/fetchPositions', () => mockFetchPositions());
+
+jest.mock('__services/buildPosition', () => {
+  const { buildPositionMock } = require('__mocks/services/buildPositionMock')
+
+  return buildPositionMock();
+});
 
 describe('when Metamask extension is not installed', () => {
-  it('suggests to install Metamask', () => {
-    render(<App />);
+  it('suggests to install Metamask', async () => {
+    await act(async () => {
+      render(<App />);
+    })
     const metamaskLink = screen.getByText('MetaMask')
     expect(metamaskLink).toBeInTheDocument();
     expect(metamaskLink).toHaveAttribute('href', 'https://metamask.io/download');
+    const positionsList = screen.queryByTestId('positions-list');
+    expect(positionsList).toBeNull();
   })
 });
 
 describe('when Metamask extension is installed', () => {
-  const ethereumRequestMock = jest.fn().mockImplementation(() => {
-    return Promise.resolve(['0x1234567890']);
+  const ethereumRequestMock = jest.fn().mockImplementation(({ method }) => {
+    if (method === 'eth_chainId') {
+      return '0xa4b1'
+    } else {
+      return Promise.resolve(['0x1234567890']);
+    }
   })
   beforeEach(() => {
     global.window.ethereum = {
       on: jest.fn(),
       removeListener: jest.fn(),
       request: ethereumRequestMock,
-      chainId: '0xa4b1',
     };
   });
-  
+
   afterAll(() => {
     delete global.window.ethereum;
   });
 
   describe('when no crypto wallet is connected', () => {
-    it('suggests connect to crypto wallet', async () => {
+    it('suggests connect to crypto wallet and renders connected wallet information', async () => {
       render(<App />);
       await waitFor(() => {
-        expect(ethereumRequestMock.mock.calls).toEqual([[{method: 'eth_requestAccounts'}]]);
-        const textElement = screen.getByText('0x1234567890');
+        expect(ethereumRequestMock.mock.calls[1]).toEqual([{method: 'eth_requestAccounts'}]);
+        const textElement = screen.getByText('0x1234...7890');
         expect(textElement).toBeInTheDocument();
+        const positionsList = screen.getByTestId('positions-list');
+        expect(positionsList).toBeInTheDocument();
       });
     })
   });
-  
+
   describe('when crypto wallet connected, but with wrong network', () => {
+    const ethereumRequestMock = jest.fn().mockImplementation(({ method }) => {
+      if (method === 'eth_chainId') {
+        return '0xa'
+      } else {
+        return Promise.resolve(['0x1234567890']);
+      }
+    })
+
     beforeEach(() => {
-      ethereumRequestMock.mock.calls = [];
-      global.window.ethereum.chainId = '0xa';
+      global.window.ethereum.request = ethereumRequestMock
     });
 
     it('suggests to switch to Arbitrum network', async () => {
       render(<App />);
       await waitFor(() => {
-        expect(ethereumRequestMock.mock.calls[0]).toEqual([
+        expect(ethereumRequestMock.mock.calls[2]).toEqual([
           {method: 'wallet_addEthereumChain', params: [NETWORK_PARAMS.arbitrum]}
         ]);
       });

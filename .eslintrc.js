@@ -9,6 +9,9 @@ module.exports = {
     "eslint:recommended",
     "plugin:react/recommended"
   ],
+  "ignorePatterns": [
+    "dist/", "node_modules/"
+  ],
   "overrides": [
   ],
   "parserOptions": {
@@ -19,6 +22,8 @@ module.exports = {
     "react"
   ],
   "rules": {
+    "no-console": "warn",
+    "no-trailing-spaces": "warn"
   },
   "settings": {
     "react": {
