@@ -12,7 +12,7 @@ const loadEnv = () => {
   }
 
   const envConfig = fs.readFileSync(envPath, 'utf8');
-  const env = Object.fromEntries(
+  const fileEnv = Object.fromEntries(
     envConfig.split('\n')
       .filter(line => line.trim() !== '' && line.includes('='))
       .map(line => {
@@ -21,12 +21,10 @@ const loadEnv = () => {
       })
   );
 
-  const envVars = Object.keys(env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = env[next];
-    return prev;
+  return Object.keys(fileEnv).reduce((acc, key) => {
+    acc[key] = JSON.stringify(process.env[key] || fileEnv[key]);
+    return acc;
   }, {});
-
-  return envVars
 }
 
 module.exports = loadEnv;
