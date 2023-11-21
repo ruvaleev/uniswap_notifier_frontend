@@ -44,7 +44,9 @@ const Status = ({ status, disappearing = false }) => {
   const message = statusMessage[status]
   return message && (
     <div className="grid-item leading-4 my-2 relative">
-      <div className={`absolute grid-item right-50 secondary text-sm ${isVisible || 'disappearing'}`}>{message}</div>
+      <div className={`absolute grid-item secondary status-message text-sm ${isVisible || 'disappearing'}`}>
+        {message}
+      </div>
     </div>
   )
 }

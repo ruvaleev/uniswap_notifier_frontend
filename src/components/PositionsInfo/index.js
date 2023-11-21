@@ -21,7 +21,7 @@ const statusMessage = {
 const Status = ({ status }) => {
   const message = statusMessage[status]
   return message && (
-    <div className="grid-container" data-testid='dashboard'>
+    <div className="grid-container status" data-testid='dashboard'>
       <div className="grid-item leading-4 my-2">
         <div className="grid-item secondary text-sm">{message}</div>
       </div>

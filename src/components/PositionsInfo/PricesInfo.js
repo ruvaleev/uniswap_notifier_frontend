@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const PricesInfo = ({ currency, price }) => {
   return (
-    <div className="grid-item mr-2 text-xs">
+    <div className="grid-item mr-2 text-sm mr-2">
       <span className="secondary">{currency}: </span>
       <span className="primary">${price}</span>
     </div>

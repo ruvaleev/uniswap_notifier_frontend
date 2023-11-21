@@ -20,7 +20,7 @@ const ProportionsScale = ({token0, token1, share0}) => {
 }
 
 const PriceBlock = ({ title, value }) => (
-  <div className='flex flex-col width-30'>
+  <div className='flex flex-col justify-between width-30'>
     <span className='secondary text-sm'>{title}</span>
     <span className='overflow-scroll primary text-sm'>{value.toFixed(PRICE_PRECISION)}</span>
   </div>

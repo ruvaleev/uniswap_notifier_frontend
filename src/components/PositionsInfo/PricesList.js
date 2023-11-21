@@ -5,7 +5,7 @@ import PricesInfo from './PricesInfo';
 
 const PricesList = ({ prices }) => {
   return (
-    <div className='grid-container flex' data-testid='prices-list'>
+    <div className='grid-container flex flex-wrap' data-testid='prices-list'>
       {
         Object.keys(prices).map((cur) => (
           <PricesInfo key={cur} currency={cur} price={prices[cur]}/>
