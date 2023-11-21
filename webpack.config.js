@@ -27,7 +27,7 @@ module.exports = {
     path: __dirname + '/dist',
   },
   plugins: [
-    new BundleAnalyzerPlugin(),
+    envVars['process.env.WITH_BUNDLE_ANALYZE'] === 'true' && new BundleAnalyzerPlugin(),
     new HtmlWebpackPlugin({
       template: './src/index.html',
     }),
