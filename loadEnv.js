@@ -22,7 +22,7 @@ const loadEnv = () => {
   );
 
   return Object.keys(fileEnv).reduce((acc, key) => {
-    acc[key] = JSON.stringify(process.env[key] || fileEnv[key]);
+    acc[key] = JSON.stringify(process.env[key]) || fileEnv[key];
     return acc;
   }, {});
 }
