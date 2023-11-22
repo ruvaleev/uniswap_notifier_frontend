@@ -2,7 +2,7 @@ import { ethers } from "ethers";
 
 import poolAbi from './poolAbi.json'
 
-const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
+const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_URL);
 
 async function getPool(poolAddress, tickLower, tickUpper) {
   const poolContract = new ethers.Contract(poolAddress, poolAbi, provider);

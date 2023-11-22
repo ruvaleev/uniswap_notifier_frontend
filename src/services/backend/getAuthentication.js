@@ -16,7 +16,7 @@ const getAuthentication = async () => {
     'chain_id': chainId
   });
 
-  const response = await fetch(`${BACKEND_URL}/authenticate`, {
+  const response = await fetch(`${process.env.BACKEND_URL}/authenticate`, {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -24,6 +24,6 @@ const getAuthentication = async () => {
   })
 
   return response.ok
-};  
+};
 
 export default getAuthentication
