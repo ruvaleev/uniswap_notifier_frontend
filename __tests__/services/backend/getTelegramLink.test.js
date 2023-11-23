@@ -15,7 +15,7 @@ describe('getTelegramLink service', () => {
     it('returns link', async () => {
       const result = await getTelegramLink();
 
-      expect(result).toEqual(telegramLinkFixture.link);
+      expect(result).toEqual(telegramLinkFixture);
     });
   })
 

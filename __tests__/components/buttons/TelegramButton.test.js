@@ -8,12 +8,16 @@ import TelegramButton from '__components/buttons/TelegramButton';
 import UnauthenticatedError from '__src/errors/UnauthenticatedError';
 import connectedFixture from '__mocks/fixtures/backend/checkTelegram/connected.json';
 import disconnectedFixture from '__mocks/fixtures/backend/checkTelegram/disconnected.json';
+import telegramLinkFixture from '__mocks/fixtures/backend/getTelegramLink/success.json';
 
 jest.mock('__services/backend/checkTelegram', () => jest.fn());
 jest.mock('__services/backend/getAuthentication', () => jest.fn().mockResolvedValue(true));
 
-const tgLink = 'https://some.tg.link'
-jest.mock('__services/backend/getTelegramLink', () => jest.fn().mockResolvedValue(tgLink));
+jest.mock('__services/backend/getTelegramLink', () => {
+  const telegramLinkFixture = require('__mocks/fixtures/backend/getTelegramLink/success.json');
+
+  return jest.fn().mockResolvedValue(telegramLinkFixture)
+});
 
 describe('TelegramButton', () => {
   describe('when user unauthenticated', () => {
@@ -55,7 +59,7 @@ describe('TelegramButton', () => {
           expect(getTelegramLink).toHaveBeenCalledTimes(1)
 
           const link = screen.getByText('Connect Telegram');
-          expect(link).toHaveAttribute('href', tgLink);
+          expect(link).toHaveAttribute('href', telegramLinkFixture.link);
         })
       })
     })
@@ -69,8 +73,9 @@ describe('TelegramButton', () => {
         render(<TelegramButton/>)
 
         await waitFor(async () => {
-          const link = screen.getByText('Go to Telegram');
-          expect(link).toHaveAttribute('href', connectedFixture.link);
+          expect(
+            document.querySelector(`a[href="${connectedFixture.link}"]`)
+          ).toBeInTheDocument();
         });
       })
     })

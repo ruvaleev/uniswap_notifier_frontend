@@ -2,6 +2,7 @@ body {
   background-color: #242839;
   color: #ffffff;
   font-family: sans-serif;
+  margin: 0;
 }
 
 footer {
@@ -53,6 +54,11 @@ input[type=range]::-moz-range-thumb {
 
 .absolute {
   position: absolute;
+}
+
+.btn {
+  background-color: #7367f0;
+  border: none;
 }
 
 .current-tick {
@@ -177,6 +183,16 @@ input[type=range]::-moz-range-thumb {
   color: #ffffff;
 }
 
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.py-2 {
+  padding-bottom: 0.5rem;
+  padding-top: 0.5rem;
+}
+
 .py-4 {
   padding-bottom: 1rem;
   padding-top: 1rem;
@@ -188,6 +204,10 @@ input[type=range]::-moz-range-thumb {
 
 .relative {
   position: relative;
+}
+
+.right-4 {
+  right: 1rem;
 }
 
 .rotatable {

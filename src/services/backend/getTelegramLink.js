@@ -5,7 +5,7 @@ const getTelegramLink = async () => {
 
   const body = await response.json()
 
-  return body.link
+  return body
 };
 
 export default getTelegramLink;

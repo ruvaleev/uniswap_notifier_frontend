@@ -1,12 +1,12 @@
 import React from 'react';
 
-import ConnectButton from '../../components/buttons/ConnectButton';
-import PositionsInfo from '../../components/PositionsInfo';
+import ControlPanel from '__components/ControlPanel';
+import PositionsInfo from '__components/PositionsInfo';
 
 function Main() {
   return (
     <>
-      <ConnectButton/>
+      <ControlPanel/>
       <PositionsInfo/>
     </>
   );

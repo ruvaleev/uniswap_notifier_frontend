@@ -17,10 +17,10 @@ describe('checkTelegram service', () => {
       beforeEach(() => {
         mockFetch(conectedFixture)
       });
-  
+
       it('returns received response', async () => {
         const result = await checkTelegram();
-  
+
         expect(result).toEqual(conectedFixture);
       });
     })
@@ -29,10 +29,10 @@ describe('checkTelegram service', () => {
       beforeEach(() => {
         mockFetch(disconectedFixture)
       });
-  
+
       it('returns received response', async () => {
         const result = await checkTelegram();
-  
+
         expect(result).toEqual(disconectedFixture);
       });
     })

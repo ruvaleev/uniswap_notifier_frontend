@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { TELEGRAM_LINK_SECONDS } from '__constants';
+import Button from './Button';
+import Telegram from '__assets/icons/Telegram';
 import checkTelegram from '__services/backend/checkTelegram';
 import getAuthentication from '__services/backend/getAuthentication';
 import getTelegramLink from '__services/backend/getTelegramLink';
@@ -29,43 +30,40 @@ const CountdownTimer = ({ seconds = 60, title = '', onCompleteCallback = () => {
 
 const ConnectTgButton =() => {
   const [tgLink, setTgLink] = useState(null);
+  const [timeout, setTimeout] = useState(null);
 
   const issueTelegramLink = async () => {
-    const link = await getTelegramLink()
-    setTgLink(link)
+    const linkInfo = await getTelegramLink()
+    setTgLink(linkInfo.link)
+    setTimeout(linkInfo.expires_in_seconds)
   }
 
   return (
     tgLink
     ?
-      <div className='flex flex-col'>
+      <div className='flex flex-col mr-2'>
         <a className='primary' href={tgLink}>Connect Telegram</a>
-        <CountdownTimer seconds={TELEGRAM_LINK_SECONDS} title='Valid for' onCompleteCallback={() => setTgLink(null)}/>
+        <CountdownTimer
+          seconds={timeout}
+          title='Valid for'
+          onCompleteCallback={() => setTgLink(null)}
+        />
       </div>
-    :
-      <button className="rounded-xl text-base text-center" onClick={issueTelegramLink}>
-        Get Telegram Link
-      </button>
+    : <Button callback={issueTelegramLink}>Get Telegram Link</Button>
   )
 }
-
-const AuthenticationButton = ({ callback }) => (
-  <button className="rounded-xl text-base text-center" onClick={callback}>
-    Authenticate
-  </button>
-)
 
 const TelegramLink = ({ connected, link }) => (
   connected
     ?
-      <div className='flex flex-col'>
-        <a className='primary' href={link}>Go to Telegram</a>
-      </div>
+      <a className='primary' href={link} target='_blank' rel="noreferrer">
+        <Telegram size={'2rem'}/>
+      </a>
     : <ConnectTgButton/>
 )
 
 const TelegramButton = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [connected, setConnected] = useState(null);
   const [link, setLink] = useState(null);
 
@@ -84,24 +82,20 @@ const TelegramButton = () => {
         .catch(() => setIsAuthenticated(false))
     }
     checkAuthentication()
-  }, [])
+  }, [isAuthenticated])
 
   return (
-    <div className='relative'>
+    <div className='mr-1 relative'>
       {
         isAuthenticated
         ? <TelegramLink connected={connected} link={link}/>
-        : <AuthenticationButton callback={authCallback}/>
+        : <Button callback={authCallback}>Authenticate</Button>
       }
     </div>
   );
 };
 
 export default TelegramButton;
-
-AuthenticationButton.propTypes = {
-  callback: PropTypes.func.isRequired,
-};
 
 CountdownTimer.propTypes = {
   seconds: PropTypes.number,

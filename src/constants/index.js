@@ -52,6 +52,5 @@ export const PRICE_PRECISION = 18;
 export const Q96 = BigNumber(Math.pow(2, 96));
 export const Q128 = BigNumber(Math.pow(2, 128));
 export const Q256 = BigNumber(Math.pow(2, 256));
-export const TELEGRAM_LINK_SECONDS = 600;
 export const YEAR_DAYS = BigNumber(365);
 export const ZERO = BigNumber(0);
