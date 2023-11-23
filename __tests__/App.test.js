@@ -5,7 +5,7 @@ import App from '__src/App';
 import { NETWORK_PARAMS } from '__constants';
 import positionsFixture from '__mocks/fixtures/positions/response200success.json';
 import pricesFixture from '__mocks/fixtures/prices/success.json';
-// import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition';
+import { ethereumMock } from '__mocks/ethereumMock';
 
 global.fetch = jest.fn(() => Promise.resolve({
   json: () => pricesFixture,
@@ -26,6 +26,10 @@ jest.mock('__services/buildPosition', () => {
 });
 
 describe('when Metamask extension is not installed', () => {
+  beforeAll(() => {
+    delete global.window.ethereum;
+  })
+
   it('suggests to install Metamask', async () => {
     await act(async () => {
       render(<App />);
@@ -39,20 +43,11 @@ describe('when Metamask extension is not installed', () => {
 });
 
 describe('when Metamask extension is installed', () => {
-  const ethereumRequestMock = jest.fn().mockImplementation(({ method }) => {
-    if (method === 'eth_chainId') {
-      return '0xa4b1'
-    } else {
-      return Promise.resolve(['0x1234567890']);
-    }
+  let ethereum;
+
+  beforeAll(() => {
+    ethereum = ethereumMock({ addresses: ['0x1234567890'] })
   })
-  beforeEach(() => {
-    global.window.ethereum = {
-      on: jest.fn(),
-      removeListener: jest.fn(),
-      request: ethereumRequestMock,
-    };
-  });
 
   afterAll(() => {
     delete global.window.ethereum;
@@ -62,7 +57,7 @@ describe('when Metamask extension is installed', () => {
     it('suggests connect to crypto wallet and renders connected wallet information', async () => {
       render(<App />);
       await waitFor(() => {
-        expect(ethereumRequestMock.mock.calls[1]).toEqual([{method: 'eth_requestAccounts'}]);
+        expect(ethereum.mock.calls[1]).toEqual([{method: 'eth_requestAccounts'}]);
         const textElement = screen.getByText('0x1234...7890');
         expect(textElement).toBeInTheDocument();
         const positionsList = screen.getByTestId('positions-list');

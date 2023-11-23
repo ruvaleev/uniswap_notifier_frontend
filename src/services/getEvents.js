@@ -6,7 +6,7 @@ import positionManagerAbi from './positionManagerAbi.json';
 import getTimestamp from './getEvents/getTimestamp';
 import getPriceByDate from './getEvents/getPriceByDate';
 
-const provider = new ethers.JsonRpcProvider(PROVIDER_URL);
+const provider = new ethers.JsonRpcProvider(process.env.PROVIDER_URL);
 const contract = new ethers.Contract(POSITION_MANAGER_CONTRACT, positionManagerAbi, provider);
 
 const parseLogsFunctions = {

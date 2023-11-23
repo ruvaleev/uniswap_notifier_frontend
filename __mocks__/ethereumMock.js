@@ -7,6 +7,7 @@ export const ethereumMock = ({ addresses = [] } = {}) => {
     on: jest.fn(),
     removeListener: jest.fn(),
     request: ethereumRequestMock,
-    chainId: '0xa4b1',
   };
+
+  return ethereumRequestMock
 };

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 
-import './styles.css';
 import { WalletContext } from '__contexts/WalletContext';
+import Button from './Button';
 
 const maskedAddress = (address) => {
   if (!address) { return '' }
@@ -22,9 +22,9 @@ const ConnectButton = () => {
 
   return (
     <div className='relative'>
-      <button className="connect-button rounded-xl text-base text-center" onClick={fetchAddress}>
+      <Button callback={fetchAddress}>
         {address ? maskedAddress(address) : 'Connect Wallet'}
-      </button>
+      </Button>
     </div>
   );
 };
