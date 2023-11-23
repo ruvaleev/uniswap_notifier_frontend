@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { TELEGRAM_LINK_SECONDS } from '__constants';
-import checkAuth from '__services/backend/checkAuth';
+import checkTelegram from '__services/backend/checkTelegram';
 import getAuthentication from '__services/backend/getAuthentication';
 import getTelegramLink from '__services/backend/getTelegramLink';
 
@@ -27,7 +27,7 @@ const CountdownTimer = ({ seconds = 60, title = '', onCompleteCallback = () => {
   );
 };
 
-const TgLinkButton =() => {
+const ConnectTgButton =() => {
   const [tgLink, setTgLink] = useState(null);
 
   const issueTelegramLink = async () => {
@@ -55,8 +55,19 @@ const AuthenticationButton = ({ callback }) => (
   </button>
 )
 
-const ConnectTelegramButton = () => {
+const TelegramLink = ({ connected, link }) => (
+  connected
+    ?
+      <div className='flex flex-col'>
+        <a className='primary' href={link}>Go to Telegram</a>
+      </div>
+    : <ConnectTgButton/>
+)
+
+const TelegramButton = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
+  const [connected, setConnected] = useState(null);
+  const [link, setLink] = useState(null);
 
   const authCallback = () => getAuthentication().then((result) => (
     setIsAuthenticated(result)
@@ -64,7 +75,13 @@ const ConnectTelegramButton = () => {
 
   useEffect(() => {
     async function checkAuthentication() {
-      await checkAuth().then((result) => setIsAuthenticated(result))
+      await checkTelegram()
+        .then((response) => {
+          setIsAuthenticated(true)
+          setConnected(response.connected)
+          setLink(response.link)
+        })
+        .catch(() => setIsAuthenticated(false))
     }
     checkAuthentication()
   }, [])
@@ -73,14 +90,14 @@ const ConnectTelegramButton = () => {
     <div className='relative'>
       {
         isAuthenticated
-        ? <TgLinkButton/>
+        ? <TelegramLink connected={connected} link={link}/>
         : <AuthenticationButton callback={authCallback}/>
       }
     </div>
   );
 };
 
-export default ConnectTelegramButton;
+export default TelegramButton;
 
 AuthenticationButton.propTypes = {
   callback: PropTypes.func.isRequired,
@@ -90,4 +107,9 @@ CountdownTimer.propTypes = {
   seconds: PropTypes.number,
   title: PropTypes.string,
   onCompleteCallback: PropTypes.func,
+};
+
+TelegramLink.propTypes = {
+  connected: PropTypes.bool,
+  link: PropTypes.string,
 };
