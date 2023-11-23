@@ -1,15 +1,7 @@
-import UnauthenticatedError from '__src/errors/UnauthenticatedError';
+import { getRequest } from './functions'
 
 const getTelegramLink = async () => {
-  const response = await fetch(`${process.env.BACKEND_URL}/telegram_link`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-  })
-  if (response.status === 401) { throw new UnauthenticatedError }
+  const response = await getRequest('/telegram_link')
 
   const body = await response.json()
 

@@ -1,12 +1,16 @@
+import UnauthenticatedError from '__src/errors/UnauthenticatedError';
+import { getRequest } from './functions'
+
 const checkAuth = async () => {
-  const response = await fetch(`${process.env.BACKEND_URL}/check_auth`, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json'
-    },
-    credentials: 'include',
-  })
+  const response = await getRequest('/check_auth')
+    .catch(error => {
+      if (error instanceof(UnauthenticatedError)) {
+        return {ok: false}
+      } else {
+        throw(error);
+      }
+    })
+
   return response.ok
 };
 
