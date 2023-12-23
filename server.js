@@ -5,6 +5,8 @@ const app = express();
 // Serve static files from the React app
 app.use(express.static(path.join(__dirname, 'dist')));
 
+app.use('/favicon.ico', express.static(path.join(__dirname, 'public/favicon.ico')));
+
 // The "catchall" handler: for any request that doesn't
 // match one above, send back React's index.html file.
 app.get('*', (req, res) => {
