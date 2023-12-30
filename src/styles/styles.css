@@ -116,6 +116,10 @@ input[type=range]::-moz-range-thumb {
   color: #ffffff;
 }
 
+.h-24 {
+  height: 6rem;
+}
+
 .icon-size {
   height: 24px;
   width: 24px;
@@ -135,6 +139,10 @@ input[type=range]::-moz-range-thumb {
 
 .justify-center {
   justify-content: center;
+}
+
+.justify-end {
+  justify-content: flex-end;
 }
 
 .leading-4 {
@@ -186,6 +194,11 @@ input[type=range]::-moz-range-thumb {
 .px-4 {
   padding-left: 1rem;
   padding-right: 1rem;
+}
+
+.px-8 {
+  padding-left: 2rem;
+  padding-right: 2rem;
 }
 
 .py-2 {
@@ -281,6 +294,14 @@ input[type=range]::-moz-range-thumb {
 .w-full {
   width: 100%;
 }
+
+/* .w-48 {
+  width: 12rem;
+} */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 .width-30 {
   width: 30%;

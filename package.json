@@ -2,18 +2,23 @@
   "license": "MIT",
   "scripts": {
     "build": "webpack --mode production",
-    "start": "webpack serve",
+    "start": "yarn run watch:css && webpack serve",
     "start_server": "node server.js",
-    "test": "jest"
+    "test": "jest",
+    "watch:css": "postcss src/styles/tailwind.css -o src/styles/tailwindOutput.css"
   },
   "dependencies": {
     "@rollbar/react": "^0.11.2",
+    "autoprefixer": "^10.4.16",
     "bignumber.js": "^9.1.2",
     "ethers": "^6.8.0",
     "express": "^4.18.2",
+    "postcss": "^8.4.32",
+    "postcss-cli": "^11.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "rollbar": "^2.26.2"
+    "rollbar": "^2.26.2",
+    "tailwindcss": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.23.0",
