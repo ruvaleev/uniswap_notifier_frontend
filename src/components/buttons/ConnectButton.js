@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 
 import { WalletContext } from '__contexts/WalletContext';
+import Wallet from '__assets/icons/Wallet';
 import Button from './Button';
 
 const maskedAddress = (address) => {
@@ -22,7 +23,10 @@ const ConnectButton = () => {
 
   return (
     <div className='relative'>
-      <Button callback={fetchAddress}>
+      <Button callback={fetchAddress} classNames='bg-green border-green flex items-center justify-around text-black'>
+        <span className='mr-2'>
+          <Wallet/>
+        </span>
         {address ? maskedAddress(address) : 'Connect Wallet'}
       </Button>
     </div>

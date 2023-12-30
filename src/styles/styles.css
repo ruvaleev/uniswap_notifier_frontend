@@ -1,7 +1,7 @@
 body {
-  background-color: #242839;
+  background-color: #062127;
   color: #ffffff;
-  font-family: sans-serif;
+  font-family: 'Metropolis-Medium', sans-serif;
   margin: 0;
 }
 
@@ -56,9 +56,18 @@ input[type=range]::-moz-range-thumb {
   position: absolute;
 }
 
-.btn {
-  background-color: #7367f0;
-  border: none;
+.bg-green {
+  background-color: #a1fa4f;
+}
+
+.border-blue {
+  border-color: #29a9eb;
+  border-width: 1px;
+}
+
+.border-green {
+  border-color: #a1fa4f;
+  border-width: 1px;
 }
 
 .current-tick {
@@ -147,6 +156,10 @@ input[type=range]::-moz-range-thumb {
 
 .leading-4 {
   line-height: 1rem !important;
+}
+
+.logo {
+  font-family: 'Metropolis-Medium', sans-serif;
 }
 
 .mb-2 {
@@ -259,6 +272,14 @@ input[type=range]::-moz-range-thumb {
   text-align: center;
 }
 
+.text-blue {
+  color: #29a9eb;
+}
+
+.text-green {
+  color: #a1fa4f;
+}
+
 .text-sm {
   font-size: 0.875rem;
   line-height: 1.25rem;
@@ -295,16 +316,22 @@ input[type=range]::-moz-range-thumb {
   width: 100%;
 }
 
-/* .w-48 {
-  width: 12rem;
-} */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
 .width-30 {
   width: 30%;
+}
+
+@font-face {
+  font-family: 'Metropolis';
+  src: url('/src/assets/fonts/Metropolis/Metropolis-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Metropolis-Medium';
+  src: url('/src/assets/fonts/Metropolis/Metropolis-Medium.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 @media (max-width: 1200px) {

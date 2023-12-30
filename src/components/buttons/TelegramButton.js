@@ -41,24 +41,38 @@ const ConnectTgButton =() => {
   return (
     tgLink
     ?
-      <div className='flex flex-col mr-2'>
-        <a className='primary' href={tgLink}>Connect Telegram</a>
-        <CountdownTimer
-          seconds={timeout}
-          title='Valid for'
-          onCompleteCallback={() => setTgLink(null)}
-        />
+      <div className='flex flex-col mr-2 items-center'>
+        <div className='flex flex-col mr-2'>
+          <BlueButton text='Connect Telegram' href={tgLink}/>
+        </div>
+        <div className='absolute flex flex-col mr-2 top-full'>
+          <CountdownTimer
+            seconds={timeout}
+            title='Valid for'
+            onCompleteCallback={() => setTgLink(null)}
+          />
+        </div>
       </div>
-    : <Button callback={issueTelegramLink}>Get Telegram Link</Button>
+    : <Button callback={issueTelegramLink} classNames='border-green text-green w-48'>Get Telegram Link</Button>
   )
 }
 
+const BlueButton = ({ text, href }) => (
+  <a
+    className='flex items-center border-blue btn cursor-pointer primary px-4 py-2 rounded-xl text-base text-blue text-center'
+    target='_blank'
+    href={href}
+  >
+    <span className='mr-2'>
+      <Telegram/>
+    </span>
+    {text}
+  </a>
+)
+
 const TelegramLink = ({ connected, link }) => (
   connected
-    ?
-      <a className='primary' href={link} target='_blank' rel="noreferrer">
-        <Telegram size={'2rem'}/>
-      </a>
+    ? <BlueButton text='Go to Telegram' href={link}/>
     : <ConnectTgButton/>
 )
 
@@ -89,7 +103,7 @@ const TelegramButton = () => {
       {
         isAuthenticated
         ? <TelegramLink connected={connected} link={link}/>
-        : <Button callback={authCallback}>Authenticate</Button>
+        : <Button callback={authCallback} classNames='border-green text-green'>Authenticate</Button>
       }
     </div>
   );
