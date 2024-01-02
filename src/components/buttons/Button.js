@@ -14,5 +14,6 @@ export default Button;
 
 Button.propTypes = {
   callback: PropTypes.func.isRequired,
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string])
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
+  classNames: PropTypes.string
 };

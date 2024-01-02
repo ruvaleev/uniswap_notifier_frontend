@@ -61,7 +61,7 @@ const BlueButton = ({ text, href }) => (
   <a
     className='flex items-center border-blue btn cursor-pointer primary px-4 py-2 rounded-xl text-base text-blue text-center'
     target='_blank'
-    href={href}
+    href={href} rel="noreferrer"
   >
     <span className='mr-2'>
       <Telegram/>
@@ -115,6 +115,11 @@ CountdownTimer.propTypes = {
   seconds: PropTypes.number,
   title: PropTypes.string,
   onCompleteCallback: PropTypes.func,
+};
+
+BlueButton.propTypes = {
+  text: PropTypes.string.isRequired,
+  href: PropTypes.string.isRequired,
 };
 
 TelegramLink.propTypes = {

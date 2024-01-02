@@ -60,6 +60,10 @@ input[type=range]::-moz-range-thumb {
   background-color: #a1fa4f;
 }
 
+.bg-white {
+  background-color: white;
+}
+
 .border-blue {
   border-color: #29a9eb;
   border-width: 1px;
@@ -162,6 +166,10 @@ input[type=range]::-moz-range-thumb {
   right: 50%;
   transform: translate(-50%, -50%);
   width: max-content;
+}
+
+.text-black {
+  color: black;
 }
 
 .text-blue {

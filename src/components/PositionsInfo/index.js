@@ -88,9 +88,13 @@ const PositionsInfo = () => {
     ?
       <>
         <Status status={status} />
-        <Dashboard totalUsdValue={totalUsdValue} totalUnclaimedUsdFees={totalUnclaimedUsdFees} totalClaimedUsdFees={totalClaimedUsdFees}/>
-        <PricesList prices={prices} />
-        {status === doneStatus && <PositionsList positions={positions} prices={prices} completionCallback={(pos) => completionCallback(pos)}/> }
+        <div className='flex px-6'>
+          <div className='flex flex-col min-width-30'>
+            <Dashboard totalUsdValue={totalUsdValue} totalUnclaimedUsdFees={totalUnclaimedUsdFees} totalClaimedUsdFees={totalClaimedUsdFees}/>
+            <PricesList prices={prices} />
+          </div>
+          {status === doneStatus && <PositionsList positions={positions} prices={prices} completionCallback={(pos) => completionCallback(pos)}/> }
+        </div>
       </>
     : <div>Connect wallet</div>;
 };
