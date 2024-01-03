@@ -96,6 +96,17 @@ describe('buildPosition', () => {
       expect(response.position.token1).toEqual(token1WithFees)
       expect(response.position.totalUsdValue).toEqual(totalUsdValue)
     });
+
+    describe('when there is no price info about at least on of position coins', () => {
+      const prices = {'WETH': 1699.14}
+
+      it('failes position with proper error', async () => {
+        const response = await buildPosition(position, status, prices)
+
+        expect(response.status).toEqual(STATUSES.failed)
+        expect(position.errorMessage).toEqual('No Price Info: ARB')
+      })
+    })
   });
 
   describe('when status is gettingEvents', () => {
