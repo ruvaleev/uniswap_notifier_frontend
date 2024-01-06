@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, waitFor } from '@testing-library/react';
+import { act, render, screen, waitFor } from '@testing-library/react';
 
 import buildPosition from '__services/buildPosition';
 import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition'
@@ -90,8 +90,10 @@ describe('Position', () => {
   })
 
   describe('when processing has successfully completed', () => {
-    beforeEach(() => {
-      renderComponent({status: STATUSES.completed, position: fulfilledPosition})
+    beforeEach(async () => {
+      await act(() => {
+        renderComponent({status: STATUSES.completed, position: fulfilledPosition})
+      });
     })
 
     it("renders proper status message and doesn't call buildPosition service", async () => {

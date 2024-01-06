@@ -6,7 +6,7 @@ import moneyFormat from '__helpers/moneyFormat';
 
 const Dashboard = ({totalUsdValue, totalUnclaimedUsdFees, totalClaimedUsdFees}) => {
   return (
-    <div className="dashboard grid-container h-fit" data-testid='dashboard'>
+    <div className="dashboard grid-container h-fit mb-2" data-testid='dashboard'>
       <NewRow
         title='Total Portfolio Value'
         subtitle='(fees not included)'

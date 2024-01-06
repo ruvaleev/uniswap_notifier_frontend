@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const AmountDisplay = ({ value }) => (
-  <span className="text-2xl text-green mr-1 font-number">{value}</span>
+const AmountDisplay = ({ value, classNames = '' }) => (
+  <span className={`font-number inline-block text-2xl text-green mr-1 ${classNames}`}>{value}</span>
 )
 
 export default AmountDisplay;
 
 AmountDisplay.propTypes = {
-  value: PropTypes.string
+  value: PropTypes.string.isRequired,
+  classNames: PropTypes.string
 }

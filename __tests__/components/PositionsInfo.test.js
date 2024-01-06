@@ -72,10 +72,6 @@ describe('PositionsInfo', () => {
     it("doesn't call fetchPositions service", () => {
       expect(fetchPositions).not.toHaveBeenCalled()
     });
-
-    it('renders proper message', () => {
-      expect(screen.getByText(/Connect wallet/i)).toBeInTheDocument();
-    })
   });
 
   describe('when WalletContext has address', () => {

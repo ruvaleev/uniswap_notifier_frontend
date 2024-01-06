@@ -2,27 +2,30 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 import { PRICE_PRECISION } from '__constants';
+import TokenIcon from '__components/TokenIcon';
+import Scale from '__components/Scale';
+
+const Token = ({ token }) => (
+  <div className='flex flex-col items-center token-icon'>
+    <TokenIcon name={token} classNames='mb-3'/>
+    {token}
+  </div>
+)
 
 const ProportionsScale = ({token0, token1, share0}) => {
-  const scaleStyle = {
-    width: `${share0}%`
-  };
-
   return (
-    <div className="flex grid-item items-center">
-      <div className="token token-left secondary mr-2">{token0}</div>
-      <div className="scale">
-        <div className="current-tick" style={scaleStyle}></div>
-      </div>
-      <div className="token token-right secondary ml-2">{token1}</div>
+    <div className="flex justify-between grid-item items-center mb-5">
+      <Token token={token0}/>
+      <Scale value={+share0} scaleClassNames='mx-6' valueClassNames='bg-green'/>
+      <Token token={token1}/>
     </div>
   )
 }
 
 const PriceBlock = ({ title, value }) => (
   <div className='flex flex-col justify-between width-30'>
-    <span className='secondary text-sm'>{title}</span>
-    <span className='overflow-scroll primary text-sm'>{value.toFixed(PRICE_PRECISION)}</span>
+    <span>{title}</span>
+    <span className='font-number overflow-scroll text-green'>{value.toFixed(PRICE_PRECISION)}</span>
   </div>
 )
 const CurrentPriceInfo = ({ t0, t1 }) => {
@@ -34,9 +37,9 @@ const CurrentPriceInfo = ({ t0, t1 }) => {
     <div data-testid='proportionsInfo' className='cursor-pointer' onClick={() => switchToken(!isToken0)}>
       <div className='text-center' data-testid='tokenLabel'>{tokenInfo.symbol}</div>
       <div className='flex flex-wrap justify-between text-center'>
-        <PriceBlock title='Min Price:' value={tokenInfo.minPrice}/>
-        <PriceBlock title='Current Price:' value={tokenInfo.price}/>
-        <PriceBlock title='Max Price:' value={tokenInfo.maxPrice}/>
+        <PriceBlock title='Min Price' value={tokenInfo.minPrice}/>
+        <PriceBlock title='Current Price' value={tokenInfo.price}/>
+        <PriceBlock title='Max Price' value={tokenInfo.maxPrice}/>
       </div>
     </div>
   )
@@ -49,7 +52,7 @@ const ProportionsInfo = ({ t0, t1 }) => {
   const share0 = t0.usdValue.multipliedBy(100).dividedBy(totalUsdValue)
 
   return (
-    <div className='my-4 py-4 relative top-bottom-bordered'>
+    <div className='relative mb-7'>
       <ProportionsScale token0={t0.symbol} token1={t1.symbol} share0={share0}/>
       <CurrentPriceInfo t0={t0} t1={t1} />
     </div>
@@ -77,4 +80,8 @@ ProportionsScale.propTypes = {
 PriceBlock.propTypes = {
   title: PropTypes.string.isRequired,
   value: PropTypes.object.isRequired
+}
+
+Token.propTypes = {
+  token: PropTypes.string.isRequired
 }

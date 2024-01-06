@@ -1,11 +1,11 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import BigNumber from 'bignumber.js';
 
-import ExpandButton from '__components/buttons/ExpandButton';
 import Row from '__components/Row';
+import ExpandableRow from './ExpandableRow';
 import dateWithHyphens from '__helpers/dateWithHyphens';
 import moneyFormat from '__helpers/moneyFormat';
+import { ZERO } from '__constants';
 
 const Collect = ({ collect, t0Symbol, t1Symbol }) => (
   <>
@@ -15,51 +15,42 @@ const Collect = ({ collect, t0Symbol, t1Symbol }) => (
   </>
 )
 
-const ClaimedFees = ({ feesClaims, t0Symbol, t1Symbol }) => {
-  const claimedFeesRef = createRef();
-  const usdAmount = feesClaims.reduce((acc, claim) => acc.plus(claim.usdAmount0).plus(claim.usdAmount1), BigNumber(0))
-
+const ClaimedFees = ({ usdAmount, feesClaims, t0Symbol, t1Symbol }) => {
   return (
-    <>
-      <div className="flex grid-item items-center">
-        <Row title='Claimed Fees:' value={moneyFormat(usdAmount)}/>
-        <ExpandButton relRef={claimedFeesRef}/>
-      </div>
-      <div ref={claimedFeesRef}>
-        {
-          feesClaims.map((collect, index) => (
-            <Collect key={index} collect={collect} t0Symbol={t0Symbol} t1Symbol={t1Symbol} />
-          ))
-        }
-      </div>
-    </>
+    <ExpandableRow title='Claimed Fees' value={moneyFormat(usdAmount)} isExpandable={feesClaims.length > 0}>
+      {
+        feesClaims.map((collect, index) => (
+          <Collect key={index} collect={collect} t0Symbol={t0Symbol} t1Symbol={t1Symbol} />
+        ))
+      }
+    </ExpandableRow>
   )
 }
 
 const UnclaimedFees = ({ token0, token1 }) => {
-  const unclaimedFeesRef = createRef();
-
   return (
-    <>
-      <div className="flex grid-item items-center">
-        <Row title='Unclaimed Fees Earned:' value={moneyFormat(token0.usdFees.plus(token1.usdFees))}/>
-        <ExpandButton relRef={unclaimedFeesRef}/>
-      </div>
-      <div ref={unclaimedFeesRef}>
-        <Row title={`${token0.symbol}:`} value={token0.fees.toFixed()} addition={`(${moneyFormat(token0.usdFees)})`}/>
-        <Row title={`${token1.symbol}:`} value={token1.fees.toFixed()} addition={`(${moneyFormat(token1.usdFees)})`}/>
-      </div>
-    </>
+    <ExpandableRow title='Unclaimed Fees Earned' value={moneyFormat(token0.usdFees.plus(token1.usdFees))}>
+      <Row title={`${token0.symbol}:`} value={token0.fees.toFixed()} addition={`(${moneyFormat(token0.usdFees)})`}/>
+      <Row title={`${token1.symbol}:`} value={token1.fees.toFixed()} addition={`(${moneyFormat(token1.usdFees)})`}/>
+    </ExpandableRow>
   )
 }
 
+const calculateClaimedFees = (feesClaims) => (
+  feesClaims
+  ? feesClaims.reduce((acc, claim) => acc.plus(claim.usdAmount0).plus(claim.usdAmount1), ZERO)
+  : ZERO
+)
+
 const FeesInfo = ({token0, token1, feesClaims}) => {
+  if (!token0.fees) { return }
+  const claimedFees = calculateClaimedFees(feesClaims)
+
   return (
-    token0.fees &&
-      <div className="grid-item leading-4">
-        <UnclaimedFees token0={token0} token1={token1} />
-        <ClaimedFees feesClaims={feesClaims} t0Symbol={token0.symbol} t1Symbol={token1.symbol} />
-      </div>
+    <>
+      <ClaimedFees usdAmount={claimedFees} feesClaims={feesClaims} t0Symbol={token0.symbol} t1Symbol={token1.symbol} />
+      <UnclaimedFees token0={token0} token1={token1} />
+    </>
   )
 };
 
@@ -78,6 +69,7 @@ Collect.propTypes = {
 }
 
 ClaimedFees.propTypes = {
+  usdAmount: PropTypes.oneOfType([PropTypes.number, PropTypes.object]),
   feesClaims: PropTypes.arrayOf(PropTypes.object).isRequired,
   t0Symbol: PropTypes.string.isRequired,
   t1Symbol: PropTypes.string.isRequired,

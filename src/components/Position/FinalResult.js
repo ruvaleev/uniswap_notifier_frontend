@@ -1,8 +1,8 @@
-import React, { createRef } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import BigNumber from 'bignumber.js';
 
-import ExpandButton from '__components/buttons/ExpandButton';
+import ExpandableRow from './ExpandableRow';
 import Row from '__components/Row';
 import moneyFormat from '__helpers/moneyFormat';
 import { HUNDRED, PERCENT_PRECISION, PRICE_PRECISION, YEAR_DAYS, ZERO } from '__constants';
@@ -41,17 +41,10 @@ const FinalResult = ({ position }) => {
   const totalEarnedConsideringIlUsd = totalValueWithFeesUsd.minus(totalHoldUsd)
   const totalEarnedConsideringIl = totalEarnedConsideringIlUsd.multipliedBy(HUNDRED).dividedBy(totalHoldUsd)
 
-  const detailsRef = createRef();
-
   return (
-    <div className='leading-4'>
-      <div className="flex grid-item items-center">
-        <div className="grid-item secondary text-base">Final result:</div>
-        <ExpandButton relRef={detailsRef}/>
-      </div>
-        <Row title='Total Profit In USD %:' value={moneyFormat(totalFeesUsd)}/>
-        <Row title='Expected APR in Fees %:' value={`${expectedApr.toFixed(PERCENT_PRECISION)}%`}/>
-      <div ref={detailsRef}>
+    <>
+      <ExpandableRow title='Total Profit In USD' value={moneyFormat(totalFeesUsd)} isExpandable={false}/>
+      <ExpandableRow title='Expected APR in Fees %' value={`${expectedApr.toFixed(PERCENT_PRECISION)}%`}>
         <Row title={`${position.token0.symbol} Earned:`} value={token0Earned.toFixed(PRICE_PRECISION)}/>
         <Row title={`${position.token1.symbol} Earned:`} value={token1Earned.toFixed(PRICE_PRECISION)}/>
         <Row
@@ -60,8 +53,8 @@ const FinalResult = ({ position }) => {
         />
         <Row title='Total Profit considering IL:' value={moneyFormat(totalEarnedConsideringIlUsd)}/>
         <Row title='Total Profit % considering IL:' value={`${totalEarnedConsideringIl.toFixed(PERCENT_PRECISION)}%`}/>
-      </div>
-    </div>
+      </ExpandableRow>
+    </>
   )
 };
 

@@ -6,9 +6,9 @@ import TokenIcon from '__components/TokenIcon';
 
 const PricesInfo = ({ currency, price }) => {
   return (
-    <div className="flex grid-container items-center justify-between py-9 text-sm">
+    <div className="flex grid-container items-center justify-between mb-2 py-4 text-sm">
       <TokenIcon name={currency} />
-      <span className="primary">{currency}</span>
+      <span className='mr-auto ml-20'>{currency}</span>
       <AmountDisplay value={`$${price}`}/>
     </div>
   )

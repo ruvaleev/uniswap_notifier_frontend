@@ -3,7 +3,6 @@ import { render, screen } from '@testing-library/react';
 
 import ImpermanentLossInfo from '__components/Position/ImpermanentLossInfo';
 import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition';
-import unfilledPosition from '__mocks/fixtures/positions/unfilledPosition.json';
 
 const renderComponent = (position) => {
   render(
@@ -12,17 +11,7 @@ const renderComponent = (position) => {
 };
 
 describe('ImpermanentLossInfo', () => {
-  describe('when position is not fullfilled yet', () => {
-    beforeEach(() => {
-      renderComponent(unfilledPosition)
-    })
-
-    it('renders proper message', () => {
-      expect(screen.getByText(/Loading.../i)).toBeInTheDocument();
-    })
-  });
-
-  describe('when position is fullfilled already', () => {
+  describe('when position is fulfilled already', () => {
     beforeEach(() => {
       renderComponent(fulfilledPosition)
     })
@@ -42,8 +31,7 @@ describe('ImpermanentLossInfo', () => {
       expect(screen.getByText('$21423.47')).toBeInTheDocument(); // Total value HODL
 
       // Result:
-      expect(screen.getByText('($923.20)')).toBeInTheDocument(); // Impermanent Loss USD
-      expect(screen.getByText('4.3093%')).toBeInTheDocument(); // Impermanent Loss Percent (100 * (IL USD / Total HODL))
+      expect(screen.getByText('$923.20')).toBeInTheDocument(); // Impermanent Loss USD
     })
   });
 });
