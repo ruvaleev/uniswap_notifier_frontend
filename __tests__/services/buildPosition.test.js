@@ -104,7 +104,9 @@ describe('buildPosition', () => {
         const response = await buildPosition(position, status, prices)
 
         expect(response.status).toEqual(STATUSES.failed)
-        expect(position.errorMessage).toEqual('No Price Info: ARB')
+        expect(position.errorMessage).toEqual(
+          "No Price Info: ARB; We've reported this and will add ARB in 24-48 hours"
+        )
       })
     })
   });

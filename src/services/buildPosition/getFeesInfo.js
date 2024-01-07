@@ -11,7 +11,10 @@ const checkPrices = (position, prices) => {
   if (!prices[position.token0.symbol]) { absentTokens.push(position.token0.symbol) }
   if (!prices[position.token1.symbol]) { absentTokens.push(position.token1.symbol) }
 
-  if (absentTokens.length > 0) { throw new Error(`No Price Info: ${absentTokens.join(', ')}`) }
+  if (absentTokens.length > 0) {
+    const tokensStr = absentTokens.join(', ')
+    throw new Error(`No Price Info: ${tokensStr}; We've reported this and will add ${tokensStr} in 24-48 hours`)
+  }
 }
 
 const getFeesInfo = async (position, prices) => {
