@@ -21,9 +21,9 @@ const statusMessage = {
 const Status = ({ status }) => {
   const message = statusMessage[status]
   return message && (
-    <div className="grid-container status" data-testid='dashboard'>
-      <div className="grid-item leading-4 my-2">
-        <div className="grid-item secondary text-sm">{message}</div>
+    <div className="flex justify-center" data-testid='dashboard'>
+      <div className="my-2">
+        <div className="secondary">{message}</div>
       </div>
     </div>
   )
@@ -85,14 +85,17 @@ const PositionsInfo = () => {
   const { totalUsdValue, totalUnclaimedUsdFees, totalClaimedUsdFees } = totalResults
 
   return address
-    ?
+    &&
       <>
         <Status status={status} />
-        <Dashboard totalUsdValue={totalUsdValue} totalUnclaimedUsdFees={totalUnclaimedUsdFees} totalClaimedUsdFees={totalClaimedUsdFees}/>
-        <PricesList prices={prices} />
-        {status === doneStatus && <PositionsList positions={positions} prices={prices} completionCallback={(pos) => completionCallback(pos)}/> }
+        <div className='flex px-6'>
+          <div className='flex flex-col min-width-30 mr-7'>
+            <Dashboard totalUsdValue={totalUsdValue} totalUnclaimedUsdFees={totalUnclaimedUsdFees} totalClaimedUsdFees={totalClaimedUsdFees}/>
+            <PricesList prices={prices} />
+          </div>
+          {status === doneStatus && <PositionsList positions={positions} prices={prices} completionCallback={(pos) => completionCallback(pos)}/> }
+        </div>
       </>
-    : <div>Connect wallet</div>;
 };
 
 export default PositionsInfo;

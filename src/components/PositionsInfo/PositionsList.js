@@ -7,7 +7,7 @@ import Position from '__components/Position';
 const PositionsList = ({ positions, prices, completionCallback }) => {
   return positions.errors
     ? <ErrorsList errors={positions.errors} />
-    : <div className='flex flex-wrap justify-between positions-list text-base' data-testid='positions-list'>
+    : <div className='flex flex-wrap justify-between positions-list text-base w-full' data-testid='positions-list'>
         {positions && positions.map((position) => (
           <Position key={position.id} position={position} prices={prices} completionCallback={completionCallback} />
         ))}
@@ -18,9 +18,9 @@ export default PositionsList;
 
 PositionsList.propTypes = {
   positions: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.object).isRequired,
+    PropTypes.arrayOf(PropTypes.object),
     PropTypes.object
-  ]),
+  ]).isRequired,
   prices: PropTypes.object.isRequired,
   completionCallback: PropTypes.func.isRequired
 }

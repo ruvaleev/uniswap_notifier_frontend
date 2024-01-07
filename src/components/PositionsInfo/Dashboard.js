@@ -1,17 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import Row from '__components/Row';
+import NewRow from '__components/NewRow';
 import moneyFormat from '__helpers/moneyFormat';
 
 const Dashboard = ({totalUsdValue, totalUnclaimedUsdFees, totalClaimedUsdFees}) => {
   return (
-    <div className="dashboard grid-container" data-testid='dashboard'>
-      <Row title='Total Portfolio Value (fees not included):' value={moneyFormat(totalUsdValue)}/>
-      <Row title='Total Unclaimed Fees:' value={moneyFormat(totalUnclaimedUsdFees)}/>
-      <Row title='Total Claimed Fees:' value={moneyFormat(totalClaimedUsdFees)}/>
-      <Row
-        title='Total Fees Earned (Claimed + Unclaimed):'
+    <div className="dashboard grid-container h-fit mb-2" data-testid='dashboard'>
+      <NewRow
+        title='Total Portfolio Value'
+        subtitle='(fees not included)'
+        value={moneyFormat(totalUsdValue)}
+        classNames='mb-7'
+      />
+      <NewRow title='Total Unclaimed Fees' value={moneyFormat(totalUnclaimedUsdFees)} classNames='mb-7'/>
+      <NewRow title='Total Claimed Fees' value={moneyFormat(totalClaimedUsdFees)} classNames='mb-7'/>
+      <NewRow
+        title='Total Fees Earned'
+        subtitle='(Claimed + Unclaimed)'
         value={moneyFormat(totalClaimedUsdFees?.plus(totalUnclaimedUsdFees))}
       />
     </div>

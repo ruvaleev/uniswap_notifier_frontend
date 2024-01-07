@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import Arrow from '__assets/icons/Arrow';
 
-const ExpandButton = ({ buttonTitle, relRef }) => {
+const ExpandButton = ({ buttonTitle, relRef, color = '#737db2', iconClassNames = '' }) => {
   const [isShown, setIsShown] = useState(false);
 
   const toggleIsShown = () => setIsShown(!isShown)
@@ -27,9 +27,11 @@ const ExpandButton = ({ buttonTitle, relRef }) => {
 
   return (
     <>
-      <a onClick={toggleIsShown} className='flex items-center'>
+      <a onClick={toggleIsShown} className='cursor-pointer flex items-center w-full'>
         {buttonTitle}
-        <Arrow rotateAngle={isShown ? 90 : 0}/>
+        <div className={iconClassNames}>
+          <Arrow rotateAngle={isShown ? 90 : 0} color={color}/>
+        </div>
       </a>
     </>
   )
@@ -38,6 +40,8 @@ const ExpandButton = ({ buttonTitle, relRef }) => {
 export default ExpandButton;
 
 ExpandButton.propTypes = {
-  buttonTitle: PropTypes.string,
-  relRef: PropTypes.object.isRequired
+  buttonTitle: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  relRef: PropTypes.object.isRequired,
+  color: PropTypes.string,
+  iconClassNames: PropTypes.string,
 }

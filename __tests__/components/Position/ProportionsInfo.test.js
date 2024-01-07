@@ -1,5 +1,5 @@
 import React from 'react';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { act, fireEvent, render, screen } from '@testing-library/react';
 
 import fulfilledPosition from '__mocks/fixtures/positions/fulfilledPosition';
 import ProportionsInfo from '__components/Position/ProportionsInfo';
@@ -14,8 +14,8 @@ describe('ProportionsInfo', () => {
   const { token0, token1 } = fulfilledPosition
   let tokenLabel;
 
-  it('renders proper info about current coins proportions in the position and allows to switch currency', () => {
-    renderComponent(token0, token1)
+  it('renders proper info about current coins proportions in the position and allows to switch currency', async () => {
+    await act(() => renderComponent(token0, token1))
 
     tokenLabel = screen.getByTestId('tokenLabel')
     expect(tokenLabel.textContent).toEqual('WETH')

@@ -6,7 +6,19 @@ import getTokenAmounts from '__services/getTokenAmounts';
 import sqrtPriceToReadablePrices from '__services/sqrtPriceToReadablePrices';
 import priceFromTick from '__services/priceFromTick';
 
+const checkPrices = (position, prices) => {
+  const absentTokens = []
+  if (!prices[position.token0.symbol]) { absentTokens.push(position.token0.symbol) }
+  if (!prices[position.token1.symbol]) { absentTokens.push(position.token1.symbol) }
+
+  if (absentTokens.length > 0) {
+    const tokensStr = absentTokens.join(', ')
+    throw new Error(`No Price Info: ${tokensStr}; We've reported this and will add ${tokensStr} in 24-48 hours`)
+  }
+}
+
 const getFeesInfo = async (position, prices) => {
+  checkPrices(position, prices)
   const poolData = await getPool(position.pool.id, position.tickLower, position.tickUpper)
   const fees = getFees(
     BigNumber(poolData.feeGrowthGlobal0X128.toString()),

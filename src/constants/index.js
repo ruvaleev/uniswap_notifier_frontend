@@ -2,10 +2,21 @@ import BigNumber from "bignumber.js";
 
 export const COINGECKO_CURRENCIES = {
   'ARB': 'arbitrum',
+  'AXS': 'axie-infinity',
+  'BLUR': 'blur',
+  'DAI': 'dai',
+  'ETH': 'ethereum',
+  'GHO': 'gho',
+  'GMX': 'gmx',
+  'LINK': 'chainlink',
+  'PSI': 'tridentdao',
+  'SHIB': 'shiba-inu',
+  'SPELL': 'spell-token',
   'USDC': 'usd-coin',
   'USDT': 'tether',
   'WBTC': 'wrapped-bitcoin',
-  'WETH': 'ethereum',
+  'WETH': 'weth',
+  'wstETH': 'wrapped-steth',
 }
 export const HUNDRED = BigNumber(100)
 export const NETWORK_PARAMS = {
