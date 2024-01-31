@@ -60,8 +60,8 @@ export const POSITIONS_FIELDS = [
 ].join(' ');
 
 export const PRICE_PRECISION = 18;
-export const Q96 = BigNumber(Math.pow(2, 96));
-export const Q128 = BigNumber(Math.pow(2, 128));
-export const Q256 = BigNumber(Math.pow(2, 256));
+export const Q96 = BigNumber('79228162514264337593543950336'); // 2**96
+export const Q128 = BigNumber('340282366920938463463374607431768211456'); // 2**128
+export const Q256 = BigNumber('115792089237316195423570985008687907853269984665640564039457584007913129639936'); // 2**256
 export const YEAR_DAYS = BigNumber(365);
 export const ZERO = BigNumber(0);

@@ -172,6 +172,7 @@ input[type=range]::-moz-range-thumb {
 .scale {
   flex-grow: 1;
   height: 0.55rem;
+  max-height: 0.55rem;
   display: flex;
   background-color: #204148;
   border-radius: 0.5rem;

@@ -1,14 +1,7 @@
 import BigNumber from 'bignumber.js';
-import { Q128, Q256, ZERO } from '__constants';
 
-function subIn256(x, y) {
-  const difference = x.minus(y);
-  if (difference.lt(ZERO)) {
-    return Q256.plus(difference);
-  } else {
-    return difference;
-  }
-}
+import { Q128, ZERO } from '__constants';
+import subIn256 from './subIn256';
 
 function toBigNumber(num) {
   return new BigNumber(num);
