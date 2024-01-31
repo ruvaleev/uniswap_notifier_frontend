@@ -24,14 +24,14 @@ describe('getILData service', () => {
           decimals1,
         )
         expect(result).toEqual({
-          impermanentLoss: 4.350798723968685,
+          impermanentLoss: 4.35079872396869,
           tickPrices: {
             price0: BigNumber('1724.7327067343867'),
             price1: BigNumber('0.00057979998645320674')
           },
           tickProportions: {
-            amount0: BigNumber('6.254801275485025'),
-            amount1: BigNumber('7912.473646894437')
+            amount0: BigNumber('6.254801275485039'),
+            amount1: BigNumber('7912.473646894412')
           }
         });
       });

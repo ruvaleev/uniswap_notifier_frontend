@@ -51,13 +51,13 @@ describe('buildPosition', () => {
     symbol: 'WETH',
     amount: BigNumber('6.292472743425067'),
     initialAmount: BigNumber('0.028400052060967359'),
-    fees: BigNumber('0.191920642674899304'),
-    price: BigNumber('1723.2152798416475943434613275531910347284624'),
+    fees: BigNumber('0.191920642674899325'),
+    price: BigNumber('1723.2152798416476990241645143601392993671716'),
     minPrice: BigNumber('1544.7739600815653'),
     maxPrice: BigNumber('2007.4484671855757'),
     usdPrice: 1699.14,
     usdValue: BigNumber('10691.79213726326834238'),
-    usdFees: BigNumber('326.10004079462840339856'),
+    usdFees: BigNumber('326.1000407946284390805'),
   }
   const token1WithFees = {
     decimals: '18',
@@ -65,13 +65,13 @@ describe('buildPosition', () => {
     symbol: 'ARB',
     amount: BigNumber('7847.529022166197'),
     initialAmount: BigNumber('39044.924814345658556843'),
-    fees: BigNumber('344.630962460268691484'),
-    price: BigNumber('0.0005803105460461641'),
+    fees: BigNumber('344.630962460268728487'),
+    price: BigNumber('0.00058031054604616407'),
     minPrice: BigNumber('0.00064734390004036526'),
     maxPrice: BigNumber('0.00049814479242996001'),
     usdPrice: 0.920302,
     usdValue: BigNumber('7222.096654157595431494'),
-    usdFees: BigNumber('317.164564014110197310108168'),
+    usdFees: BigNumber('317.164564014110231364043074'),
   }
   const totalUsdValue = BigNumber('17913.888791420863773874');
   const holdUsdValue0 = BigNumber("24.12783222943603918563");

@@ -11,8 +11,8 @@ describe('sqrtPriceToReadablePrices', () => {
       expect(
         sqrtPriceToReadablePrices(sqrtPrice, decimals0, decimals1)
       ).toEqual({
-        price0: BigNumber('1864.0867627926768292234659853896845472844356'),
-        price1: BigNumber('0.00053645571652569033')
+        price0: BigNumber('1864.0867627926769424621789134918931076452025'),
+        price1: BigNumber('0.0005364557165256903')
       })
     });
   })
@@ -41,8 +41,8 @@ describe('sqrtPriceToReadablePrices', () => {
       expect(
         sqrtPriceToReadablePrices(sqrtPrice, decimals0, decimals1)
       ).toEqual({
-        price0: BigNumber('18.34820099176733050163617104052222906961907690524641'),
-        price1: BigNumber('0.05450125603314956208')
+        price0: BigNumber('18.34820099176733161624334854267284381293146841943601'),
+        price1: BigNumber('0.05450125603314955877')
       })
     });
   });
