@@ -28,7 +28,7 @@ describe('getHistoricalPrice service', () => {
       }));
     });
 
-    it('returns hash without prices', async () => {
+    it('raises proper error', async () => {
       await expect(getHistoricalPrice('BTC', '01-10-2023')).rejects.toThrow('coin not found');
     });
   })
