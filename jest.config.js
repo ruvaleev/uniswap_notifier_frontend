@@ -10,6 +10,7 @@ module.exports = {
     "^__contexts(.*)$": "<rootDir>/src/contexts$1",
     "^__helpers(.*)$": "<rootDir>/src/helpers$1",
     "^__mocks(.*)$": "<rootDir>/__mocks__$1",
+    "^__redux(.*)$": "<rootDir>/src/redux$1",
     "^__services(.*)$": "<rootDir>/src/services$1",
     "^__src(.*)$": "<rootDir>/src$1",
   },

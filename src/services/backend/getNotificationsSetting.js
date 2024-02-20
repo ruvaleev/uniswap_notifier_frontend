@@ -1,4 +1,3 @@
-import UnauthenticatedError from '__src/errors/UnauthenticatedError';
 import { getRequest } from './functions'
 
 const getNotificationsSetting = async () => {

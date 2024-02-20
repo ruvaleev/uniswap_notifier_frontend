@@ -1,5 +1,5 @@
 import getNotificationsSetting from '__services/backend/getNotificationsSetting';
-import notificationsSettingFixture from '__mocks/fixtures/notificationsSetting/success.json';
+import notificationsSettingFixture from '__mocks/fixtures/backend/getNotificationsSetting/success.json';
 
 describe('getNotificationsSetting service', () => {
   describe('when api returns successful response', () => {

@@ -52,6 +52,7 @@ module.exports = {
       '__contexts': path.resolve(__dirname, 'src/contexts'),
       '__helpers': path.resolve(__dirname, 'src/helpers'),
       '__mocks': path.resolve(__dirname, '__mocks__'),
+      '__redux': path.resolve(__dirname, 'src/redux'),
       '__services': path.resolve(__dirname, 'src/services'),
       '__src': path.resolve(__dirname, 'src'),
     },
