@@ -5,10 +5,14 @@ const webpack = require('webpack');
 const loadEnv = require('./loadEnv');
 
 const envVars = loadEnv();
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'development',
+  mode: mode,
+  devServer: {
+    historyApiFallback: true,
+  },
   module: {
     rules: [
       {
