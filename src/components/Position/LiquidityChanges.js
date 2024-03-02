@@ -8,7 +8,7 @@ const NoChanges = () => <span className="grid-item secondary text-sm">No changes
 
 const Change = ({ timestamp, change }) => (
   <div className="grid-item">
-    <Row title={`${dateWithHyphens(timestamp)}:`} value={`${change > 0 ? '+' : ''}${change}%`}/>
+    <Row title={`${dateWithHyphens(timestamp * 1000)}:`} value={`${change > 0 ? '+' : ''}${change}%`}/>
   </div>
 )
 
