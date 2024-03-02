@@ -20,6 +20,7 @@ describe('LiquidityChanges', () => {
   it('renders proper liquidity changes history', () => {
     renderComponent(changes)
 
+    expect(screen.queryAllByText('24-10-2023:').length).toEqual(4);
     expect(screen.getByText('-50%')).toBeInTheDocument();
     expect(screen.getByText('+100%')).toBeInTheDocument();
     expect(screen.getByText('+50%')).toBeInTheDocument();
