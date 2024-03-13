@@ -5,10 +5,14 @@ const webpack = require('webpack');
 const loadEnv = require('./loadEnv');
 
 const envVars = loadEnv();
+const mode = process.env.NODE_ENV === 'production' ? 'production' : 'development';
 
 module.exports = {
   entry: './src/index.js',
-  mode: 'development',
+  mode: mode,
+  devServer: {
+    historyApiFallback: true,
+  },
   module: {
     rules: [
       {
@@ -52,6 +56,7 @@ module.exports = {
       '__contexts': path.resolve(__dirname, 'src/contexts'),
       '__helpers': path.resolve(__dirname, 'src/helpers'),
       '__mocks': path.resolve(__dirname, '__mocks__'),
+      '__redux': path.resolve(__dirname, 'src/redux'),
       '__services': path.resolve(__dirname, 'src/services'),
       '__src': path.resolve(__dirname, 'src'),
     },
