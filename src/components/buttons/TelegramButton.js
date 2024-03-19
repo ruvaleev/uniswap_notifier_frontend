@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import BlueTgButton from './BlueTgButton';
 import Button from './Button';
-import Telegram from '__assets/icons/Telegram';
 import checkTelegram from '__services/backend/checkTelegram';
 import getAuthentication from '__services/backend/getAuthentication';
 import getTelegramLink from '__services/backend/getTelegramLink';
@@ -43,7 +43,7 @@ const ConnectTgButton =() => {
     ?
       <div className='flex flex-col mr-2 items-center'>
         <div className='flex flex-col mr-2'>
-          <BlueButton text='Connect Telegram' href={tgLink}/>
+          <BlueTgButton text='Connect Telegram' href={tgLink}/>
         </div>
         <div className='absolute flex flex-col mr-2 top-full'>
           <CountdownTimer
@@ -57,22 +57,9 @@ const ConnectTgButton =() => {
   )
 }
 
-const BlueButton = ({ text, href }) => (
-  <a
-    className='flex items-center border-blue btn cursor-pointer primary px-4 py-2 rounded-xl text-base text-blue text-center'
-    target='_blank'
-    href={href} rel="noreferrer"
-  >
-    <span className='mr-2'>
-      <Telegram/>
-    </span>
-    {text}
-  </a>
-)
-
 const TelegramLink = ({ connected, link }) => (
   connected
-    ? <BlueButton text='Go to Telegram' href={link}/>
+    ? <BlueTgButton text='Go to Telegram' href={link}/>
     : <ConnectTgButton/>
 )
 
@@ -115,11 +102,6 @@ CountdownTimer.propTypes = {
   seconds: PropTypes.number,
   title: PropTypes.string,
   onCompleteCallback: PropTypes.func,
-};
-
-BlueButton.propTypes = {
-  text: PropTypes.string.isRequired,
-  href: PropTypes.string.isRequired,
 };
 
 TelegramLink.propTypes = {
